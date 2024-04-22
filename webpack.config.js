@@ -64,8 +64,7 @@ module.exports = (env, argv) => {
                 '.tsx',
                 '.ts',
                 '.js',
-                ".html"
-                
+                ".html" 
             ]
         },
         plugins: [
@@ -76,7 +75,7 @@ module.exports = (env, argv) => {
 
             // Make an index.html from the template
             new HtmlWebpackPlugin({
-                template: 'src/index.html',
+                template: 'public/index.html',
                 hash: true,
                 minify: false
             })
