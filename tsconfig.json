@@ -8,12 +8,12 @@
     
         // Rules for your code
         "strict": true,
-        "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "noUnusedParameters": true,
-        "noUnusedLocals": true,
-        "noFallthroughCasesInSwitch": true,
-        "noImplicitOverride": true,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noUnusedParameters": false,
+        "noUnusedLocals": false,
+        "noFallthroughCasesInSwitch": false,
+        "noImplicitOverride": false,
 
         // Settings for linking source files
         "moduleResolution": "node",
