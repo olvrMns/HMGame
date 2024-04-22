@@ -28,7 +28,8 @@ module.exports = (env, argv) => {
                 },
                 progress: true,
             },
-            port: 1234, host: '0.0.0.0'
+            //host: '0.0.0.0'
+            port: 5555, host: '127.0.0.1'
         },
 
         // Web games are bigger than pages, disable the warnings that our game is too big.
@@ -48,8 +49,6 @@ module.exports = (env, argv) => {
                 },
             })],
         },
-
-
         // Explain webpack how to do Typescript
         module: {
             rules: [
@@ -69,7 +68,6 @@ module.exports = (env, argv) => {
                 
             ]
         },
-
         plugins: [
             // Copy our static assets to the final build
             new CopyPlugin({
