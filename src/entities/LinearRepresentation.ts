@@ -1,4 +1,5 @@
 import MS from "../util/MathService";
+import AbstractGraphics from "./AbstractGraphics";
 import Coordinate from "./Coordinate";
 
 
@@ -46,4 +47,20 @@ export default class LinearRepresentation {
     public getCoordinateFromY(y: number): Coordinate {
         return new Coordinate(this.getXFromY(y), y);
     }
+
+    // public getAllCoordinates(delta: number): Coordinate[] {
+    //     let coordinates: Coordinate[] = [];
+    //     //need to introducde delta at elem++/elem--
+    //     if (this.startCoordinate.x < this.endCoordinate.x) {
+    //         for (let elem = this.startCoordinate.x; elem <= this.endCoordinate.x; elem++) {
+    //             //elem * delta... something like that
+    //         }
+    //     } else {
+    //         for (let elem = this.startCoordinate.x; elem >= this.endCoordinate.x; elem--) {
+
+    //         }
+    //     }
+    //     return coordinates;
+        
+    // }
 }
