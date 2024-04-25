@@ -18,16 +18,18 @@ const app = new Application<HTMLCanvasElement>({
 	height: GAME_WINDOW_HEIGHT,
 	autoStart: false
 });
-
+const from = new Coordinate(0, 0);
 const g: Graphics = new Graphics;
 g.x = GAME_WINDOW_CENTER.getX();
 g.y = GAME_WINDOW_CENTER.getY();
-g.lineStyle(10, 'rgb(170, 170, 224)');
-const line1: Line = new Line(g, new Coordinate(0, 0), new Coordinate(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT));
-const line2: Line = new Line(g, new Coordinate(0, 0), new Coordinate(GAME_WINDOW_WIDTH, -GAME_WINDOW_HEIGHT));
+g.lineStyle(5, 'rgb(170, 170, 224)');
+const line1: Line = new Line(g, from, new Coordinate(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT));
+const line2: Line = new Line(g, from, new Coordinate(GAME_WINDOW_WIDTH, -GAME_WINDOW_HEIGHT));
 const line3: Line = new Line(g, new Coordinate(0, 0), new Coordinate(-GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT));
 const line4: Line = new Line(g, new Coordinate(0, 0), new Coordinate(-GAME_WINDOW_WIDTH, -GAME_WINDOW_HEIGHT));
-g.addChild(line1.draw(), line2.draw(), line3.draw(), line4.draw());
+const line5: Line = new Line(g, new Coordinate(0, 0), new Coordinate(GAME_WINDOW_CENTER.getX(), 0));
+const line6: Line = new Line(g, new Coordinate(0, 0), new Coordinate(0, GAME_WINDOW_CENTER.getY()));
+g.addChild(line1, line2, line3, line4, line5, line6);
 app.stage.addChild(g);
 app.start();
 

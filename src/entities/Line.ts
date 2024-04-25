@@ -13,18 +13,16 @@ export default class Line extends AbstractGraphics {
         this.linearRep = new LinearRepresentation(startCoordinate, endCoordinate);
         this.nodeSpeed = nodeSpeed;
         this.cadence = cadence;
+        this.draw();
     }
 
+    /**
+     * 
+     * @Note used in constructor 
+     */
     public override draw(): this {
         this.moveParentCursorToCoordinate(this.linearRep.getStartCoordinate());
         this.lineToCoordinate(this.linearRep.getEndCoordinate());
         return this;
     }
-
-    // public override draw(): void {
-    //     // graph.lineStyle(5, 'rgb(170, 170, 224)');
-    //     // graph.moveTo(this.linearRep.getEndCoordinate().x, this.linearRep.getEndCoordinate().y);
-    //     // graph.lineTo(this.linearRep.getStartCoordinate().x, this.linearRep.getStartCoordinate().y);
-    // }
-
 }
