@@ -1,5 +1,6 @@
 import Coordinate from "../entities/Coordinate";
 import Line from "../entities/Line";
+import Level from "../entities/abstract/AbstractLevel";
 
-//for Core
-export type Anchors = {anchorCoordinate: Coordinate, line: Line | null}[];
+export type CollisionLines = {collisionCoordinate: Coordinate, line: Line}[];
+export type Levels = {[levelName:string]: Level};
