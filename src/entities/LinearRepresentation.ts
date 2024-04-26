@@ -1,7 +1,5 @@
 import MS from "../util/MathService";
-import AbstractGraphics from "./AbstractGraphics";
 import Coordinate from "./Coordinate";
-
 
 export default class LinearRepresentation {
     private startCoordinate: Coordinate;

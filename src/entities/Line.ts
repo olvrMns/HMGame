@@ -1,7 +1,7 @@
 import { Graphics } from "pixi.js";
 import Coordinate from "./Coordinate";
 import LinearRepresentation from "./LinearRepresentation";
-import AbstractGraphics from "./AbstractGraphics";
+import AbstractGraphics from "./abstract/AbstractGraphics";
 
 export default class Line extends AbstractGraphics {
     public linearRep: LinearRepresentation;
@@ -20,9 +20,8 @@ export default class Line extends AbstractGraphics {
      * 
      * @Note used in constructor 
      */
-    public override draw(): this {
+    public override draw(): void {
         this.moveParentCursorToCoordinate(this.linearRep.getStartCoordinate());
         this.lineToCoordinate(this.linearRep.getEndCoordinate());
-        return this;
     }
 }

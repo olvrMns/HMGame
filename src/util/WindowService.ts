@@ -11,9 +11,15 @@ export default class WindowService {
     private static DEFAULT_RP = 1;
     public windowWidth: number;
     public windowHeight: number;
-    public centerCoordinate: Coordinate;
     /**
-     * @Note Window reduction percentage (RP) 0 - 1
+     * @Important these are the coordinate of the center of the browser
+     * window, and not the game window
+     * - gameWindowCenterCoordinate <- to get the center
+     */
+    public centerCoordinate: Coordinate;
+    public gameWindowCenterCoordinate: Coordinate;
+    /**
+     * @Note Window reduction percentage (RP) 0.6 - 1
      */
     public reductionPercentage: number;
     public gameWindowWidth: number;
@@ -35,6 +41,7 @@ export default class WindowService {
         this.gameWindowWidth = this.windowWidth * this.reductionPercentage;
         this.gameWindowHeight = this.windowHeight * this.reductionPercentage;
         this.centerCoordinate = new Coordinate(this.gameWindowWidth/2, this.gameWindowHeight/2);
+        this.gameWindowCenterCoordinate = new Coordinate(0, 0);
         this.PSC_BOTTOM_RIGHT = new Coordinate(this.gameWindowWidth, this.gameWindowHeight);
         this.PSC_UPPER_RIGHT = new Coordinate(this.gameWindowWidth, -this.gameWindowHeight);
         this.PSC_BOTTOM_LEFT = new Coordinate(-this.gameWindowWidth, this.gameWindowHeight)
@@ -43,6 +50,10 @@ export default class WindowService {
         this.PSC_MIDDLE_LEFT = new Coordinate(-this.centerCoordinate.x, 0);
         this.PSC_UPPER_MIDDLE = new Coordinate(0, -this.centerCoordinate.y);
         this.PSC_BOTTOM_MIDDLE = new Coordinate(0, this.centerCoordinate.y);
+    }
+
+    public getGameWindowCenterCoordinate(): Coordinate {
+        return this.gameWindowCenterCoordinate;
     }
 
     public static getInstance(reductionPercentage: number = WindowService.DEFAULT_RP): WindowService {
