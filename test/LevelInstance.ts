@@ -1,32 +1,36 @@
 import { Graphics } from "pixi.js";
 import Level from "../src/entities/abstract/AbstractLevel";
-import { Levels } from "../src/util/typings";
 
 
 export default class LevelInstance {
-    private rootGraphic: Graphics;
+    private parentGraphic: Graphics;
     private activeLevel: Level | null;
     private score: number;
     
-    constructor() {
-        this.rootGraphic = new Graphics;
+    constructor(parentGraphic: Graphics) {
+        this.parentGraphic = parentGraphic;
         this.score = 0;
         this.activeLevel = null;
     }
 
-    public resetScore() {
-
+    public resetScore(): void {
+        this.score = 0;
     }
 
-    public incrementScore() {
-
+    public incrementScore(): void {
+        this.score++;
     }
 
-    public load(level: Level) {
-
+    public loadLevel(level: Level): void {
+        this.activeLevel = level;
+        level.draw();
     }
 
-    public update() {
+    public unloadLevel(): void {
+        this.activeLevel = null;
+    }
+
+    public update(delta: number): void {
 
     }
 }

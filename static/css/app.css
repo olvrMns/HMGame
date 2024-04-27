@@ -1,3 +1,4 @@
-body {
-    background-color: antiquewhite;
+body{
+    margin: 0;
+    display: flex;
 }

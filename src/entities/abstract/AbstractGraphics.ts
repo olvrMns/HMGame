@@ -4,12 +4,11 @@ import WindowService from "../../util/WindowService";
 
 export default abstract class AbstractGraphics extends Graphics {
     protected parentGraphic: Graphics;
-    protected WS: WindowService;
+    protected WS: WindowService = WindowService.getInstance();
 
     constructor(parentGraphic: Graphics) {
         super();
         this.parentGraphic = parentGraphic;
-        this.WS = WindowService.getInstance();
     }
 
     public moveParentCursorToCoordinate(c1: Coordinate): void {
