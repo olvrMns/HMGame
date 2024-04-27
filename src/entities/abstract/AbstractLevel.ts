@@ -1,17 +1,34 @@
 import { Graphics } from "pixi.js";
-import { CollisionLines } from "../../util/typings";
+import { Lines } from "../../util/typings";
 import Coordinate from "../Coordinate";
 import Line from "../Line";
 import AbstractGraphic from "./AbstractGraphics";
 
 export default abstract class Level extends AbstractGraphic {
-    private collisionLines: CollisionLines;
+    private lines: Lines;
     private collisionBufferDistanceMultiplier: number;
 
     constructor(parentGraphic: Graphics, collisionBufferDistanceMultiplier: number = 1) {
         super(parentGraphic);
-        this.collisionLines = [];
+        this.lines = [];
         this.collisionBufferDistanceMultiplier = collisionBufferDistanceMultiplier;
+    }
+
+    public getCollisionBufferDistanceMultiplier(): number {
+        return this.collisionBufferDistanceMultiplier;
+    }
+
+    //
+    public getDistancedBufferedEndCoordinate(line: Line): Coordinate {
+        return line.getLinearRepresentation().getEndCoordinate().multiply(this.collisionBufferDistanceMultiplier);
+    }
+
+    public getLines(): Lines {
+        return this.lines;
+    }
+
+    public getRandomLine(): Line {
+        return this.lines[Math.floor(Math.random() * (this.lines.length))];
     }
 
     /**
@@ -22,6 +39,6 @@ export default abstract class Level extends AbstractGraphic {
      * @param startCoordinate 
      */
     protected addLine(collisionCoordinate: Coordinate, startCoordinate: Coordinate): void {
-        this.collisionLines.push({collisionCoordinate: collisionCoordinate, line: new Line(this.parentGraphic, startCoordinate, collisionCoordinate)});
+        this.lines.push(new Line(this.parentGraphic, startCoordinate, collisionCoordinate));
     }
 }

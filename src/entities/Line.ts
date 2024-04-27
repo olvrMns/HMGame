@@ -4,12 +4,16 @@ import LinearRepresentation from "./LinearRepresentation";
 import AbstractGraphics from "./abstract/AbstractGraphics";
 
 export default class Line extends AbstractGraphics {
-    public linearRep: LinearRepresentation;
+    private linearRep: LinearRepresentation;
 
     constructor(parentGraphic: Graphics, startCoordinate: Coordinate, endCoordinate: Coordinate) {
         super(parentGraphic);
         this.linearRep = new LinearRepresentation(startCoordinate, endCoordinate);
         this.draw();
+    }
+
+    public getLinearRepresentation(): LinearRepresentation {
+        return this.linearRep;
     }
 
     /**

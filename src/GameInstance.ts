@@ -43,45 +43,11 @@ export default class GameInstance extends Application {
     }
  
     public tick() {
-        console.log(this.WS);
-        const g: Graphics = this.test(this.WS.PSC_BOTTOM_MIDDLE);
-        const g2: Graphics = this.test(this.WS.PSC_MIDDLE_RIGHT);
-        const g3: Graphics = this.test(this.WS.PSC_MIDDLE_LEFT);
-        const g4: Graphics = this.test(this.WS.PSC_UPPER_MIDDLE);
-        const g5: Graphics = this.test(new Coordinate(this.WS.PSC_UPPER_RIGHT.x/2, this.WS.PSC_UPPER_RIGHT.y/2));
-        this.rootGraphic.addChild(g, g2, g3, g4, g5);
-        
-        const advanceValue: number = 0.30;
-
+        this.levelInstance.initializeLineNode();
         if (this.levelInstance.levelIsActive()) {
-            this.ticker.add((delta: number) => {
+            // this.ticker.add((delta: number) => {
                 
-                this.testMoveGraphics(g, advanceValue, delta);
-                this.testMoveGraphics(g2, advanceValue, delta);
-                this.testMoveGraphics(g3, advanceValue, delta);
-                this.testMoveGraphics(g4, advanceValue, delta);
-                this.testMoveGraphics(g5, advanceValue, delta);
-                
-                // g.x = g.x * 0.999
-                // g.y = g.y * 0.999
-                
-            })
+            // })
         }
-    }
-
-    public test(c1: Coordinate): Graphics {
-        let circle  = new Graphics().lineStyle(5, 'rgb(100,123,170)');
-        circle.x = c1.x;
-        circle.y = c1.y;
-        circle.drawCircle(0, 0, 10);
-        return circle
-    }
-
-    public testMoveGraphics(g: Graphics, advanceValue: number, delta: number) {
-        if (g.x < 0) g.x += advanceValue * delta;
-        else g.x += -advanceValue * delta;
-        
-        if (g.y < 0) g.y += advanceValue * delta;
-        else g.y += -advanceValue * delta;
     }
 }

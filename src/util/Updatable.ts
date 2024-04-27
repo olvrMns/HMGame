@@ -1,4 +1,4 @@
 
 export interface Updatable {
-    update(delta: number): void
+    update(delta: number, distance: number): void
 }

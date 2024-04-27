@@ -15,6 +15,7 @@ export class RectangularLevel extends Level {
         this.addLine(new Coordinate(0, 50), this.WS.PSC_BOTTOM_MIDDLE);
         this.addLine(new Coordinate(50, 0), this.WS.PSC_MIDDLE_RIGHT);
         this.addLine(new Coordinate(-50, 0), this.WS.PSC_MIDDLE_LEFT);
+        //this.addLine(new Coordinate(50, -50), this.WS.PSC_UPPER_RIGHT);
     }
 
 }
@@ -25,6 +26,7 @@ export class CircleLevel extends Level {
         let radius: number = 80;
         this.drawCircleFromCooridnate(this.WS.gameWindowCenterCoordinate, radius);
         this.addLine(new Coordinate(0, -radius), this.WS.PSC_UPPER_MIDDLE);
+        //this.addLine(new Coordinate(radius, radius), this.WS.PSC_UPPER_RIGHT);
     }
 
 }

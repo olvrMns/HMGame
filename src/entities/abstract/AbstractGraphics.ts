@@ -3,6 +3,11 @@ import Coordinate from "../Coordinate";
 import WindowService from "../../util/WindowService";
 
 export default abstract class AbstractGraphics extends Graphics {
+    /**
+     * @Important
+     * ROOT GRAPHICS OBJECT
+     * needs to be renamed to rootGraphics for more clarity
+     */
     protected parentGraphic: Graphics;
     protected WS: WindowService = WindowService.getInstance();
 

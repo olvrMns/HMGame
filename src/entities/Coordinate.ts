@@ -23,4 +23,8 @@ export default class Coordinate {
     public setY(y: number): void {
         this.y = y;
     }
+
+    public multiply(multiplier: number) {
+        return new Coordinate(this.x * multiplier, this.y * multiplier);
+    }
 }

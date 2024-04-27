@@ -1,6 +1,9 @@
 import { Graphics } from "pixi.js";
 import Level from "./entities/abstract/AbstractLevel";
 import {Updatable} from "./util/Updatable"
+import Line from "./entities/Line";
+import LineNode from "./entities/LineNode";
+import Coordinate from "./entities/Coordinate";
 
 
 export default class LevelInstance implements Updatable {
@@ -9,17 +12,29 @@ export default class LevelInstance implements Updatable {
     private cadenceMultiplier: number;
     private activeLevel: Level | null;
     private score: number;
+    private highestScore: number;
+    private lineNodes: LineNode[];
     
     constructor(parentGraphic: Graphics) {
+        this.parentGraphic = parentGraphic;
         this.nodeSpeedMultiplier = 1;
         this.cadenceMultiplier = 1;
-        this.parentGraphic = parentGraphic;
-        this.score = 0;
         this.activeLevel = null;
+        this.score = 0;
+        this.highestScore = 0;
+        this.lineNodes = [];
     }
 
-    public levelIsActive() {
+    public levelIsActive(): boolean {
         return this.activeLevel != null;
+    }
+
+    public setHighestScore(highestScore: number): void {
+        this.highestScore = highestScore;
+    }
+
+    public resetHighestScore(): void {
+        this.highestScore = 0;
     }
 
     public resetScore(): void {
@@ -31,20 +46,27 @@ export default class LevelInstance implements Updatable {
     }
 
     public loadLevel(level: Level): void {
+        this.unloadLevel();
         this.activeLevel = level;
         level.draw();
     }
 
     public unloadLevel(): void {
-        this.activeLevel?.destroy(true);
-        this.activeLevel = null;
+        if (this.levelIsActive()) {
+            this.activeLevel?.destroy(true);
+            this.activeLevel = null;
+        }
     }
 
     /**
-     * @Note initializes a node on a line
+     * @Note initializes a node on a line 
+     * - also adds the new graphic to the rootGraphics
      */
-    public initializeLineNode() {
-
+    public initializeLineNode(line: Line = this.activeLevel?.getRandomLine() as Line) {
+        this.lineNodes.push(new LineNode(
+            this.parentGraphic, 
+            line.getLinearRepresentation(), 
+            this.activeLevel?.getDistancedBufferedEndCoordinate(line) as Coordinate));
     }
 
     /**
