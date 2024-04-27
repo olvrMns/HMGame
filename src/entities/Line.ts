@@ -5,14 +5,10 @@ import AbstractGraphics from "./abstract/AbstractGraphics";
 
 export default class Line extends AbstractGraphics {
     public linearRep: LinearRepresentation;
-    private nodeSpeedMultiplier: number;
-    private cadenceMultiplier: number;
 
-    constructor(parentGraphic: Graphics, startCoordinate: Coordinate, endCoordinate: Coordinate, nodeSpeedMultiplier: number = 1, cadenceMultiplier: number = 1) {
+    constructor(parentGraphic: Graphics, startCoordinate: Coordinate, endCoordinate: Coordinate) {
         super(parentGraphic);
         this.linearRep = new LinearRepresentation(startCoordinate, endCoordinate);
-        this.nodeSpeedMultiplier = nodeSpeedMultiplier;
-        this.cadenceMultiplier = cadenceMultiplier;
         this.draw();
     }
 
