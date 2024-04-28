@@ -21,15 +21,7 @@ export default class LinearRepresentation {
     public getEndCoordinate(): Coordinate {
         return this.endCoordinate;
     }
-
-    public setStartCoordinate(coordinate: Coordinate): void {
-        this.startCoordinate = coordinate;
-    }
-
-    public setEndCoordinate(coordinate: Coordinate): void {
-        this.endCoordinate = coordinate;
-    }
-
+    
     public getYFromX(x: number): number {
         return (x*this.slope) + this.initialY;
     }

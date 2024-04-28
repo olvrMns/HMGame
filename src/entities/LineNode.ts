@@ -7,13 +7,11 @@ import { Updatable } from "../util/Updatable";
 
 export default class LineNode extends AbstractGraphic implements Updatable {
     private linearRep: LinearRepresentation;
-    private collisionCoordinate: Coordinate;
     //private type: string;
 
-    constructor(parentGraphic: Graphics, linearRep: LinearRepresentation, collisionCoordinate: Coordinate) {
+    constructor(parentGraphic: Graphics, linearRep: LinearRepresentation) {
         super(parentGraphic);
         this.linearRep = linearRep;
-        this.collisionCoordinate = collisionCoordinate;
         this.init();
     }
 
@@ -29,18 +27,47 @@ export default class LineNode extends AbstractGraphic implements Updatable {
         this.drawCircle(0, 0, 10);
     }
 
+    public xIsAscendant() {
+        return this.linearRep.getStartCoordinate().x < this.linearRep.getEndCoordinate().x;
+    }
+
+    public yIsAscendant() {
+        return this.linearRep.getStartCoordinate().y < this.linearRep.getEndCoordinate().y;
+    }
+
+    /**
+     * @Note can be destroyed if....
+     * @returns if the LineNode can be destroyed (as reached it's end point on the graph)
+     */
+    public canBeDestroyed(): boolean {
+        let xHasPassed: boolean;
+        let yHasPassed: boolean;
+        if (this.xIsAscendant()) xHasPassed = this.x >= this.linearRep.getEndCoordinate().x;
+        else xHasPassed = this.x <= this.linearRep.getEndCoordinate().x;
+        if (this.yIsAscendant()) yHasPassed = this.y >= this.linearRep.getEndCoordinate().y;
+        else yHasPassed = this.y <= this.linearRep.getEndCoordinate().y;
+        return xHasPassed && yHasPassed;
+    }
+
+    /**
+     * @Note y/xIsAscendant could be calculated only once at the craetion of the node for more optimization
+     * @param delta 
+     * @param distance 
+     */
     public update(delta: number, distance: number): void {
-        let nx: number = 0;
-        let ny: number = 0;
-
-        // if (g.x < 0) nx = advanceValue * delta;
-        // else nx = -advanceValue * delta;
+        let coordinate: Coordinate = new Coordinate(0, 0);
+        let start: Coordinate = this.linearRep.getStartCoordinate();
+        let end: Coordinate = this.linearRep.getEndCoordinate();
+        if (start.x === end.x && start.x === 0) {
+            if (this.yIsAscendant()) this.y += distance * delta;
+            else this.y -= distance * delta;
+        } else if (start.y === end.y && start.y === 0) {
+            if (this.xIsAscendant()) this.x += distance * delta;
+            else this.x -= distance * delta;
+        }
         
-        // if (g.y < 0) ny = advanceValue * delta;
-        // else ny = -advanceValue * delta;
-
-        this.x += nx;
-        this.y += ny;
+        
+        //this.moveCurrentGraphic(coordinate);
         
     }
 }

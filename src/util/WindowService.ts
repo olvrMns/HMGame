@@ -25,8 +25,10 @@ export default class WindowService {
     public PSC_BOTTOM_LEFT: Coordinate;
     public PSC_MIDDLE_RIGHT: Coordinate;
     public PSC_MIDDLE_LEFT: Coordinate;
+    //private diagonalOffSetMultiplier: number;
 
     private constructor() {
+        //this.diagonalOffSetMultiplier = 1.1;
         this.windowWidth = window.innerWidth;
         this.windowHeight = window.innerHeight;
         this.centerCoordinate = new Coordinate(this.windowWidth/2, this.windowHeight/2);

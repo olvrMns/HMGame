@@ -1,9 +1,8 @@
 import { Application, Graphics } from "pixi.js";
+import { CircleLevel, RectangularLevel } from "../implementation/Levels";
+import WindowService from "../util/WindowService";
+import { Levels } from "../util/typings";
 import LevelInstance from "./LevelInstance";
-import { CircleLevel, RectangularLevel } from "./implementation/Levels";
-import WindowService from "./util/WindowService";
-import { Levels } from "./util/typings";
-import Coordinate from "./entities/Coordinate";
 
 
 
@@ -39,15 +38,9 @@ export default class GameInstance extends Application {
     }
 
     public load(levelName: string): void {
-        if (this.levels[levelName] != null) this.levelInstance.loadLevel(this.levels[levelName]);
-    }
- 
-    public tick() {
-        this.levelInstance.initializeLineNode();
-        if (this.levelInstance.levelIsActive()) {
-            // this.ticker.add((delta: number) => {
-                
-            // })
+        if (this.levels[levelName] != null) {
+            this.levelInstance.loadLevel(this.levels[levelName]);
+            //this.ticker.add(this.levelInstance.getInstanceTicker());
         }
     }
 }

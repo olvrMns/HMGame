@@ -32,6 +32,11 @@ export default abstract class AbstractGraphics extends Graphics {
         return this.parentGraphic;
     }
 
+    public moveCurrentGraphic(c1: Coordinate): void {
+        this.x = c1.x;
+        this.y = c1.y;
+    }
+
     /**
      * @Returns the current object that is inheriting AbstractGraphics
      */

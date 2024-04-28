@@ -7,6 +7,7 @@ import AbstractGraphic from "./AbstractGraphics";
 export default abstract class Level extends AbstractGraphic {
     private lines: Lines;
     private collisionBufferDistanceMultiplier: number;
+    //TEMPO //CADENCE //NODESPEED
 
     constructor(parentGraphic: Graphics, collisionBufferDistanceMultiplier: number = 1) {
         super(parentGraphic);
