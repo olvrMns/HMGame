@@ -58,7 +58,12 @@ export default class LineNode extends AbstractGraphic implements Updatable {
     }
 
     /**
-     * @Note y/xIsAscendant could be calculated only once at the craetion of the node for more optimization
+     * @Note y/xIsAscendant could be calculated only once at the creation of the node for more optimization
+     * - if the staring and ending x coordinate of the linearRepresentation are the same, then only increment y coordinate of Graphic...same thing y
+     * - else use getXFromY in the current linearRepresentation to get the next point based on distance...
+     *   (because it'll be just a normal(inversed...) linear equation)
+     * - getting the next point (y/x coordinate) will not work if x/y are the same because the equation will be y=z or x=z...
+     *   the linearReprensentation will also have a -Infinity slope/Nan initialY(set at the creation of the line)
      * @param delta 
      * @param distance 
      */
