@@ -3,15 +3,16 @@ import { Lines } from "../../util/typings";
 import Coordinate from "../Coordinate";
 import Line from "../Line";
 import AbstractGraphic from "./AbstractGraphics";
+import LinearRepresentation from "../LinearRepresentation";
 
 export default abstract class Level extends AbstractGraphic {
     private lines: Lines;
     private collisionBufferDistanceMultiplier: number;
     public nodeSpeedMultiplier: number;
     public cadenceMultiplier: number;
-    //TEMPO //CADENCE //NODESPEED
+    //TEMPO
 
-    constructor(parentGraphic: Graphics, collisionBufferDistanceMultiplier: number = 1, nodeSpeedMultiplier: number = 1, cadenceMultiplier: number = 1) {
+    constructor(parentGraphic: Graphics, collisionBufferDistanceMultiplier: number = 1, nodeSpeedMultiplier: number = 1, cadenceMultiplier: number = 1.2) {
         super(parentGraphic);
         this.nodeSpeedMultiplier = nodeSpeedMultiplier;
         this.cadenceMultiplier = cadenceMultiplier;
@@ -31,9 +32,8 @@ export default abstract class Level extends AbstractGraphic {
         return this.collisionBufferDistanceMultiplier;
     }
 
-    //
-    public getDistancedBufferedEndCoordinate(line: Line): Coordinate {
-        return line.getLinearRepresentation().getEndCoordinate().multiply(this.collisionBufferDistanceMultiplier);
+    public getDistancedBufferedEndCoordinate(linearRep: LinearRepresentation): Coordinate {
+        return linearRep.getEndCoordinate().multiply(this.collisionBufferDistanceMultiplier);
     }
 
     public getLines(): Lines {

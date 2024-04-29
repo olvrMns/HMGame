@@ -2,6 +2,7 @@ import { Graphics, TickerCallback } from "pixi.js";
 import Line from "./Line";
 import LineNode from "./LineNode";
 import Level from "./abstract/AbstractLevel";
+import Coordinate from "./Coordinate";
 
 
 export default class LevelInstance {
@@ -26,7 +27,7 @@ export default class LevelInstance {
         this.failStreak = 0;
         this.totalFrameCount = 0;
         this.framesBeforeNodeUpdate = 20;
-        this.framesBeforeNodeInitialization = 50;
+        this.framesBeforeNodeInitialization = 100;
     }
 
     public resetHighestScore(): void {
@@ -93,6 +94,15 @@ export default class LevelInstance {
         }
     }
 
+    public intercept() {
+        for (let node of this.lineNodes) {
+            let from: Coordinate = this.activeLevel?.getDistancedBufferedEndCoordinate(node.getLinearRepresentation()) as Coordinate;
+            if (node.canBeIntercepted(from)) {
+                console.log("CAN BE INTERCEPTED");
+            }
+        }
+    }
+
     /**
      * @Note moves all the nodes
      */
@@ -100,11 +110,15 @@ export default class LevelInstance {
         for (let node of this.lineNodes) node.update(delta, this.distance);
     }
 
+    /**
+     * @Note Random sequence
+     * @returns TickerCallback
+     */
     public getInstanceTicker(): TickerCallback<any> { 
         const speedMultiplier = this.activeLevel?.getNodeSpeedMultiplier();
         const cadenceMultiplier = this.activeLevel?.getCadenceMultiplier();
         return (delta: number) => {
-            if (this.totalFrameCount % (Math.floor(this.framesBeforeNodeUpdate * (speedMultiplier ? speedMultiplier : 1))) == 0) {
+            if (this.totalFrameCount % Math.floor(this.framesBeforeNodeUpdate * (speedMultiplier ? speedMultiplier : 1)) == 0) {
                 this.updateNodes(delta); 
                 this.destroyLineNodes();
             } 
@@ -112,6 +126,9 @@ export default class LevelInstance {
             if (this.totalFrameCount % Math.floor(this.framesBeforeNodeInitialization * (cadenceMultiplier ? cadenceMultiplier : 1)) == 0) {
                 this.initializeLineNode();
             }
+
+            this.intercept();
+
             this.totalFrameCount++;
         };
     }

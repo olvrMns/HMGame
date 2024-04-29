@@ -23,6 +23,10 @@ export default class LineNode extends AbstractGraphic implements Updatable {
         this.parentGraphic.addChild(this);
     }
 
+    public getLinearRepresentation(): LinearRepresentation {
+        return this.linearRep;
+    }
+
     public draw(): void {
         this.drawCircle(0, 0, 10);
     }
@@ -35,18 +39,22 @@ export default class LineNode extends AbstractGraphic implements Updatable {
         return this.linearRep.getStartCoordinate().y < this.linearRep.getEndCoordinate().y;
     }
 
+    public hasPassed(c1: Coordinate): boolean {
+        let xHasPassed: boolean;
+        let yHasPassed: boolean;
+        if (this.xIsAscendant()) xHasPassed = this.x >= c1.x;
+        else xHasPassed = this.x <= c1.x;
+        if (this.yIsAscendant()) yHasPassed = this.y >= c1.y;
+        else yHasPassed = this.y <= c1.y;
+        return xHasPassed && yHasPassed;
+    }
+
     /**
      * @Note can be destroyed if....
      * @returns if the LineNode can be destroyed (as reached it's end point on the graph)
      */
     public canBeDestroyed(): boolean {
-        let xHasPassed: boolean;
-        let yHasPassed: boolean;
-        if (this.xIsAscendant()) xHasPassed = this.x >= this.linearRep.getEndCoordinate().x;
-        else xHasPassed = this.x <= this.linearRep.getEndCoordinate().x;
-        if (this.yIsAscendant()) yHasPassed = this.y >= this.linearRep.getEndCoordinate().y;
-        else yHasPassed = this.y <= this.linearRep.getEndCoordinate().y;
-        return xHasPassed && yHasPassed;
+        return this.hasPassed(this.linearRep.getEndCoordinate());
     }
 
     /**
@@ -69,7 +77,7 @@ export default class LineNode extends AbstractGraphic implements Updatable {
     /**
      * @Note - will use collisionBufferDistanceMultiplier of current Level
      */
-    public isInReceptionState(): boolean {
-        return true;
+    public canBeIntercepted(c1: Coordinate): boolean {
+        return this.hasPassed(c1);
     }
 }
