@@ -1,6 +1,4 @@
 import { Graphics, TickerCallback } from "pixi.js";
-import { Updatable } from "../util/Updatable";
-import Coordinate from "./Coordinate";
 import Line from "./Line";
 import LineNode from "./LineNode";
 import Level from "./abstract/AbstractLevel";
@@ -8,8 +6,6 @@ import Level from "./abstract/AbstractLevel";
 
 export default class LevelInstance {
     private parentGraphic: Graphics;
-    private nodeSpeedMultiplier: number;
-    private cadenceMultiplier: number;
     private activeLevel: Level | null;
     private score: number;
     private highestScore: number;
@@ -17,18 +13,20 @@ export default class LevelInstance {
     private distance: number;
     private failStreak: number;
     private totalFrameCount: number;
+    private framesBeforeNodeUpdate: number;
+    private framesBeforeNodeInitialization: number;
     
     constructor(parentGraphic: Graphics) {
         this.parentGraphic = parentGraphic;
-        this.nodeSpeedMultiplier = 1;
-        this.cadenceMultiplier = 1;
         this.activeLevel = null;
         this.score = 0;
         this.highestScore = 0;
         this.lineNodes = [];
-        this.distance = 9;
+        this.distance = 15;
         this.failStreak = 0;
         this.totalFrameCount = 0;
+        this.framesBeforeNodeUpdate = 20;
+        this.framesBeforeNodeInitialization = 50;
     }
 
     public resetHighestScore(): void {
@@ -87,10 +85,9 @@ export default class LevelInstance {
     public destroyLineNodes() {
         for (let node of this.lineNodes) {
             if (node.canBeDestroyed()) {
-                console.log("CAN BE DESTROYED");
-                //node.destroy(true);
-                //remove from array
-                //this.resetScore();
+                this.lineNodes = this.lineNodes.filter((currentNode) => currentNode !== node);
+                node.destroy(true);
+                this.resetScore();
             }
         }
     }
@@ -102,13 +99,18 @@ export default class LevelInstance {
         for (let node of this.lineNodes) node.update(delta, this.distance);
     }
 
-    public getInstanceTicker(): TickerCallback<any> {
-        this.initializeLineNode();
+    public getInstanceTicker(): TickerCallback<any> { 
+        const speedMultiplier = this.activeLevel?.getNodeSpeedMultiplier();
+        const cadenceMultiplier = this.activeLevel?.getCadenceMultiplier();
         return (delta: number) => {
-            if (this.totalFrameCount % 5 == 0) {
+            if (this.totalFrameCount % (Math.floor(this.framesBeforeNodeUpdate * (speedMultiplier ? speedMultiplier : 1))) == 0) {
                 this.updateNodes(delta); 
                 this.destroyLineNodes();
             } 
+            
+            if (this.totalFrameCount % Math.floor(this.framesBeforeNodeInitialization * (cadenceMultiplier ? cadenceMultiplier : 1)) == 0) {
+                this.initializeLineNode();
+            }
             this.totalFrameCount++;
         };
     }

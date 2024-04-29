@@ -7,12 +7,24 @@ import AbstractGraphic from "./AbstractGraphics";
 export default abstract class Level extends AbstractGraphic {
     private lines: Lines;
     private collisionBufferDistanceMultiplier: number;
+    public nodeSpeedMultiplier: number;
+    public cadenceMultiplier: number;
     //TEMPO //CADENCE //NODESPEED
 
-    constructor(parentGraphic: Graphics, collisionBufferDistanceMultiplier: number = 1) {
+    constructor(parentGraphic: Graphics, collisionBufferDistanceMultiplier: number = 1, nodeSpeedMultiplier: number = 1, cadenceMultiplier: number = 1) {
         super(parentGraphic);
+        this.nodeSpeedMultiplier = nodeSpeedMultiplier;
+        this.cadenceMultiplier = cadenceMultiplier;
         this.lines = [];
         this.collisionBufferDistanceMultiplier = collisionBufferDistanceMultiplier;
+    }
+
+    public getNodeSpeedMultiplier(): number {
+        return this.nodeSpeedMultiplier;
+    }
+
+    public getCadenceMultiplier(): number {
+        return this.cadenceMultiplier;
     }
 
     public getCollisionBufferDistanceMultiplier(): number {

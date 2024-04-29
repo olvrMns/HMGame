@@ -40,7 +40,7 @@ export default class GameInstance extends Application {
     public load(levelName: string): void {
         if (this.levels[levelName] != null) {
             this.levelInstance.loadLevel(this.levels[levelName]);
-            //this.ticker.add(this.levelInstance.getInstanceTicker());
+            this.ticker.add(this.levelInstance.getInstanceTicker());
         }
     }
 }
