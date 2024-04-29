@@ -88,6 +88,7 @@ export default class LevelInstance {
                 this.lineNodes = this.lineNodes.filter((currentNode) => currentNode !== node);
                 node.destroy(true);
                 this.resetScore();
+                this.failStreak++;
             }
         }
     }

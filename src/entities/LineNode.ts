@@ -55,19 +55,21 @@ export default class LineNode extends AbstractGraphic implements Updatable {
      * @param distance 
      */
     public update(delta: number, distance: number): void {
-        let coordinate: Coordinate = new Coordinate(0, 0);
         let start: Coordinate = this.linearRep.getStartCoordinate();
         let end: Coordinate = this.linearRep.getEndCoordinate();
-        if (start.x === end.x && start.x === 0) {
+        if (start.x === end.x) {
             if (this.yIsAscendant()) this.y += distance * delta;
             else this.y -= distance * delta;
-        } else if (start.y === end.y && start.y === 0) {
+        } else if (start.y === end.y) {
             if (this.xIsAscendant()) this.x += distance * delta;
             else this.x -= distance * delta;
-        }
-        
-        
-        //this.moveCurrentGraphic(coordinate);
-        
+        }  
+    }
+
+    /**
+     * @Note - will use collisionBufferDistanceMultiplier of current Level
+     */
+    public isInReceptionState(): boolean {
+        return true;
     }
 }
