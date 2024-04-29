@@ -11,11 +11,8 @@ export default class LevelInstance {
     private score: number;
     private highestScore: number;
     private lineNodes: LineNode[];
-    private distance: number;
     private failStreak: number;
     private totalFrameCount: number;
-    private framesBeforeNodeUpdate: number;
-    private framesBeforeNodeInitialization: number;
     
     constructor(rootGraphics: Graphics) {
         this.rootGraphics = rootGraphics;
@@ -23,11 +20,8 @@ export default class LevelInstance {
         this.score = 0;
         this.highestScore = 0;
         this.lineNodes = [];
-        this.distance = 15;
         this.failStreak = 0;
         this.totalFrameCount = 0;
-        this.framesBeforeNodeUpdate = 20;
-        this.framesBeforeNodeInitialization = 100;
     }
 
     public resetHighestScore(): void {
@@ -76,14 +70,14 @@ export default class LevelInstance {
      * @Note initializes a node on a line 
      * - also adds the new graphic to the rootGraphics
      */
-    public initializeLineNode(line: Line = this.activeLevel?.getRandomLine() as Line) {
+    public initializeLineNode(line: Line = this.activeLevel?.getRandomLine() as Line): void {
         this.lineNodes.push(new LineNode(this.rootGraphics, line.getLinearRepresentation())); //needs to be fixed
     }
 
     /**
      * @Note destroys the node
      */
-    public destroyLineNodes() {
+    public destroyLineNodes(): void {
         for (let node of this.lineNodes) {
             if (node.canBeDestroyed()) {
                 this.lineNodes = this.lineNodes.filter((currentNode) => currentNode !== node);
@@ -94,7 +88,7 @@ export default class LevelInstance {
         }
     }
 
-    public intercept() {
+    public intercept(): void {
         for (let node of this.lineNodes) {
             let from: Coordinate = this.activeLevel?.getDistancedBufferedEndCoordinate(node.getLinearRepresentation()) as Coordinate;
             if (node.canBeIntercepted(from)) {
@@ -106,8 +100,8 @@ export default class LevelInstance {
     /**
      * @Note moves all the nodes
      */
-    public updateNodes(delta: number) {
-        for (let node of this.lineNodes) node.update(delta, this.distance);
+    public updateNodes(delta: number): void {
+        for (let node of this.lineNodes) node.update(delta, this.activeLevel?.distance as number);
     }
 
     /**
@@ -115,20 +109,22 @@ export default class LevelInstance {
      * @returns TickerCallback
      */
     public getInstanceTicker(): TickerCallback<any> { 
-        const speedMultiplier = this.activeLevel?.getNodeSpeedMultiplier();
-        const cadenceMultiplier = this.activeLevel?.getCadenceMultiplier();
+        const speedMultiplier: number = this.activeLevel?.getNodeSpeedMultiplier() as number;
+        const cadenceMultiplier: number = this.activeLevel?.getCadenceMultiplier() as number;
+        const framesBeforeNodeUpdate: number = this.activeLevel?.getFramesBeforeNodeUpdate() as number;
+        const framesBeforeNodeInitialization: number = this.activeLevel?.getFramesBeforeNodeInitialization() as number;
         return (delta: number) => {
-            if (this.totalFrameCount % Math.floor(this.framesBeforeNodeUpdate * (speedMultiplier ? speedMultiplier : 1)) == 0) {
+            if (this.totalFrameCount % Math.floor(framesBeforeNodeUpdate * speedMultiplier) == 0) {
                 this.updateNodes(delta); 
                 this.destroyLineNodes();
             } 
             
-            if (this.totalFrameCount % Math.floor(this.framesBeforeNodeInitialization * (cadenceMultiplier ? cadenceMultiplier : 1)) == 0) {
+            if (this.totalFrameCount % Math.floor(framesBeforeNodeInitialization * cadenceMultiplier) == 0) {
                 this.initializeLineNode();
             }
 
             this.intercept();
-
+            if (this.totalFrameCount > 200) this.totalFrameCount = 0;
             this.totalFrameCount++;
         };
     }

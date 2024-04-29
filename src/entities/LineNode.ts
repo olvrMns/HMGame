@@ -4,10 +4,8 @@ import LinearRepresentation from "./LinearRepresentation";
 import AbstractGraphic from "./abstract/AbstractGraphics";
 import { Updatable } from "../util/Updatable";
 
-
 export default class LineNode extends AbstractGraphic implements Updatable {
     private linearRep: LinearRepresentation;
-    //private type: string;
 
     constructor(rootGraphics: Graphics, linearRep: LinearRepresentation) {
         super(rootGraphics);
@@ -27,7 +25,7 @@ export default class LineNode extends AbstractGraphic implements Updatable {
     }
 
     public draw(): void {
-        this.lineStyle(5, 'rgb(100,123,170)');
+        this.lineStyle(5, 'green');
         this.drawCircle(0, 0, 10);
     }
 
@@ -39,6 +37,11 @@ export default class LineNode extends AbstractGraphic implements Updatable {
         return this.linearRep.getStartCoordinate().y < this.linearRep.getEndCoordinate().y;
     }
 
+    /**
+     * @Note NEEDS TO BE FIXED FOR LINEAR EQUATIONS NOT GETTING INTERCEPTED
+     * @param c1 
+     * @returns 
+     */
     public hasPassed(c1: Coordinate): boolean {
         let xHasPassed: boolean;
         let yHasPassed: boolean;
@@ -46,6 +49,7 @@ export default class LineNode extends AbstractGraphic implements Updatable {
         else xHasPassed = this.x <= c1.x;
         if (this.yIsAscendant()) yHasPassed = this.y >= c1.y;
         else yHasPassed = this.y <= c1.y;
+        //console.log("CURRENT Y : " + this.y + " -- " + "LIMIT Y : " + c1.y);
         return xHasPassed && yHasPassed;
     }
 
@@ -55,6 +59,13 @@ export default class LineNode extends AbstractGraphic implements Updatable {
      */
     public canBeDestroyed(): boolean {
         return this.hasPassed(this.linearRep.getEndCoordinate());
+    }
+
+    /**
+     * @Note - will use collisionBufferDistanceMultiplier of current Level
+     */
+    public canBeIntercepted(c1: Coordinate): boolean {
+        return this.hasPassed(c1);
     }
 
     /**
@@ -87,12 +98,5 @@ export default class LineNode extends AbstractGraphic implements Updatable {
             }
             this.moveCurrentGraphic(nextCoordinate);
         }
-    }
-
-    /**
-     * @Note - will use collisionBufferDistanceMultiplier of current Level
-     */
-    public canBeIntercepted(c1: Coordinate): boolean {
-        return this.hasPassed(c1);
     }
 }

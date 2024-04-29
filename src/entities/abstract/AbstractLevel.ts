@@ -6,18 +6,39 @@ import AbstractGraphic from "./AbstractGraphics";
 import LinearRepresentation from "../LinearRepresentation";
 
 export default abstract class Level extends AbstractGraphic {
-    private lines: Lines;
-    private collisionBufferDistanceMultiplier: number;
+    public lines: Lines;
+    public collisionBufferDistanceMultiplier: number;
     public nodeSpeedMultiplier: number;
     public cadenceMultiplier: number;
-    //TEMPO
+    public framesBeforeNodeUpdate: number;
+    public framesBeforeNodeInitialization: number;
+    public distance: number;
 
-    constructor(rootGraphics: Graphics, collisionBufferDistanceMultiplier: number = 1, nodeSpeedMultiplier: number = 1, cadenceMultiplier: number = 1.2) {
-        super(rootGraphics);
-        this.nodeSpeedMultiplier = nodeSpeedMultiplier;
-        this.cadenceMultiplier = cadenceMultiplier;
-        this.lines = [];
-        this.collisionBufferDistanceMultiplier = collisionBufferDistanceMultiplier;
+    constructor(
+        rootGraphics: Graphics, 
+        collisionBufferDistanceMultiplier: number = 1.2, 
+        nodeSpeedMultiplier: number = 1, 
+        cadenceMultiplier: number = 1, 
+        framesBeforeNodeUpdate: number = 10,
+        framesBeforeNodeInitialization: number = 60,
+        distance: number = 2) {
+
+            super(rootGraphics);
+            this.nodeSpeedMultiplier = nodeSpeedMultiplier;
+            this.cadenceMultiplier = cadenceMultiplier;
+            this.lines = [];
+            this.collisionBufferDistanceMultiplier = collisionBufferDistanceMultiplier;
+            this.framesBeforeNodeUpdate = framesBeforeNodeUpdate;
+            this.framesBeforeNodeInitialization = framesBeforeNodeInitialization;
+            this.distance = distance;
+    }
+
+    public getFramesBeforeNodeUpdate() {
+        return this.framesBeforeNodeUpdate;
+    }
+
+    public getFramesBeforeNodeInitialization() {
+        return this.framesBeforeNodeInitialization;
     }
 
     public getNodeSpeedMultiplier(): number {
