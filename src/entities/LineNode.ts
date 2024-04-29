@@ -71,7 +71,17 @@ export default class LineNode extends AbstractGraphic implements Updatable {
         } else if (start.y === end.y) {
             if (this.xIsAscendant()) this.x += distance * delta;
             else this.x -= distance * delta;
-        }  
+        } else {
+            let nextCoordinate: Coordinate = new Coordinate(0, 0);
+            if (this.xIsAscendant()) { 
+                nextCoordinate.setX(this.x + (distance * delta));
+                nextCoordinate.setY(this.linearRep.getYFromX(nextCoordinate.x)); 
+            } else {
+                nextCoordinate.setX(this.x - (distance * delta));
+                nextCoordinate.setY(this.linearRep.getYFromX(nextCoordinate.x)); 
+            }
+            this.moveCurrentGraphic(nextCoordinate);
+        }
     }
 
     /**

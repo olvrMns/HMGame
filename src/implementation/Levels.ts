@@ -15,6 +15,7 @@ export class RectangularLevel extends Level {
         this.addLine(new Coordinate(0, 50), this.WS.PSC_BOTTOM_MIDDLE);
         this.addLine(new Coordinate(50, 0), this.WS.PSC_MIDDLE_RIGHT);
         this.addLine(new Coordinate(-50, 0), this.WS.PSC_MIDDLE_LEFT);
+        this.addLine(new Coordinate(50, -50), new Coordinate(-150, -200));
         //this.addLine(new Coordinate(50, -50), new Coordinate(1716, -919)); //new Coordinate(1669, -919)
     }
 

@@ -21,12 +21,13 @@ export default class GameInstance extends Application {
         this.levelInstance = new LevelInstance(this.rootGraphic);
         this.levels = this.getLevels();
         this.setGraphics();
+        //window.onresize = () => this.resize();
     }
 
     private setGraphics() {
         this.rootGraphic.x = this.WS.centerCoordinate.x;
         this.rootGraphic.y = this.WS.centerCoordinate.y;
-        this.rootGraphic.lineStyle(5, 'red');
+        this.rootGraphic.lineStyle(2, 'red');
         this.stage.addChild(this.rootGraphic);
     }
 
@@ -40,7 +41,7 @@ export default class GameInstance extends Application {
     public load(levelName: string): void {
         if (this.levels[levelName] != null) {
             this.levelInstance.loadLevel(this.levels[levelName]);
-            //this.ticker.add(this.levelInstance.getInstanceTicker());
+            this.ticker.add(this.levelInstance.getInstanceTicker());
         }
     }
 }
