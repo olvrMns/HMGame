@@ -6,30 +6,29 @@ export default abstract class AbstractGraphics extends Graphics {
     /**
      * @Important
      * ROOT GRAPHICS OBJECT
-     * needs to be renamed to rootGraphics for more clarity
      */
-    protected parentGraphic: Graphics;
+    protected rootGraphics: Graphics;
     protected WS: WindowService = WindowService.getInstance();
 
-    constructor(parentGraphic: Graphics) {
+    constructor(rootGraphics: Graphics) {
         super();
-        this.parentGraphic = parentGraphic;
+        this.rootGraphics = rootGraphics;
     }
 
     public moveParentCursorToCoordinate(c1: Coordinate): void {
-        this.parentGraphic.moveTo(c1.getX(), c1.getY());
+        this.rootGraphics.moveTo(c1.getX(), c1.getY());
     }
 
     public lineToCoordinate(c1: Coordinate): void {
-        this.parentGraphic.lineTo(c1.getX(), c1.getY());
+        this.rootGraphics.lineTo(c1.getX(), c1.getY());
     }
 
     public drawCircleFromCooridnate(c1: Coordinate, radius: number): void {
-        this.parentGraphic.drawCircle(c1.x, c1.y, radius);
+        this.rootGraphics.drawCircle(c1.x, c1.y, radius);
     }
 
     public getParent(): Graphics {
-        return this.parentGraphic;
+        return this.rootGraphics;
     }
 
     public moveCurrentGraphic(c1: Coordinate): void {

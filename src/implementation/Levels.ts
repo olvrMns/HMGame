@@ -4,8 +4,8 @@ import Coordinate from "../entities/Coordinate";
 
 export class RectangularLevel extends Level {
 
-    constructor(parentGraphic: Graphics) {
-        super(parentGraphic, 1.2, 0.5, 0.9);
+    constructor(rootGraphics: Graphics) {
+        super(rootGraphics, 1.2, 0.5, 0.9);
     }
     
     public override draw(): void {

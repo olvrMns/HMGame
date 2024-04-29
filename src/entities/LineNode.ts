@@ -9,8 +9,8 @@ export default class LineNode extends AbstractGraphic implements Updatable {
     private linearRep: LinearRepresentation;
     //private type: string;
 
-    constructor(parentGraphic: Graphics, linearRep: LinearRepresentation) {
-        super(parentGraphic);
+    constructor(rootGraphics: Graphics, linearRep: LinearRepresentation) {
+        super(rootGraphics);
         this.linearRep = linearRep;
         this.init();
     }
@@ -18,9 +18,8 @@ export default class LineNode extends AbstractGraphic implements Updatable {
     public init(): void {
         this.x = this.linearRep.getStartCoordinate().x;
         this.y = this.linearRep.getStartCoordinate().y;
-        this.lineStyle(5, 'rgb(100,123,170)');
         this.draw();
-        this.parentGraphic.addChild(this);
+        this.rootGraphics.addChild(this);
     }
 
     public getLinearRepresentation(): LinearRepresentation {
@@ -28,6 +27,7 @@ export default class LineNode extends AbstractGraphic implements Updatable {
     }
 
     public draw(): void {
+        this.lineStyle(5, 'rgb(100,123,170)');
         this.drawCircle(0, 0, 10);
     }
 

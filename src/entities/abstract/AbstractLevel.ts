@@ -12,8 +12,8 @@ export default abstract class Level extends AbstractGraphic {
     public cadenceMultiplier: number;
     //TEMPO
 
-    constructor(parentGraphic: Graphics, collisionBufferDistanceMultiplier: number = 1, nodeSpeedMultiplier: number = 1, cadenceMultiplier: number = 1.2) {
-        super(parentGraphic);
+    constructor(rootGraphics: Graphics, collisionBufferDistanceMultiplier: number = 1, nodeSpeedMultiplier: number = 1, cadenceMultiplier: number = 1.2) {
+        super(rootGraphics);
         this.nodeSpeedMultiplier = nodeSpeedMultiplier;
         this.cadenceMultiplier = cadenceMultiplier;
         this.lines = [];
@@ -52,6 +52,6 @@ export default abstract class Level extends AbstractGraphic {
      * @param startCoordinate 
      */
     protected addLine(collisionCoordinate: Coordinate, startCoordinate: Coordinate): void {
-        this.lines.push(new Line(this.parentGraphic, startCoordinate, collisionCoordinate));
+        this.lines.push(new Line(this.rootGraphics, startCoordinate, collisionCoordinate));
     }
 }

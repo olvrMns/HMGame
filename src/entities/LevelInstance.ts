@@ -6,7 +6,7 @@ import Coordinate from "./Coordinate";
 
 
 export default class LevelInstance {
-    private parentGraphic: Graphics;
+    private rootGraphics: Graphics;
     private activeLevel: Level | null;
     private score: number;
     private highestScore: number;
@@ -17,8 +17,8 @@ export default class LevelInstance {
     private framesBeforeNodeUpdate: number;
     private framesBeforeNodeInitialization: number;
     
-    constructor(parentGraphic: Graphics) {
-        this.parentGraphic = parentGraphic;
+    constructor(rootGraphics: Graphics) {
+        this.rootGraphics = rootGraphics;
         this.activeLevel = null;
         this.score = 0;
         this.highestScore = 0;
@@ -77,7 +77,7 @@ export default class LevelInstance {
      * - also adds the new graphic to the rootGraphics
      */
     public initializeLineNode(line: Line = this.activeLevel?.getRandomLine() as Line) {
-        this.lineNodes.push(new LineNode(this.parentGraphic, line.getLinearRepresentation())); //needs to be fixed
+        this.lineNodes.push(new LineNode(this.rootGraphics, line.getLinearRepresentation())); //needs to be fixed
     }
 
     /**

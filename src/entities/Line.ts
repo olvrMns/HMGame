@@ -6,8 +6,8 @@ import AbstractGraphics from "./abstract/AbstractGraphics";
 export default class Line extends AbstractGraphics {
     private linearRep: LinearRepresentation;
 
-    constructor(parentGraphic: Graphics, startCoordinate: Coordinate, endCoordinate: Coordinate) {
-        super(parentGraphic);
+    constructor(rootGraphics: Graphics, startCoordinate: Coordinate, endCoordinate: Coordinate) {
+        super(rootGraphics);
         this.linearRep = new LinearRepresentation(startCoordinate, endCoordinate);
         this.draw();
     }
