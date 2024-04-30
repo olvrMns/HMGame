@@ -6,10 +6,12 @@ import { Updatable } from "../util/Updatable";
 
 export default class LineNode extends AbstractGraphic implements Updatable {
     private linearRep: LinearRepresentation;
+    private interceptionThresholdCoordinate: Coordinate;
 
-    constructor(rootGraphics: Graphics, linearRep: LinearRepresentation) {
+    constructor(rootGraphics: Graphics, linearRep: LinearRepresentation, interceptionThresholdCoordinate: Coordinate) {
         super(rootGraphics);
         this.linearRep = linearRep;
+        this.interceptionThresholdCoordinate = interceptionThresholdCoordinate;
         this.init();
     }
 
@@ -29,14 +31,6 @@ export default class LineNode extends AbstractGraphic implements Updatable {
         this.drawCircle(0, 0, 10);
     }
 
-    public xIsAscendant() {
-        return this.linearRep.getStartCoordinate().x < this.linearRep.getEndCoordinate().x;
-    }
-
-    public yIsAscendant() {
-        return this.linearRep.getStartCoordinate().y < this.linearRep.getEndCoordinate().y;
-    }
-
     /**
      * @Note NEEDS TO BE FIXED FOR LINEAR EQUATIONS NOT GETTING INTERCEPTED
      * @param c1 
@@ -45,11 +39,10 @@ export default class LineNode extends AbstractGraphic implements Updatable {
     public hasPassed(c1: Coordinate): boolean {
         let xHasPassed: boolean;
         let yHasPassed: boolean;
-        if (this.xIsAscendant()) xHasPassed = this.x >= c1.x;
+        if (this.linearRep.xIsAscendant) xHasPassed = this.x >= c1.x;
         else xHasPassed = this.x <= c1.x;
-        if (this.yIsAscendant()) yHasPassed = this.y >= c1.y;
+        if (this.linearRep.yIsAscendant) yHasPassed = this.y >= c1.y;
         else yHasPassed = this.y <= c1.y;
-        //console.log("CURRENT Y : " + this.y + " -- " + "LIMIT Y : " + c1.y);
         return xHasPassed && yHasPassed;
     }
 
@@ -64,8 +57,8 @@ export default class LineNode extends AbstractGraphic implements Updatable {
     /**
      * @Note - will use collisionBufferDistanceMultiplier of current Level
      */
-    public canBeIntercepted(c1: Coordinate): boolean {
-        return this.hasPassed(c1);
+    public canBeIntercepted(): boolean {
+        return this.hasPassed(this.interceptionThresholdCoordinate);
     }
 
     /**
@@ -82,14 +75,14 @@ export default class LineNode extends AbstractGraphic implements Updatable {
         let start: Coordinate = this.linearRep.getStartCoordinate();
         let end: Coordinate = this.linearRep.getEndCoordinate();
         if (start.x === end.x) {
-            if (this.yIsAscendant()) this.y += distance * delta;
+            if (this.linearRep.yIsAscendant) this.y += distance * delta;
             else this.y -= distance * delta;
         } else if (start.y === end.y) {
-            if (this.xIsAscendant()) this.x += distance * delta;
+            if (this.linearRep.xIsAscendant) this.x += distance * delta;
             else this.x -= distance * delta;
         } else {
             let nextCoordinate: Coordinate = new Coordinate(0, 0);
-            if (this.xIsAscendant()) { 
+            if (this.linearRep.xIsAscendant) { 
                 nextCoordinate.setX(this.x + (distance * delta));
                 nextCoordinate.setY(this.linearRep.getYFromX(nextCoordinate.x)); 
             } else {

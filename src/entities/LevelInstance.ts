@@ -71,7 +71,10 @@ export default class LevelInstance {
      * - also adds the new graphic to the rootGraphics
      */
     public initializeLineNode(line: Line = this.activeLevel?.getRandomLine() as Line): void {
-        this.lineNodes.push(new LineNode(this.rootGraphics, line.getLinearRepresentation())); //needs to be fixed
+        this.lineNodes.push(new LineNode(
+            this.rootGraphics, 
+            line.getLinearRepresentation(), 
+            line.getInterceptionThresholdCoordinate())); //needs to be fixed
     }
 
     /**
@@ -90,8 +93,7 @@ export default class LevelInstance {
 
     public intercept(): void {
         for (let node of this.lineNodes) {
-            let from: Coordinate = this.activeLevel?.getDistancedBufferedEndCoordinate(node.getLinearRepresentation()) as Coordinate;
-            if (node.canBeIntercepted(from)) {
+            if (node.canBeIntercepted()) {
                 console.log("CAN BE INTERCEPTED");
             }
         }

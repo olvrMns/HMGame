@@ -13,6 +13,7 @@ export default abstract class Level extends AbstractGraphic {
     public framesBeforeNodeUpdate: number;
     public framesBeforeNodeInitialization: number;
     public distance: number;
+    public distanceToIntercept: number;
 
     constructor(
         rootGraphics: Graphics, 
@@ -21,7 +22,8 @@ export default abstract class Level extends AbstractGraphic {
         cadenceMultiplier: number = 1, 
         framesBeforeNodeUpdate: number = 10,
         framesBeforeNodeInitialization: number = 60,
-        distance: number = 2) {
+        distance: number = 2,
+        distanceToIntercept: number = 15) {
 
             super(rootGraphics);
             this.nodeSpeedMultiplier = nodeSpeedMultiplier;
@@ -31,6 +33,7 @@ export default abstract class Level extends AbstractGraphic {
             this.framesBeforeNodeUpdate = framesBeforeNodeUpdate;
             this.framesBeforeNodeInitialization = framesBeforeNodeInitialization;
             this.distance = distance;
+            this.distanceToIntercept = distanceToIntercept
     }
 
     public getFramesBeforeNodeUpdate() {
@@ -49,16 +52,20 @@ export default abstract class Level extends AbstractGraphic {
         return this.cadenceMultiplier;
     }
 
-    public getCollisionBufferDistanceMultiplier(): number {
-        return this.collisionBufferDistanceMultiplier;
-    }
+    // public getCollisionBufferDistanceMultiplier(): number {
+    //     return this.collisionBufferDistanceMultiplier;
+    // }
 
-    public getDistancedBufferedEndCoordinate(linearRep: LinearRepresentation): Coordinate {
-        return linearRep.getEndCoordinate().multiply(this.collisionBufferDistanceMultiplier);
-    }
+    // public getDistancedBufferedEndCoordinate(linearRep: LinearRepresentation): Coordinate {
+    //     return linearRep.getEndCoordinate().multiply(this.collisionBufferDistanceMultiplier);
+    // }
 
     public getLines(): Lines {
         return this.lines;
+    }
+
+    public getDistanceToIntercept(): number {
+        return this.distanceToIntercept;
     }
 
     public getRandomLine(): Line {
@@ -73,6 +80,6 @@ export default abstract class Level extends AbstractGraphic {
      * @param startCoordinate 
      */
     protected addLine(collisionCoordinate: Coordinate, startCoordinate: Coordinate): void {
-        this.lines.push(new Line(this.rootGraphics, startCoordinate, collisionCoordinate));
+        this.lines.push(new Line(this.rootGraphics, startCoordinate, collisionCoordinate, this.distanceToIntercept));
     }
 }
