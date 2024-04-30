@@ -15,3 +15,6 @@ cases:
 ## make a function to see threshold distance
 
 ## keyboard events (class?)
+
+- window.addEventListenner('keypress', () => {})
+- 

@@ -32,7 +32,7 @@ export default class LineNode extends AbstractGraphic implements Updatable {
     }
 
     /**
-     * @Note NEEDS TO BE FIXED FOR LINEAR EQUATIONS NOT GETTING INTERCEPTED
+     * @Note ...
      * @param c1 
      * @returns 
      */

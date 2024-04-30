@@ -3,7 +3,6 @@ import { Lines } from "../../util/typings";
 import Coordinate from "../Coordinate";
 import Line from "../Line";
 import AbstractGraphic from "./AbstractGraphics";
-import LinearRepresentation from "../LinearRepresentation";
 
 export default abstract class Level extends AbstractGraphic {
     public lines: Lines;
@@ -52,13 +51,9 @@ export default abstract class Level extends AbstractGraphic {
         return this.cadenceMultiplier;
     }
 
-    // public getCollisionBufferDistanceMultiplier(): number {
-    //     return this.collisionBufferDistanceMultiplier;
-    // }
-
-    // public getDistancedBufferedEndCoordinate(linearRep: LinearRepresentation): Coordinate {
-    //     return linearRep.getEndCoordinate().multiply(this.collisionBufferDistanceMultiplier);
-    // }
+    public getCollisionBufferDistanceMultiplier(): number {
+        return this.collisionBufferDistanceMultiplier;
+    }
 
     public getLines(): Lines {
         return this.lines;

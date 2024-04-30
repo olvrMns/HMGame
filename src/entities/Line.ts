@@ -51,7 +51,11 @@ export default class Line extends AbstractGraphics {
      * @Note used in constructor 
      */
     public override draw(): void {
+        this.rootGraphics.lineStyle(3, 'red');
         this.moveParentCursorToCoordinate(this.linearRep.getStartCoordinate());
+        this.lineToCoordinate(this.getInterceptionThresholdCoordinate());
+        this.rootGraphics.lineStyle(3, 'green');
+        this.moveParentCursorToCoordinate(this.getInterceptionThresholdCoordinate());
         this.lineToCoordinate(this.linearRep.getEndCoordinate());
     }
 }
