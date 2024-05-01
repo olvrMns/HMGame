@@ -1,9 +1,8 @@
-import { Graphics, TickerCallback } from "pixi.js";
+import { BitmapText, Graphics, TickerCallback } from "pixi.js";
 import Line from "./Line";
 import LineNode from "./LineNode";
 import Level from "./abstract/AbstractLevel";
-import Coordinate from "./Coordinate";
-import { keyList, nodeTypes } from "../util/LineNodeTypes";
+import { keyList } from "../util/LineNodeTypes";
 
 
 export default class LevelInstance {
@@ -15,6 +14,9 @@ export default class LevelInstance {
     private failStreak: number;
     private highestFailStreak: number;
     private totalFrameCount: number;
+
+    // TEST
+    private textScore: BitmapText;
     
     constructor(rootGraphics: Graphics) {
         this.rootGraphics = rootGraphics;
@@ -25,6 +27,8 @@ export default class LevelInstance {
         this.failStreak = 0;
         this.totalFrameCount = 0;
         this.highestFailStreak = 0;
+        this.textScore = new BitmapText(this.score.toString(), {fontName: 'Desyrel', fontSize: 50, tint: 'white', align: 'center'});
+        this.addScoreToCenter();
     }
 
     public resetHighestScore(): void {
@@ -52,8 +56,18 @@ export default class LevelInstance {
     }
 
     public incrementScore(): void {
+        this.textScore.text = this.score.toString();
         this.score++;
         if (this.highestScore < this.score) this.highestScore = this.score;
+    }
+
+    public addScoreToCenter(): void {
+        //const text: BitmapText = new BitmapText(this.score.toString(), {fontName: 'Desyrel', fontSize: 50, tint: 'white', align: 'center'});
+        this.textScore.anchor.x = 0.5
+        this.textScore.anchor.y = 0.5
+        this.textScore.x = 0; 
+        this.textScore.y = 0;
+        this.rootGraphics.addChild(this.textScore);
     }
 
     public loadLevel(level: Level): void {
@@ -81,8 +95,8 @@ export default class LevelInstance {
                 for (let node of this.lineNodes) {
                     if (node.lineNoteType.keyboardKey == keyboardEvent.key.toLowerCase() && node.canBeIntercepted()) {
                         this.destroyNode(node);
-                        console.log("oui")
-                    } else console.log("fail");
+                        this.incrementScore();
+                    } 
                 }
             }
         })
@@ -96,7 +110,7 @@ export default class LevelInstance {
         this.lineNodes.push(new LineNode(
             this.rootGraphics, 
             line.getLinearRepresentation(), 
-            line.getInterceptionThresholdCoordinate())); //needs to be fixed
+            line.getInterceptionThresholdCoordinate()));
     }
 
     public destroyNode(node: LineNode) {

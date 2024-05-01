@@ -16,5 +16,5 @@ cases:
 
 ## keyboard events (class?)
 
-- window.addEventListenner('keypress', () => {})
-- 
+- KEY BEING PRESSED MULTIPLE TIMES ON CERTAIN LINES
+- ADD SCORE IN THE CENTER

@@ -6,7 +6,7 @@ import GameInstance from "./entities/GameInstance";
 // });
 
 (async() => {
+    await Assets.load('https://pixijs.com/assets/bitmap-font/desyrel.xml');
     const instance: GameInstance = new GameInstance();
-    await instance.loadAssests();
     instance.load("testLevel1");
 })();

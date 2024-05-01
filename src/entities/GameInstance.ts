@@ -31,9 +31,9 @@ export default class GameInstance extends Application {
         this.stage.addChild(this.rootGraphic);
     }
 
-    public async loadAssests() {
-        await Assets.load('https://pixijs.com/assets/bitmap-font/desyrel.xml');
-    }
+    // public async loadAssests() {
+    //     await Assets.load('https://pixijs.com/assets/bitmap-font/desyrel.xml');
+    // }
 
     private getLevels(): Levels {
         return {

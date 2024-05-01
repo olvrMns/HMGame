@@ -34,7 +34,7 @@ export default class LineNode extends AbstractGraphic implements Updatable {
      * @Reference https://pixijs.download/v6.5.2/docs/PIXI.BitmapText.html
      */
     public addBitmapText() {
-        const text: BitmapText = new BitmapText(this.lineNoteType.keyboardKey.toUpperCase(), {fontName: 'Desyrel', fontSize: 50, tint: this.lineNoteType.color, align: 'center'});
+        const text: BitmapText = new BitmapText(this.lineNoteType.keyboardKey.toUpperCase(), {fontName: 'Desyrel', fontSize: 30, tint: 'white', align: 'center'});
         text.anchor.x = 0.5
         text.anchor.y = 0.5
         text.x = 0; 
@@ -45,7 +45,7 @@ export default class LineNode extends AbstractGraphic implements Updatable {
     public draw(): void {
         this.lineStyle(5, this.lineNoteType.color);
         this.beginFill(this.lineNoteType.color);
-        this.drawCircle(0, 0, 23);
+        this.drawCircle(0, 0, 17);
         this.endFill();
         this.addBitmapText();
     }
