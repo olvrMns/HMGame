@@ -1,3 +1,4 @@
+import { Sprite } from "pixi.js";
 import Line from "../entities/Line";
 import Level from "../entities/abstract/AbstractLevel";
 

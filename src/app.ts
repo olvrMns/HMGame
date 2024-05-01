@@ -1,4 +1,4 @@
-import { Assets } from "pixi.js";
+import { Assets, Graphics } from "pixi.js";
 import GameInstance from "./entities/GameInstance";
 
 // window.addEventListener("keypress", (keyboardEvent: KeyboardEvent) => {
@@ -6,7 +6,7 @@ import GameInstance from "./entities/GameInstance";
 // });
 
 (async() => {
-    await Assets.load('https://pixijs.com/assets/bitmap-font/desyrel.xml');
+    await GameInstance.loadAssests();
     const instance: GameInstance = new GameInstance();
     instance.load("testLevel1");
 })();

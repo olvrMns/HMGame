@@ -1,8 +1,8 @@
 import { BitmapText, Graphics, TickerCallback } from "pixi.js";
 import Line from "./Line";
-import LineNode from "./LineNode";
+import LineNode from "./node/LineNode";
 import Level from "./abstract/AbstractLevel";
-import { keyList } from "../util/LineNodeTypes";
+import { keyList} from "./node/LineNodeTypes";
 
 
 export default class LevelInstance {
@@ -15,8 +15,8 @@ export default class LevelInstance {
     private highestFailStreak: number;
     private totalFrameCount: number;
 
-    // TEST
-    private textScore: BitmapText;
+    private scoreText: BitmapText;
+    private highestScoreText: BitmapText;
     
     constructor(rootGraphics: Graphics) {
         this.rootGraphics = rootGraphics;
@@ -27,8 +27,9 @@ export default class LevelInstance {
         this.failStreak = 0;
         this.totalFrameCount = 0;
         this.highestFailStreak = 0;
-        this.textScore = new BitmapText(this.score.toString(), {fontName: 'Desyrel', fontSize: 50, tint: 'white', align: 'center'});
-        this.addScoreToCenter();
+        this.scoreText = new BitmapText('0', {fontName: 'Desyrel', fontSize: 50, tint: 'white', align: 'center'});
+        this.highestScoreText = new BitmapText('0', {fontName: 'Desyrel', fontSize: 50, tint: 'white', align: 'center'});
+        this.setBitmaps();
     }
 
     public resetHighestScore(): void {
@@ -37,6 +38,7 @@ export default class LevelInstance {
 
     public resetScore(): void {
         this.score = 0;
+        this.updateScoreText();
     }
 
     public resetFailStreak(): void {
@@ -47,27 +49,38 @@ export default class LevelInstance {
         this.totalFrameCount = 0;
     }
 
+    public updateScoreText(): void {
+        this.scoreText.text = this.score.toString();
+    }
+
     public levelIsActive(): boolean {
         return this.activeLevel != null;
     }
 
     public setHighestScore(highestScore: number): void {
         this.highestScore = highestScore;
+        this.highestScoreText.text = this.highestScore.toString();
     }
 
     public incrementScore(): void {
-        this.textScore.text = this.score.toString();
         this.score++;
-        if (this.highestScore < this.score) this.highestScore = this.score;
+        this.updateScoreText();
+        if (this.highestScore < this.score) this.setHighestScore(this.score);
     }
 
-    public addScoreToCenter(): void {
-        //const text: BitmapText = new BitmapText(this.score.toString(), {fontName: 'Desyrel', fontSize: 50, tint: 'white', align: 'center'});
-        this.textScore.anchor.x = 0.5
-        this.textScore.anchor.y = 0.5
-        this.textScore.x = 0; 
-        this.textScore.y = 0;
-        this.rootGraphics.addChild(this.textScore);
+    public setBitmaps(): void {
+        this.scoreText.anchor.x = 0.5
+        this.scoreText.anchor.y = 0.5
+        this.scoreText.x = 0; 
+        this.scoreText.y = 0;
+
+        this.highestScoreText.anchor.x = 0.5
+        this.highestScoreText.anchor.y = 0.5
+        this.highestScoreText.x = 200; 
+        this.highestScoreText.y = 200;
+
+        this.rootGraphics.addChild(this.scoreText);
+        this.rootGraphics.addChild(this.highestScoreText);
     }
 
     public loadLevel(level: Level): void {
@@ -91,12 +104,18 @@ export default class LevelInstance {
      */
     public setWindowKeyboardListenner() {
         window.addEventListener("keydown", (keyboardEvent: KeyboardEvent): void => {
-            if (keyList().includes(keyboardEvent.key.toLowerCase())) {
+            if (keyList.includes(keyboardEvent.key.toLowerCase())) {
                 for (let node of this.lineNodes) {
-                    if (node.lineNoteType.keyboardKey == keyboardEvent.key.toLowerCase() && node.canBeIntercepted()) {
+                    if (node.lineNoteType.keyboardKey == keyboardEvent.key.toLowerCase() && node.canBeIntercepted() && node.isValid) {
                         this.destroyNode(node);
                         this.incrementScore();
-                    } 
+                        break;
+                    } else if (node.isValid) {
+                        this.resetScore();
+                        node.invalidate();
+                        break;
+                    }
+                    
                 }
             }
         })
@@ -127,14 +146,6 @@ export default class LevelInstance {
                 this.destroyNode(node);
                 this.resetScore();
                 this.failStreak++;
-            }
-        }
-    }
-
-    public intercept(): void {
-        for (let node of this.lineNodes) {
-            if (node.canBeIntercepted()) {
-                console.log("CAN BE INTERCEPTED");
             }
         }
     }

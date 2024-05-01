@@ -1,21 +1,24 @@
-import { BitmapFont, BitmapText, Graphics, TextStyle } from "pixi.js";
-import Coordinate from "./Coordinate";
-import LinearRepresentation from "./LinearRepresentation";
-import AbstractGraphic from "./abstract/AbstractGraphics";
-import { Updatable } from "../util/Updatable";
-import { LineNodeType } from "../util/typings";
-import { getRandomType } from "../util/LineNodeTypes";
+import { BitmapText, Graphics, ILineStyleOptions, TextStyle, Texture } from "pixi.js";
+import Coordinate from "../Coordinate";
+import LinearRepresentation from "../LinearRepresentation";
+import AbstractGraphic from "../abstract/AbstractGraphics";
+import { Updatable } from "../../util/Updatable";
+import { LineNodeType } from "../../util/typings";
+import { getRandomType } from "./LineNodeTypes";
 
 export default class LineNode extends AbstractGraphic implements Updatable {
-    private linearRep: LinearRepresentation;
-    private interceptionThresholdCoordinate: Coordinate;
+    protected linearRep: LinearRepresentation;
+    protected interceptionThresholdCoordinate: Coordinate;
     public lineNoteType: LineNodeType;
+    public isValid: boolean = true;
+    public currentLineStyle: ILineStyleOptions;
 
     constructor(rootGraphics: Graphics, linearRep: LinearRepresentation, interceptionThresholdCoordinate: Coordinate) {
         super(rootGraphics);
         this.linearRep = linearRep;
         this.interceptionThresholdCoordinate = interceptionThresholdCoordinate;
         this.lineNoteType = getRandomType();
+        this.currentLineStyle = {color: this.lineNoteType.color, width: 5};
         this.init();
     }
 
@@ -43,8 +46,8 @@ export default class LineNode extends AbstractGraphic implements Updatable {
     }
 
     public draw(): void {
-        this.lineStyle(5, this.lineNoteType.color);
-        this.beginFill(this.lineNoteType.color);
+        this.changeCurrentLineStyle(this.currentLineStyle);
+        this.beginFill(this.currentLineStyle.color);
         this.drawCircle(0, 0, 17);
         this.endFill();
         this.addBitmapText();
@@ -81,6 +84,16 @@ export default class LineNode extends AbstractGraphic implements Updatable {
     }
 
     /**
+     * @Note in case the player failed to hit the note...
+     * The node will become invalide and wont be able increase score
+     */
+    public invalidate(): void {
+        this.isValid = false;
+        this.currentLineStyle = {color: 'black', width: 2}
+        this.draw();
+    }
+
+    /**
      * @Note y/xIsAscendant could be calculated only once at the creation of the node for more optimization
      * - if the staring and ending x coordinate of the linearRepresentation are the same, then only increment y coordinate of Graphic...same thing y
      * - else use getXFromY in the current linearRepresentation to get the next point based on distance...
@@ -91,12 +104,11 @@ export default class LineNode extends AbstractGraphic implements Updatable {
      * @param distance 
      */
     public update(delta: number, distance: number): void {
-        let start: Coordinate = this.linearRep.getStartCoordinate();
-        let end: Coordinate = this.linearRep.getEndCoordinate();
-        if (start.x === end.x) {
+        const {startCoordinate, endCoordinate} = this.linearRep;
+        if (startCoordinate.x === endCoordinate.x) {
             if (this.linearRep.yIsAscendant) this.y += distance * delta;
             else this.y -= distance * delta;
-        } else if (start.y === end.y) {
+        } else if (startCoordinate.y === endCoordinate.y) {
             if (this.linearRep.xIsAscendant) this.x += distance * delta;
             else this.x -= distance * delta;
         } else {
