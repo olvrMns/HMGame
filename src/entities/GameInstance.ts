@@ -1,4 +1,4 @@
-import { Application, Graphics } from "pixi.js";
+import { Application, Assets, Graphics } from "pixi.js";
 import { CircleLevel, RectangularLevel } from "../implementation/Levels";
 import WindowService from "../util/WindowService";
 import { Levels } from "../util/typings";
@@ -29,6 +29,10 @@ export default class GameInstance extends Application {
         this.rootGraphic.y = this.WS.centerCoordinate.y;
         this.rootGraphic.lineStyle(2, 'red');
         this.stage.addChild(this.rootGraphic);
+    }
+
+    public async loadAssests() {
+        await Assets.load('https://pixijs.com/assets/bitmap-font/desyrel.xml');
     }
 
     private getLevels(): Levels {

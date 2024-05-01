@@ -74,7 +74,7 @@ export default abstract class Level extends AbstractGraphic {
      * @param collisionCoordinate
      * @param startCoordinate 
      */
-    protected addLine(collisionCoordinate: Coordinate, startCoordinate: Coordinate): void {
-        this.lines.push(new Line(this.rootGraphics, startCoordinate, collisionCoordinate, this.distanceToIntercept));
+    protected addLine(collisionCoordinate: Coordinate, startCoordinate: Coordinate, showInterceptionSegment: boolean= false): void {
+        this.lines.push(new Line(this.rootGraphics, startCoordinate, collisionCoordinate, this.distanceToIntercept, showInterceptionSegment));
     }
 }

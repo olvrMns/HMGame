@@ -1,17 +1,21 @@
-import { Graphics } from "pixi.js";
+import { BitmapFont, BitmapText, Graphics, TextStyle } from "pixi.js";
 import Coordinate from "./Coordinate";
 import LinearRepresentation from "./LinearRepresentation";
 import AbstractGraphic from "./abstract/AbstractGraphics";
 import { Updatable } from "../util/Updatable";
+import { LineNodeType } from "../util/typings";
+import { getRandomType } from "../util/LineNodeTypes";
 
 export default class LineNode extends AbstractGraphic implements Updatable {
     private linearRep: LinearRepresentation;
     private interceptionThresholdCoordinate: Coordinate;
+    public lineNoteType: LineNodeType;
 
     constructor(rootGraphics: Graphics, linearRep: LinearRepresentation, interceptionThresholdCoordinate: Coordinate) {
         super(rootGraphics);
         this.linearRep = linearRep;
         this.interceptionThresholdCoordinate = interceptionThresholdCoordinate;
+        this.lineNoteType = getRandomType();
         this.init();
     }
 
@@ -26,9 +30,24 @@ export default class LineNode extends AbstractGraphic implements Updatable {
         return this.linearRep;
     }
 
+    /**
+     * @Reference https://pixijs.download/v6.5.2/docs/PIXI.BitmapText.html
+     */
+    public addBitmapText() {
+        const text: BitmapText = new BitmapText(this.lineNoteType.keyboardKey.toUpperCase(), {fontName: 'Desyrel', fontSize: 50, tint: this.lineNoteType.color, align: 'center'});
+        text.anchor.x = 0.5
+        text.anchor.y = 0.5
+        text.x = 0; 
+        text.y = 0;
+        this.addChild(text);
+    }
+
     public draw(): void {
-        this.lineStyle(5, 'green');
-        this.drawCircle(0, 0, 10);
+        this.lineStyle(5, this.lineNoteType.color);
+        this.beginFill(this.lineNoteType.color);
+        this.drawCircle(0, 0, 23);
+        this.endFill();
+        this.addBitmapText();
     }
 
     /**

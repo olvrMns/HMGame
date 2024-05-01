@@ -3,6 +3,7 @@ import Line from "./Line";
 import LineNode from "./LineNode";
 import Level from "./abstract/AbstractLevel";
 import Coordinate from "./Coordinate";
+import { keyList, nodeTypes } from "../util/LineNodeTypes";
 
 
 export default class LevelInstance {
@@ -12,6 +13,7 @@ export default class LevelInstance {
     private highestScore: number;
     private lineNodes: LineNode[];
     private failStreak: number;
+    private highestFailStreak: number;
     private totalFrameCount: number;
     
     constructor(rootGraphics: Graphics) {
@@ -22,6 +24,7 @@ export default class LevelInstance {
         this.lineNodes = [];
         this.failStreak = 0;
         this.totalFrameCount = 0;
+        this.highestFailStreak = 0;
     }
 
     public resetHighestScore(): void {
@@ -56,6 +59,7 @@ export default class LevelInstance {
     public loadLevel(level: Level): void {
         this.unloadLevel();
         this.activeLevel = level;
+        this.setWindowKeyboardListenner();
         level.draw();
     }
 
@@ -64,6 +68,24 @@ export default class LevelInstance {
             this.activeLevel?.destroy(true);
             this.activeLevel = null;
         }
+    }
+
+    /**
+     * @Note
+     * https://phuoc.ng/collection/this-vs-that/keydown-vs-keypress-vs-keyup/
+     * this method should only contain the callback so we can remove it when unloading
+     */
+    public setWindowKeyboardListenner() {
+        window.addEventListener("keydown", (keyboardEvent: KeyboardEvent): void => {
+            if (keyList().includes(keyboardEvent.key.toLowerCase())) {
+                for (let node of this.lineNodes) {
+                    if (node.lineNoteType.keyboardKey == keyboardEvent.key.toLowerCase() && node.canBeIntercepted()) {
+                        this.destroyNode(node);
+                        console.log("oui")
+                    } else console.log("fail");
+                }
+            }
+        })
     }
 
     /**
@@ -77,14 +99,18 @@ export default class LevelInstance {
             line.getInterceptionThresholdCoordinate())); //needs to be fixed
     }
 
+    public destroyNode(node: LineNode) {
+        this.lineNodes = this.lineNodes.filter((currentNode) => currentNode !== node);
+        node.destroy(true);
+    }
+
     /**
      * @Note destroys the node
      */
     public destroyLineNodes(): void {
         for (let node of this.lineNodes) {
             if (node.canBeDestroyed()) {
-                this.lineNodes = this.lineNodes.filter((currentNode) => currentNode !== node);
-                node.destroy(true);
+                this.destroyNode(node);
                 this.resetScore();
                 this.failStreak++;
             }
@@ -124,8 +150,6 @@ export default class LevelInstance {
             if (this.totalFrameCount % Math.floor(framesBeforeNodeInitialization * cadenceMultiplier) == 0) {
                 this.initializeLineNode();
             }
-
-            this.intercept();
             if (this.totalFrameCount > 200) this.totalFrameCount = 0;
             this.totalFrameCount++;
         };

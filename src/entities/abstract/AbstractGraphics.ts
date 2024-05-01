@@ -9,6 +9,8 @@ export default abstract class AbstractGraphics extends Graphics {
      */
     protected rootGraphics: Graphics;
     protected WS: WindowService = WindowService.getInstance();
+    protected DEBUG_LINE_STYLE: ILineStyleOptions = {color: 'green', width: 3};
+    protected DEFAULT_LINE_STYLE: ILineStyleOptions = {color: 'red', width: 3}
 
     constructor(rootGraphics: Graphics) {
         super();
@@ -25,6 +27,10 @@ export default abstract class AbstractGraphics extends Graphics {
 
     public changeCurrentLineStyle(options: ILineStyleOptions): void {
         this.lineStyle(options);
+    }
+
+    public changeRootLineStyleToDefault(): void {
+        this.rootGraphics.lineStyle(this.DEFAULT_LINE_STYLE);
     }
 
     public lineToCoordinate(c1: Coordinate): void {

@@ -6,11 +6,13 @@ import AbstractGraphics from "./abstract/AbstractGraphics";
 export default class Line extends AbstractGraphics {
     private linearRep: LinearRepresentation;
     private interceptionThresholdCoordinate: Coordinate;
+    private showInterceptionSegment: boolean;
 
-    constructor(rootGraphics: Graphics, startCoordinate: Coordinate, endCoordinate: Coordinate, distanceToIntercept: number) {
+    constructor(rootGraphics: Graphics, startCoordinate: Coordinate, endCoordinate: Coordinate, distanceToIntercept: number, showInterceptionSegment: boolean = false) {
         super(rootGraphics);
         this.linearRep = new LinearRepresentation(startCoordinate, endCoordinate);
         this.interceptionThresholdCoordinate = this.computeDistanceInterceptionCoordinate(distanceToIntercept);
+        this.showInterceptionSegment = showInterceptionSegment;
         this.draw();
     }
 
@@ -51,10 +53,10 @@ export default class Line extends AbstractGraphics {
      * @Note used in constructor 
      */
     public override draw(): void {
-        this.rootGraphics.lineStyle(3, 'red');
+        this.changeRootLineStyleToDefault();
         this.moveParentCursorToCoordinate(this.linearRep.getStartCoordinate());
         this.lineToCoordinate(this.getInterceptionThresholdCoordinate());
-        this.rootGraphics.lineStyle(3, 'green');
+        if (this.showInterceptionSegment) this.changeRootLineStyle(this.DEBUG_LINE_STYLE);
         this.moveParentCursorToCoordinate(this.getInterceptionThresholdCoordinate());
         this.lineToCoordinate(this.linearRep.getEndCoordinate());
     }
