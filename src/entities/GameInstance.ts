@@ -34,7 +34,8 @@ export default class GameInstance extends Application {
     public static async loadAssests() {
         await Assets.load([
             'https://pixijs.com/assets/bitmap-font/desyrel.xml', 
-            "sprites/planet-0.png", 
+            "sprites/planet-0.png",
+            "sprites/planet2Data.png",  
             "sprites/SpaceBackground1.png",
         ]);
       
