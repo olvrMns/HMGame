@@ -1,0 +1,8 @@
+
+
+/**
+ * @description
+ */
+export class GameInstance {
+
+}
