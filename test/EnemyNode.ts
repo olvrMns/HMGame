@@ -1,8 +1,12 @@
+import { AnimatedSprite, Sprite } from "pixi.js";
 
 
 /**
  * @description 
  */
-export class EnemyNode {
+export class EnemyNode extends AnimatedSprite {
+    // private linearRepresentation: LinearRepresentation;
+    // private interceptionThresholdCoordinate: Coordinate;
 
-}
+
+}   
