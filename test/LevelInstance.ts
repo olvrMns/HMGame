@@ -1,6 +1,7 @@
-import { Application, BitmapFont, Container } from "pixi.js";
+import { Application, BitmapFont, Container, DisplayObject } from "pixi.js";
 import { AbstractLevel } from "./AbstractLevel";
 import { EnemyNode } from "./EnemyNode";
+import { Line } from "./Line";
 
 
 /**
@@ -10,7 +11,7 @@ import { EnemyNode } from "./EnemyNode";
 export class LevelInstance {
     private static instance: LevelInstance;
     private application: Application;
-    private level: AbstractLevel | undefined;
+    public level: AbstractLevel | undefined;
     private score: number = 0;
     private highestScore: number = 0;
     private failStreak: number = 0;
@@ -25,4 +26,15 @@ export class LevelInstance {
         if (!this.instance) this.instance = new LevelInstance(application);
         return this.instance;
     }
+
+    public levelIsActive(): boolean {
+        return this.level != null;
+    }
+
+    // public initializeEnemyNode(line: Line = this.level?.getRandomLine() as Line): void {
+    //     this.enemyNodes.push(new EnemyNode(
+    //         this.enemyNodes, 
+    //         line.linearRepresentation, 
+    //         line.interceptionThresholdCoordinate));
+    // }
 }

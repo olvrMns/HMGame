@@ -1,6 +1,7 @@
-import { Application } from "pixi.js";
+import { Application, DisplayObject } from "pixi.js";
 import { WindowPresets } from "./WindowPresets";
 import { LevelInstance } from "./LevelInstance";
+import { AbstractLevel } from "./AbstractLevel";
 
 
 /**
@@ -32,5 +33,19 @@ export class GameInstance extends Application {
         const canvas: HTMLCanvasElement = document.createElement("canvas") as HTMLCanvasElement;
         document.body.appendChild(canvas);
         return canvas;
+    }
+
+    public loadLevel(level: AbstractLevel): void {
+        this.unloadLevel();
+        this.levelInstance.level = level;
+        this.stage.addChild(this.levelInstance.level);
+    }
+
+    public unloadLevel(): void {
+        if (this.levelInstance.levelIsActive()) {
+            this.stage.removeChild(this.levelInstance.level as DisplayObject);
+            this.levelInstance.level?.destroy(true);
+            this.levelInstance.level = undefined;
+        }
     }
 }

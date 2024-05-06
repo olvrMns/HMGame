@@ -5,7 +5,7 @@ import { Coordinate } from "./Coordinate";
 /**
  * @description Not instantiable Object that encapsulates the data relative to each level
  */
-export class AbstractLevel extends Container  {
+export abstract class AbstractLevel extends Container  {
     public backgroundSprite: AnimatedSprite;
     public distancePerFrame: number;
     public distanceToIntercept: number;
@@ -37,6 +37,8 @@ export class AbstractLevel extends Container  {
         this.cadenceMultiplier = cadenceMultiplier;
         this.lines = [];
     }
+
+    public abstract build(): void;
 
     public getRandomLine(): Line {
         return this.lines[Math.floor(Math.random() * (this.lines.length))];

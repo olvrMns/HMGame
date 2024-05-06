@@ -31,6 +31,10 @@ export class Line extends Graphics {
         return new Line(startCoordinate, endCoordinate, distanceToIntercept, showInterceptionSegment, permittedAssets);
     }
 
+    // public getRandomPermittedAsset() {
+
+    // }
+
     public computeDistanceInterceptionCoordinate(distanceToIntercept: number): Coordinate {
         let nc = new Coordinate(0, 0);
         const {endCoordinate, xIsAscendant, startCoordinate, yIsAscendant} = this.linearRepresentation;
