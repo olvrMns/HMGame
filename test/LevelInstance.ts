@@ -1,4 +1,4 @@
-import { Application, Container } from "pixi.js";
+import { Application, BitmapFont, Container } from "pixi.js";
 import { AbstractLevel } from "./AbstractLevel";
 import { EnemyNode } from "./EnemyNode";
 

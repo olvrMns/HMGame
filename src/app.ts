@@ -11,5 +11,4 @@ import { GameInstance } from "../test/GameInstance";
     var clone: Sprite = Object.create(ApplicationSrpites.SPACE_BACKGROUND1);
     console.log(clone == ApplicationSrpites.SPACE_BACKGROUND1)
     instance.stage.addChild(ApplicationSrpites.SPACE_BACKGROUND1);
-    
 })();
