@@ -1,5 +1,6 @@
 import { AnimatedSprite, Container } from "pixi.js";
 import { Line } from "./Line";
+import {ApplicationUtils} from "./ApplicationUtils";
 import { Coordinate } from "./Coordinate";
 
 /**
@@ -41,7 +42,7 @@ export abstract class AbstractLevel extends Container  {
     public abstract build(): void;
 
     public getRandomLine(): Line {
-        return this.lines[Math.floor(Math.random() * (this.lines.length))];
+        return ApplicationUtils.getRandomArrayElement<Line>(this.lines);
     }
 
     public addLine(line: Line): void {

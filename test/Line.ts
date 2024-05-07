@@ -1,6 +1,7 @@
-import { Graphics } from "pixi.js";
+import { Graphics, Resource, Texture } from "pixi.js";
 import { Coordinate } from "./Coordinate";
 import { LinearRepresentation } from "./LinearRepresentation";
+import {ApplicationUtils} from "./ApplicationUtils";
 
 
 /**
@@ -11,7 +12,7 @@ export class Line extends Graphics {
     public linearRepresentation: LinearRepresentation;
     public interceptionThresholdCoordinate: Coordinate;
     public showInterceptionSegment: boolean;
-    public permittedAssets: any[];
+    public permittedAssets: Texture<Resource>[][];
 
     constructor(
         startCoordinate: Coordinate, 
@@ -31,9 +32,9 @@ export class Line extends Graphics {
         return new Line(startCoordinate, endCoordinate, distanceToIntercept, showInterceptionSegment, permittedAssets);
     }
 
-    // public getRandomPermittedAsset() {
-
-    // }
+    public getRandomPermittedAsset(): Texture<Resource>[] {
+        return ApplicationUtils.getRandomArrayElement<Texture<Resource>[]>(this.permittedAssets);
+    }
 
     public computeDistanceInterceptionCoordinate(distanceToIntercept: number): Coordinate {
         let nc = new Coordinate(0, 0);
