@@ -2,6 +2,7 @@ import { Application, BitmapFont, Container, DisplayObject, TickerCallback } fro
 import { AbstractLevel } from "./AbstractLevel";
 import { EnemyNode } from "./EnemyNode";
 import { Line } from "./Line";
+import { LineObject } from "./typings";
 
 
 /**
@@ -31,11 +32,17 @@ export class LevelInstance {
         return this.level != null;
     }
 
-    public initializeEnemyNode(line: Line = this.level?.getRandomLine() as Line): void {
-        this.enemyNodes.push(new EnemyNode(
-            line.getRandomPermittedAsset(), 
-            line.linearRepresentation, 
-            line.interceptionThresholdCoordinate));
+    /**
+     * @description resets instance attributes
+     */
+    public reset() {
+        
+    }
+
+    public initializeEnemyNode(lineObject: LineObject = this.level?.getRandomLineObject() as LineObject): void {
+        let enemyNode: EnemyNode = EnemyNode.of(lineObject);
+        this.enemyNodes.push(enemyNode);
+        this.level?.addChild(enemyNode);
     }
 
     /**
@@ -43,8 +50,8 @@ export class LevelInstance {
      * @param enemyNode 
      */
     public destroyEnemyNode(enemyNode: EnemyNode) {
-        this.enemyNodes.filter(node => node !== enemyNode);
-        enemyNode.destroy(true);
+        this.enemyNodes = this.enemyNodes.filter(node => node !== enemyNode);
+        enemyNode.destroy({texture: false});
     }
 
     public destroyLineNodes(): void {
@@ -73,8 +80,10 @@ export class LevelInstance {
         const cadenceMultiplier: number = this.level?.cadenceMultiplier as number;
         const framesBeforeNodeUpdate: number = this.level?.framesBeforeNodeUpdate as number;
         const framesBeforeNodeInitialization: number = this.level?.framesBeforeNodeInitialization as number;
+        console.log(framesBeforeNodeInitialization);
         return (delta: number) => {
             if (this.frameCount % Math.floor(framesBeforeNodeUpdate * speedMultiplier) == 0) {
+                console.log(this.enemyNodes.length)
                 this.updateNodes(delta); 
                 this.destroyLineNodes();
             } 
@@ -82,6 +91,7 @@ export class LevelInstance {
             if (this.frameCount % Math.floor(framesBeforeNodeInitialization * cadenceMultiplier) == 0) {
                 this.initializeEnemyNode();
             }
+
             if (this.frameCount > 200) this.frameCount = 0;
             this.frameCount++;
         };

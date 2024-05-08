@@ -1,13 +1,12 @@
-import { AnimatedSprite, Container } from "pixi.js";
-import { Line } from "./Line";
-import {ApplicationUtils} from "./ApplicationUtils";
-import { Coordinate } from "./Coordinate";
+import { Container } from "pixi.js";
+
+import { ApplicationUtils } from "./ApplicationUtils";
+import { LineObject } from "./typings";
 
 /**
  * @description Not instantiable Object that encapsulates the data relative to each level
  */
 export abstract class AbstractLevel extends Container  {
-    public backgroundSprite: AnimatedSprite;
     public distancePerFrame: number;
     public distanceToIntercept: number;
     public distanceToInterceptMultiplier: number;
@@ -15,10 +14,9 @@ export abstract class AbstractLevel extends Container  {
     public nodeSpeedMultiplier: number;
     public framesBeforeNodeInitialization: number;
     public cadenceMultiplier: number;
-    public lines: Line[];
+    public lineObjects: LineObject[];
 
     constructor(
-        backgroundSprite: AnimatedSprite, 
         distancePerFrame: number = 2,
         distanceToIntercept: number = 30,
         distanceToInterceptMultiplier: number = 1.2,
@@ -28,7 +26,6 @@ export abstract class AbstractLevel extends Container  {
         cadenceMultiplier: number = 1) {
 
         super()
-        this.backgroundSprite = backgroundSprite;
         this.distancePerFrame = distancePerFrame;
         this.distanceToIntercept = distanceToIntercept;
         this.distanceToInterceptMultiplier = distanceToInterceptMultiplier;
@@ -36,16 +33,18 @@ export abstract class AbstractLevel extends Container  {
         this.nodeSpeedMultiplier = nodeSpeedMultiplier;
         this.framesBeforeNodeInitialization = framesBeforeNodeInitialization;
         this.cadenceMultiplier = cadenceMultiplier;
-        this.lines = [];
+        this.lineObjects = [];
+        this.build();
     }
 
     public abstract build(): void;
 
-    public getRandomLine(): Line {
-        return ApplicationUtils.getRandomArrayElement<Line>(this.lines);
+    public getRandomLineObject(): LineObject {
+        return ApplicationUtils.getRandomArrayElement<LineObject>(this.lineObjects);
     }
 
-    public addLine(line: Line): void {
-        this.lines.push(line);
+    public addLineObject(lineObject: LineObject): void {
+        this.lineObjects.push(lineObject);
+        this.addChild(lineObject.line);
     }
 }

@@ -1,8 +1,7 @@
 import { Graphics, Resource, Texture } from "pixi.js";
 import { Coordinate } from "./Coordinate";
 import { LinearRepresentation } from "./LinearRepresentation";
-import {ApplicationUtils} from "./ApplicationUtils";
-
+import { ApplicationUtils } from "./ApplicationUtils";
 
 /**
  * @description Object encapsulating data on a line where [EnemyNode] will traverse
@@ -12,28 +11,32 @@ export class Line extends Graphics {
     public linearRepresentation: LinearRepresentation;
     public interceptionThresholdCoordinate: Coordinate;
     public showInterceptionSegment: boolean;
-    public permittedAssets: Texture<Resource>[][];
 
     constructor(
         startCoordinate: Coordinate, 
         endCoordinate: Coordinate, 
         distanceToIntercept: number, 
-        showInterceptionSegment: boolean = false, 
-        ...permittedAssets: any[]) {
+        showInterceptionSegment: boolean = false) {
             
         super();
         this.linearRepresentation = new LinearRepresentation(startCoordinate, endCoordinate);
         this.interceptionThresholdCoordinate = this.computeDistanceInterceptionCoordinate(distanceToIntercept);
         this.showInterceptionSegment = showInterceptionSegment;
-        this.permittedAssets = permittedAssets;
+        this.draw();
     }
 
-    public static of(startCoordinate: Coordinate, endCoordinate: Coordinate, distanceToIntercept: number, showInterceptionSegment: boolean = false, ...permittedAssets: any[]): Line {
-        return new Line(startCoordinate, endCoordinate, distanceToIntercept, showInterceptionSegment, permittedAssets);
+    public draw() {
+        if (this.showInterceptionSegment) {
+            this.lineStyle(ApplicationUtils.DEFAULT_LINE_STYLE);
+            this.moveTo(this.linearRepresentation.startCoordinate.x, this.linearRepresentation.startCoordinate.y);
+            this.lineTo(this.interceptionThresholdCoordinate.x, this.interceptionThresholdCoordinate.y);
+            this.lineStyle(ApplicationUtils.DEBUG_LINE_STYLE);
+            this.lineTo(this.linearRepresentation.endCoordinate.x, this.linearRepresentation.endCoordinate.y);
+        }
     }
 
-    public getRandomPermittedAsset(): Texture<Resource>[] {
-        return ApplicationUtils.getRandomArrayElement<Texture<Resource>[]>(this.permittedAssets);
+    public static of(startCoordinate: Coordinate, endCoordinate: Coordinate, distanceToIntercept: number, showInterceptionSegment: boolean = false): Line {
+        return new Line(startCoordinate, endCoordinate, distanceToIntercept, showInterceptionSegment);
     }
 
     public computeDistanceInterceptionCoordinate(distanceToIntercept: number): Coordinate {

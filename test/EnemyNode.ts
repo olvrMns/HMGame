@@ -1,6 +1,7 @@
 import { AnimatedSprite, FrameObject, Resource, Sprite, Texture } from "pixi.js";
 import { LinearRepresentation } from "./LinearRepresentation";
 import { Coordinate } from "./Coordinate";
+import { LineObject } from "./typings";
 
 
 /**
@@ -11,17 +12,23 @@ export class EnemyNode extends AnimatedSprite {
     private interceptionThresholdCoordinate: Coordinate;
     public isValid: boolean = true;
 
-    constructor(textures: FrameObject[] | Texture<Resource>[], linearRepresentation: LinearRepresentation, interceptionThresholdCoordinate: Coordinate) {
-        super(textures)
-        this.linearRepresentation = linearRepresentation;
-        this.interceptionThresholdCoordinate = interceptionThresholdCoordinate;
+    constructor(lineObject: LineObject) {
+        super(lineObject.enemyTextures)
+        this.linearRepresentation = lineObject.line.linearRepresentation;
+        this.interceptionThresholdCoordinate = lineObject.line.interceptionThresholdCoordinate;
         this.init();
+    }
+
+    public static of(lineObject: LineObject): EnemyNode {
+        return new EnemyNode(lineObject);
     }
 
     public init() {
         this.play();
         this.x = this.linearRepresentation.startCoordinate.x;
         this.y = this.linearRepresentation.startCoordinate.y;
+        this.anchor.x = 0.5;
+        this.anchor.y = 0.5;
     }
 
     public hasPassed(c1: Coordinate): boolean {

@@ -39,13 +39,15 @@ export class GameInstance extends Application {
         this.unloadLevel();
         this.levelInstance.level = level;
         this.stage.addChild(this.levelInstance.level);
+        this.ticker.add(this.levelInstance.getInstanceTicker());
     }
 
     public unloadLevel(): void {
         if (this.levelInstance.levelIsActive()) {
             this.stage.removeChild(this.levelInstance.level as DisplayObject);
-            this.levelInstance.level?.destroy(true);
+            this.levelInstance.level?.destroy({texture: false});
             this.levelInstance.level = undefined;
+            this.levelInstance.reset();
         }
     }
 }
