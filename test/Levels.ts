@@ -35,5 +35,21 @@ export class Space1 extends AbstractLevel {
             keyboardKey: "A", 
             enemyTextures: ApplicationTextures.SPACESHIP1, 
             line: Line.of(WindowPresets.PSC_UPPER_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
+        this.addLineObject({
+            keyboardKey: "A", 
+            enemyTextures: ApplicationTextures.SPACESHIP1, 
+            line: Line.of(WindowPresets.PSC_UPPER_LEFT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
+        this.addLineObject({
+            keyboardKey: "A", 
+            enemyTextures: ApplicationTextures.SPACESHIP1, 
+            line: Line.of(WindowPresets.PSC_BOTTOM_LEFT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
+        this.addLineObject({
+            keyboardKey: "A", 
+            enemyTextures: ApplicationTextures.SPACESHIP1, 
+            line: Line.of(WindowPresets.PSC_BOTTOM_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
+        this.addLineObject({
+            keyboardKey: "A", 
+            enemyTextures: ApplicationTextures.SPACESHIP1, 
+            line: Line.of(WindowPresets.PSC_BOTTOM_MIDDLE, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
     }
 }

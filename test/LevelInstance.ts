@@ -80,10 +80,8 @@ export class LevelInstance {
         const cadenceMultiplier: number = this.level?.cadenceMultiplier as number;
         const framesBeforeNodeUpdate: number = this.level?.framesBeforeNodeUpdate as number;
         const framesBeforeNodeInitialization: number = this.level?.framesBeforeNodeInitialization as number;
-        console.log(framesBeforeNodeInitialization);
         return (delta: number) => {
             if (this.frameCount % Math.floor(framesBeforeNodeUpdate * speedMultiplier) == 0) {
-                console.log(this.enemyNodes.length)
                 this.updateNodes(delta); 
                 this.destroyLineNodes();
             } 

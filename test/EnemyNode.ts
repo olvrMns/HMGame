@@ -16,6 +16,9 @@ export class EnemyNode extends AnimatedSprite {
         super(lineObject.enemyTextures)
         this.linearRepresentation = lineObject.line.linearRepresentation;
         this.interceptionThresholdCoordinate = lineObject.line.interceptionThresholdCoordinate;
+        this.scale.x = 0.5;
+        this.scale.y = 0.5;
+        this.rotation = 1.2;
         this.init();
     }
 
