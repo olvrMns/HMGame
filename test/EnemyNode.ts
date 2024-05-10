@@ -2,6 +2,7 @@ import { AnimatedSprite } from "pixi.js";
 import { LinearRepresentation } from "./LinearRepresentation";
 import { Coordinate } from "./Coordinate";
 import { EnemyNodeOptions, LineObject } from "./typings";
+import { KeyboardKeys } from "./AbstractLevel";
 
 
 /**
@@ -10,7 +11,8 @@ import { EnemyNodeOptions, LineObject } from "./typings";
 export class EnemyNode extends AnimatedSprite {
     public linearRepresentation: LinearRepresentation;
     public interceptionThresholdCoordinate: Coordinate;
-    public isValid: boolean = true;
+    public triggerKey: KeyboardKeys;
+    public hasNotBeenTriggered: boolean = true;
 
     constructor(lineObject: LineObject, options: EnemyNodeOptions) {
         super(lineObject.enemyTextures)
@@ -19,6 +21,7 @@ export class EnemyNode extends AnimatedSprite {
         this.scale.x = options.scaleX ? options.scaleX : 0.5;
         this.scale.y = options.scaleY ? options.scaleY : 0.5;
         this.angle = lineObject.line.inclination;
+        this.triggerKey = lineObject.triggerKey;
         this.init();
     }
 
@@ -56,7 +59,8 @@ export class EnemyNode extends AnimatedSprite {
     }
 
     public invalidate(): void {
-        this.isValid = false;
+        this.hasNotBeenTriggered = false;
+        this.alpha = 0.5;
     }
 
     /**

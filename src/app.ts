@@ -11,5 +11,4 @@ import { Space1 } from "../test/Levels";
     // instance.unloadLevel();
     // await new Promise(r => setTimeout(r, 5000));
     // instance.loadLevel(new Space1());
-
 })();

@@ -39,6 +39,7 @@ export class GameInstance extends Application {
         this.unloadLevel();
         this.levelInstance.level = level;
         this.stage.addChild(this.levelInstance.level);
+        window.addEventListener("keydown", (keyboardEvent: KeyboardEvent) => this.levelInstance.getInstanceKeyboardListenner(keyboardEvent));
         this.ticker.add(this.levelInstance.getInstanceTicker());
     }
 
@@ -46,6 +47,7 @@ export class GameInstance extends Application {
         if (this.levelInstance.levelIsActive()) {
             this.stage.removeChild(this.levelInstance.level as DisplayObject);
             this.levelInstance.level?.destroy({texture: false});
+            window.removeEventListener("keydown", (keyboardEvent: KeyboardEvent) => this.levelInstance.getInstanceKeyboardListenner(keyboardEvent));
             this.levelInstance.level = undefined;
             this.levelInstance.reset();
         }

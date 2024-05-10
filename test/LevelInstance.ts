@@ -1,5 +1,5 @@
 import { Application, BitmapFont, Container, DisplayObject, TickerCallback } from "pixi.js";
-import { AbstractLevel } from "./AbstractLevel";
+import { AbstractLevel, KeyboardKeys } from "./AbstractLevel";
 import { EnemyNode } from "./EnemyNode";
 import { LineObject } from "./typings";
 
@@ -16,10 +16,11 @@ export class LevelInstance {
     private highestScore: number = 0;
     private failStreak: number = 0;
     private frameCount: number = 0;
-    private enemyNodes: EnemyNode[] = [];
+    private enemyNodes: EnemyNode[];
 
     private constructor(application: Application) {
         this.application = application;
+        this.enemyNodes = [];
     }
 
     public static getInstance(application: Application) {
@@ -31,11 +32,20 @@ export class LevelInstance {
         return this.level != null;
     }
 
+    public incrementScore(): void {
+        this.score++;
+        if (this.highestScore < this.score) this.highestScore = this.score;
+    }
+
+    public resetScore(): void {
+        this.score = 0;
+    }
+
     /**
      * @description resets instance attributes
      */
-    public reset() {
-        
+    public reset() {    
+        this.resetScore();
     }
 
     public initializeEnemyNode(lineObject: LineObject = this.level?.getRandomLineObject() as LineObject): void {
@@ -57,7 +67,7 @@ export class LevelInstance {
         for (let node of this.enemyNodes) {
             if (node.canBeDestroyed()) {
                 this.destroyEnemyNode(node);
-                //this.resetScore();
+                this.resetScore();
                 //this.failStreak++;
             }
         }
@@ -68,6 +78,27 @@ export class LevelInstance {
      */
     public updateNodes(delta: number): void {
         for (let node of this.enemyNodes) node.updateNode(delta, this.level?.distancePerFrame as number);
+    }
+
+    public getInstanceKeyboardListenner(keyboardEvent: KeyboardEvent): void {
+        let currentKey = keyboardEvent.key.toUpperCase();
+        if (Object.keys(KeyboardKeys).includes(currentKey)) {
+            for (let node of this.enemyNodes) {
+                if (node.triggerKey === currentKey && node.canBeIntercepted() && node.hasNotBeenTriggered) {
+                    this.destroyEnemyNode(node);
+                    this.incrementScore();
+                    //DESTRCTUCTION ANIMATION ON DESTRUCTION...
+                    //EACH INTERCEPTION SHOULD MAKE THE PLANET FASTER
+                    console.log(this.score);
+                    break;
+                } else if (node.hasNotBeenTriggered) {
+                    node.invalidate();
+                    this.resetScore();
+                    console.log("MISSED - NODE ACCELERATION");
+                    break;
+                }
+            }
+        }
     }
 
     /**

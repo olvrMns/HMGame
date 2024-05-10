@@ -1,7 +1,12 @@
 import { Container } from "pixi.js";
-
 import { ApplicationUtils } from "./ApplicationUtils";
 import { LineObject } from "./typings";
+
+export enum KeyboardKeys {
+    A = "A",
+    D = "D",
+    W = "W"
+}
 
 /**
  * @description Not instantiable Object that encapsulates the data relative to each level
