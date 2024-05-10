@@ -6,7 +6,7 @@ import { WindowPresets } from "./WindowPresets";
 
 export class Space1 extends AbstractLevel {
     constructor() {
-        super(10, 100, 1.5, 5, 0.9, 100, 0.9);
+        super(10, 100, 1.5, 20, 0.9, 5000, 0.9);
     }
 
     public build(): void {
@@ -23,33 +23,34 @@ export class Space1 extends AbstractLevel {
         this.addChild(ApplicationSrpites.SPACE_BACKGROUND1);
         this.addChild(core1);
 
-        this.addLineObject({
-            keyboardKey: "A", 
-            enemyTextures: ApplicationTextures.SPACESHIP1, 
-            line: Line.of(WindowPresets.PSC_MIDDLE_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
-        this.addLineObject({
-            keyboardKey: "D", 
-            enemyTextures: ApplicationTextures.SPACESHIP2, 
-            line: Line.of(WindowPresets.PSC_UPPER_MIDDLE, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
-        this.addLineObject({
-            keyboardKey: "A", 
-            enemyTextures: ApplicationTextures.SPACESHIP1, 
-            line: Line.of(WindowPresets.PSC_UPPER_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
+        // this.addLineObject({
+        //     keyboardKey: "A", 
+        //     enemyTextures: ApplicationTextures.SPACESHIP1, 
+        //     line: Line.of(WindowPresets.PSC_MIDDLE_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
+        // this.addLineObject({
+        //     keyboardKey: "D", 
+        //     enemyTextures: ApplicationTextures.SPACESHIP2, 
+        //     line: Line.of(WindowPresets.PSC_UPPER_MIDDLE, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
+        // this.addLineObject({
+        //     keyboardKey: "A", 
+        //     enemyTextures: ApplicationTextures.SPACESHIP1, 
+        //     line: Line.of(WindowPresets.PSC_UPPER_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
         this.addLineObject({
             keyboardKey: "A", 
             enemyTextures: ApplicationTextures.SPACESHIP1, 
             line: Line.of(WindowPresets.PSC_UPPER_LEFT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
-        this.addLineObject({
-            keyboardKey: "A", 
-            enemyTextures: ApplicationTextures.SPACESHIP1, 
-            line: Line.of(WindowPresets.PSC_BOTTOM_LEFT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
-        this.addLineObject({
-            keyboardKey: "A", 
-            enemyTextures: ApplicationTextures.SPACESHIP1, 
-            line: Line.of(WindowPresets.PSC_BOTTOM_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
-        this.addLineObject({
-            keyboardKey: "A", 
-            enemyTextures: ApplicationTextures.SPACESHIP1, 
-            line: Line.of(WindowPresets.PSC_BOTTOM_MIDDLE, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
+
+        // this.addLineObject({
+        //     keyboardKey: "A", 
+        //     enemyTextures: ApplicationTextures.SPACESHIP1, 
+        //     line: Line.of(WindowPresets.PSC_BOTTOM_LEFT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
+        // this.addLineObject({
+        //     keyboardKey: "A", 
+        //     enemyTextures: ApplicationTextures.SPACESHIP1, 
+        //     line: Line.of(WindowPresets.PSC_BOTTOM_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
+        // this.addLineObject({
+        //     keyboardKey: "A", 
+        //     enemyTextures: ApplicationTextures.SPACESHIP1, 
+        //     line: Line.of(WindowPresets.PSC_BOTTOM_MIDDLE, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, true)});
     }
 }

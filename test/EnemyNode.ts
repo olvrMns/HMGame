@@ -1,29 +1,30 @@
 import { AnimatedSprite, FrameObject, Resource, Sprite, Texture } from "pixi.js";
 import { LinearRepresentation } from "./LinearRepresentation";
 import { Coordinate } from "./Coordinate";
-import { LineObject } from "./typings";
+import { EnemyNodeOptions, LineObject } from "./typings";
 
 
 /**
  * @description 
  */
 export class EnemyNode extends AnimatedSprite {
-    private linearRepresentation: LinearRepresentation;
-    private interceptionThresholdCoordinate: Coordinate;
+    public linearRepresentation: LinearRepresentation;
+    public interceptionThresholdCoordinate: Coordinate;
     public isValid: boolean = true;
 
-    constructor(lineObject: LineObject) {
+    constructor(lineObject: LineObject, options: EnemyNodeOptions) {
         super(lineObject.enemyTextures)
         this.linearRepresentation = lineObject.line.linearRepresentation;
         this.interceptionThresholdCoordinate = lineObject.line.interceptionThresholdCoordinate;
-        this.scale.x = 0.5;
-        this.scale.y = 0.5;
-        this.rotation = 1.2;
+        this.scale.x = options.scaleX ? options.scaleX : 0.5;
+        this.scale.y = options.scaleY ? options.scaleY : 0.5;
+        this.angle = options.angle ? options.angle : 0;
+        console.log("node angle : " + this.angle)
         this.init();
     }
 
-    public static of(lineObject: LineObject): EnemyNode {
-        return new EnemyNode(lineObject);
+    public static of(lineObject: LineObject, options: EnemyNodeOptions): EnemyNode {
+        return new EnemyNode(lineObject, options);
     }
 
     public init() {

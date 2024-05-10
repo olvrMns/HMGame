@@ -40,7 +40,7 @@ export class LevelInstance {
     }
 
     public initializeEnemyNode(lineObject: LineObject = this.level?.getRandomLineObject() as LineObject): void {
-        let enemyNode: EnemyNode = EnemyNode.of(lineObject);
+        let enemyNode: EnemyNode = EnemyNode.of(lineObject, {angle: lineObject.line.linearRepresentation.angle, scaleX: 1, scaleY: 1});
         this.enemyNodes.push(enemyNode);
         this.level?.addChild(enemyNode);
     }
@@ -51,6 +51,7 @@ export class LevelInstance {
      */
     public destroyEnemyNode(enemyNode: EnemyNode) {
         this.enemyNodes = this.enemyNodes.filter(node => node !== enemyNode);
+        console.log(enemyNode.linearRepresentation);
         enemyNode.destroy({texture: false});
     }
 
@@ -90,7 +91,7 @@ export class LevelInstance {
                 this.initializeEnemyNode();
             }
 
-            if (this.frameCount > 200) this.frameCount = 0;
+            if (this.frameCount > 10000) this.frameCount = 0;
             this.frameCount++;
         };
     }
