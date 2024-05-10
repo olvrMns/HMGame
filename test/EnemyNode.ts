@@ -1,4 +1,4 @@
-import { AnimatedSprite, FrameObject, Resource, Sprite, Texture } from "pixi.js";
+import { AnimatedSprite } from "pixi.js";
 import { LinearRepresentation } from "./LinearRepresentation";
 import { Coordinate } from "./Coordinate";
 import { EnemyNodeOptions, LineObject } from "./typings";
@@ -18,8 +18,7 @@ export class EnemyNode extends AnimatedSprite {
         this.interceptionThresholdCoordinate = lineObject.line.interceptionThresholdCoordinate;
         this.scale.x = options.scaleX ? options.scaleX : 0.5;
         this.scale.y = options.scaleY ? options.scaleY : 0.5;
-        this.angle = options.angle ? options.angle : 0;
-        console.log("node angle : " + this.angle)
+        this.angle = lineObject.line.inclination;
         this.init();
     }
 

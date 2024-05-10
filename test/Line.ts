@@ -10,17 +10,20 @@ import { ApplicationUtils } from "./ApplicationUtils";
 export class Line extends Graphics {
     public linearRepresentation: LinearRepresentation;
     public interceptionThresholdCoordinate: Coordinate;
+    public inclination: number;
     public showInterceptionSegment: boolean;
 
     constructor(
         startCoordinate: Coordinate, 
         endCoordinate: Coordinate, 
         distanceToIntercept: number, 
+        inclination: number,
         showInterceptionSegment: boolean = false) {
             
         super();
         this.linearRepresentation = new LinearRepresentation(startCoordinate, endCoordinate);
         this.interceptionThresholdCoordinate = this.computeDistanceInterceptionCoordinate(distanceToIntercept);
+        this.inclination = inclination;
         this.showInterceptionSegment = showInterceptionSegment;
         this.draw();
     }
@@ -35,8 +38,8 @@ export class Line extends Graphics {
         }
     }
 
-    public static of(startCoordinate: Coordinate, endCoordinate: Coordinate, distanceToIntercept: number, showInterceptionSegment: boolean = false): Line {
-        return new Line(startCoordinate, endCoordinate, distanceToIntercept, showInterceptionSegment);
+    public static of(startCoordinate: Coordinate, endCoordinate: Coordinate, distanceToIntercept: number, inclination: number, showInterceptionSegment: boolean = false): Line {
+        return new Line(startCoordinate, endCoordinate, distanceToIntercept, inclination, showInterceptionSegment);
     }
 
     public computeDistanceInterceptionCoordinate(distanceToIntercept: number): Coordinate {

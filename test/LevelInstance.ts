@@ -1,7 +1,6 @@
 import { Application, BitmapFont, Container, DisplayObject, TickerCallback } from "pixi.js";
 import { AbstractLevel } from "./AbstractLevel";
 import { EnemyNode } from "./EnemyNode";
-import { Line } from "./Line";
 import { LineObject } from "./typings";
 
 
@@ -40,7 +39,7 @@ export class LevelInstance {
     }
 
     public initializeEnemyNode(lineObject: LineObject = this.level?.getRandomLineObject() as LineObject): void {
-        let enemyNode: EnemyNode = EnemyNode.of(lineObject, {angle: lineObject.line.linearRepresentation.angle, scaleX: 1, scaleY: 1});
+        let enemyNode: EnemyNode = EnemyNode.of(lineObject, {angle: lineObject.line.inclination, scaleX: 0.5, scaleY: 0.5});
         this.enemyNodes.push(enemyNode);
         this.level?.addChild(enemyNode);
     }
@@ -51,7 +50,6 @@ export class LevelInstance {
      */
     public destroyEnemyNode(enemyNode: EnemyNode) {
         this.enemyNodes = this.enemyNodes.filter(node => node !== enemyNode);
-        console.log(enemyNode.linearRepresentation);
         enemyNode.destroy({texture: false});
     }
 
