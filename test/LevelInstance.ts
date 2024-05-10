@@ -1,7 +1,8 @@
 import { Application, BitmapFont, Container, DisplayObject, TickerCallback } from "pixi.js";
-import { AbstractLevel, KeyboardKeys } from "./AbstractLevel";
+import { AbstractLevel, TriggerKeys } from "./AbstractLevel";
 import { EnemyNode } from "./EnemyNode";
 import { LineObject } from "./typings";
+import InputManager from "guki-input-controller";
 
 
 /**
@@ -80,11 +81,11 @@ export class LevelInstance {
         for (let node of this.enemyNodes) node.updateNode(delta, this.level?.distancePerFrame as number);
     }
 
-    public getInstanceKeyboardListenner(keyboardEvent: KeyboardEvent): void {
-        let currentKey = keyboardEvent.key.toUpperCase();
-        if (Object.keys(KeyboardKeys).includes(currentKey)) {
+    public onKeyPress(key: string) {
+        key = key.toUpperCase();
+        if (Object.keys(TriggerKeys).includes(key)) {
             for (let node of this.enemyNodes) {
-                if (node.triggerKey === currentKey && node.canBeIntercepted() && node.hasNotBeenTriggered) {
+                if (node.triggerKey === key && node.canBeIntercepted() && node.hasNotBeenTriggered) {
                     this.destroyEnemyNode(node);
                     this.incrementScore();
                     //DESTRCTUCTION ANIMATION ON DESTRUCTION...
@@ -101,6 +102,16 @@ export class LevelInstance {
         }
     }
 
+    public getInstanceKeyboardListenner(keyboardEvent: KeyboardEvent): void {
+        this.onKeyPress(keyboardEvent.key);
+    }
+
+    public onControllerPress(inputManager: InputManager) {
+        for (let key of inputManager.gamepad.pressed) {
+            this.onKeyPress(key);
+        }
+    }
+
     /**
      * @Note Random sequence
      * @returns TickerCallback
@@ -110,7 +121,10 @@ export class LevelInstance {
         const cadenceMultiplier: number = this.level?.cadenceMultiplier as number;
         const framesBeforeNodeUpdate: number = this.level?.framesBeforeNodeUpdate as number;
         const framesBeforeNodeInitialization: number = this.level?.framesBeforeNodeInitialization as number;
+        const inputManager: InputManager = new InputManager();
+        inputManager.init();
         return (delta: number) => {
+            inputManager.update();
             if (this.frameCount % Math.floor(framesBeforeNodeUpdate * speedMultiplier) == 0) {
                 this.updateNodes(delta); 
                 this.destroyLineNodes();
@@ -122,6 +136,8 @@ export class LevelInstance {
 
             if (this.frameCount > 10000) this.frameCount = 0;
             this.frameCount++;
+
+            this.onControllerPress(inputManager);
         };
     }
 }

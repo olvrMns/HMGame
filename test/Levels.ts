@@ -1,5 +1,5 @@
 import { AnimatedSprite } from "pixi.js";
-import { AbstractLevel, KeyboardKeys } from "./AbstractLevel";
+import { AbstractLevel, TriggerKeys } from "./AbstractLevel";
 import { ApplicationTextures, ApplicationSrpites } from "./AssetLoader";
 import { Line } from "./Line";
 import { WindowPresets } from "./WindowPresets";
@@ -24,31 +24,31 @@ export class Space1 extends AbstractLevel {
         this.addChild(core1);
 
         this.addLineObject({
-            triggerKey: KeyboardKeys.A, 
+            triggerKey: TriggerKeys.X, 
             enemyTextures: ApplicationTextures.SPACESHIP1, 
             line: Line.of(WindowPresets.PSC_MIDDLE_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, -90, false)});
+        // this.addLineObject({
+        //     triggerKey: TriggerKeys.Y, 
+        //     enemyTextures: ApplicationTextures.SPACESHIP2, 
+        //     line: Line.of(WindowPresets.PSC_UPPER_MIDDLE, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 180, true)});
         this.addLineObject({
-            triggerKey: KeyboardKeys.D, 
-            enemyTextures: ApplicationTextures.SPACESHIP2, 
-            line: Line.of(WindowPresets.PSC_UPPER_MIDDLE, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 180, true)});
-        this.addLineObject({
-            triggerKey: KeyboardKeys.A, 
+            triggerKey: TriggerKeys.X, 
             enemyTextures: ApplicationTextures.SPACESHIP1, 
             line: Line.of(WindowPresets.PSC_UPPER_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept,  -120, false)});
+        // this.addLineObject({
+        //     triggerKey: TriggerKeys.Y, 
+        //     enemyTextures: ApplicationTextures.SPACESHIP2, 
+        //     line: Line.of(WindowPresets.PSC_UPPER_LEFT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 120, false)});
+        // this.addLineObject({
+        //     triggerKey: TriggerKeys.Y, 
+        //     enemyTextures: ApplicationTextures.SPACESHIP2, 
+        //     line: Line.of(WindowPresets.PSC_BOTTOM_LEFT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 60, true)});
         this.addLineObject({
-            triggerKey: KeyboardKeys.D, 
-            enemyTextures: ApplicationTextures.SPACESHIP2, 
-            line: Line.of(WindowPresets.PSC_UPPER_LEFT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 120, false)});
-        this.addLineObject({
-            triggerKey: KeyboardKeys.D, 
-            enemyTextures: ApplicationTextures.SPACESHIP2, 
-            line: Line.of(WindowPresets.PSC_BOTTOM_LEFT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 60, true)});
-        this.addLineObject({
-            triggerKey: KeyboardKeys.A, 
+            triggerKey: TriggerKeys.X, 
             enemyTextures: ApplicationTextures.SPACESHIP1, 
             line: Line.of(WindowPresets.PSC_BOTTOM_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, -60, false)});
         this.addLineObject({
-            triggerKey: KeyboardKeys.A, 
+            triggerKey: TriggerKeys.X, 
             enemyTextures: ApplicationTextures.SPACESHIP1, 
             line: Line.of(WindowPresets.PSC_BOTTOM_MIDDLE, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 360, false)});
     }

@@ -2,10 +2,17 @@ import { Container } from "pixi.js";
 import { ApplicationUtils } from "./ApplicationUtils";
 import { LineObject } from "./typings";
 
-export enum KeyboardKeys {
+export enum TriggerKeys {
     A = "A",
     D = "D",
-    W = "W"
+    W = "W",
+    X = "X",
+    Y = "Y",
+    B = "B",
+    DOWN = "Down",
+    UP = "Up",
+    LEFT = "Left",
+    RIGHT = "Right"
 }
 
 /**
