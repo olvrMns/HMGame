@@ -4,9 +4,17 @@ import { ApplicationTextures, ApplicationSrpites } from "./AssetLoader";
 import { Line } from "./Line";
 import { WindowPresets } from "./WindowPresets";
 
+//10, 200, 1.5, 2, 0.9, 500, 0.9
 export class Space1 extends AbstractLevel {
     constructor() {
-        super(10, 200, 1.5, 2, 0.9, 500, 0.9);
+        super({
+            distancePerFrame: 10,
+            distanceToIntercept: 150,
+            framesBeforeNodeInitialization: 50,
+            distanceToInterceptMultiplier: 1.5,
+            framesBeforeNodeUpdate: 5,
+            nodeSpeedMultiplier: 0.5,
+        });
     }
 
     public build(): void {
@@ -19,7 +27,6 @@ export class Space1 extends AbstractLevel {
         core1.anchor.x = 0.5;
         core1.anchor.y = 0.5;
         core1.play();
-
         this.addChild(ApplicationSrpites.SPACE_BACKGROUND1);
         this.addChild(core1);
 
