@@ -1,7 +1,7 @@
-import { Application, BitmapFont, Container, DisplayObject, TickerCallback } from "pixi.js";
+import { LineObject } from "./types";
+import { Application, TickerCallback } from "pixi.js";
 import { AbstractLevel, TriggerKeys } from "./AbstractLevel";
 import { EnemyNode } from "./EnemyNode";
-import { LineObject } from "./typings";
 import InputManager from "guki-input-controller";
 
 
@@ -84,6 +84,7 @@ export class LevelInstance {
     public onKeyPress(key: string) {
         key = key.toUpperCase();
         if (Object.keys(TriggerKeys).includes(key)) {
+            console.log("NUMBER OF ENEMIES : " + this.enemyNodes.length);
             for (let node of this.enemyNodes) {
                 if (node.triggerKey === key && node.canBeIntercepted() && node.hasNotBeenTriggered) {
                     this.destroyEnemyNode(node);
@@ -97,6 +98,9 @@ export class LevelInstance {
                     this.resetScore();
                     console.log("MISSED - NODE ACCELERATION");
                     break;
+                } else {
+                    console.log("ELSE?");
+                    break;
                 }
             }
         }
@@ -107,9 +111,7 @@ export class LevelInstance {
     }
 
     public onControllerPress(inputManager: InputManager) {
-        for (let key of inputManager.gamepad.pressed) {
-            this.onKeyPress(key);
-        }
+        if (inputManager.gamepad.justPressed[0]) this.onKeyPress(inputManager.gamepad.pressed[0]);
     }
 
     /**
@@ -121,7 +123,7 @@ export class LevelInstance {
         const cadenceMultiplier: number = this.level?.cadenceMultiplier as number;
         const framesBeforeNodeUpdate: number = this.level?.framesBeforeNodeUpdate as number;
         const framesBeforeNodeInitialization: number = this.level?.framesBeforeNodeInitialization as number;
-        const inputManager: InputManager = new InputManager();
+        const inputManager = new InputManager();
         inputManager.init();
         return (delta: number) => {
             inputManager.update();

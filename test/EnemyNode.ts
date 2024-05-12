@@ -1,9 +1,8 @@
+import { EnemyNodeOptions, LineObject } from "./types";
 import { AnimatedSprite } from "pixi.js";
-import { LinearRepresentation } from "./LinearRepresentation";
-import { Coordinate } from "./Coordinate";
-import { EnemyNodeOptions, LineObject } from "./typings";
 import { TriggerKeys } from "./AbstractLevel";
-
+import { Coordinate } from "./Coordinate";
+import { LinearRepresentation } from "./LinearRepresentation";
 
 /**
  * @description 

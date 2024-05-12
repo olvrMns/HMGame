@@ -6,7 +6,7 @@ import { WindowPresets } from "./WindowPresets";
 
 export class Space1 extends AbstractLevel {
     constructor() {
-        super(10, 100, 1.5, 5, 0.9, 250, 0.9);
+        super(10, 200, 1.5, 2, 0.9, 500, 0.9);
     }
 
     public build(): void {
@@ -26,7 +26,7 @@ export class Space1 extends AbstractLevel {
         this.addLineObject({
             triggerKey: TriggerKeys.X, 
             enemyTextures: ApplicationTextures.SPACESHIP1, 
-            line: Line.of(WindowPresets.PSC_MIDDLE_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, -90, false)});
+            line: Line.of(WindowPresets.PSC_MIDDLE_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, -90, true)});
         // this.addLineObject({
         //     triggerKey: TriggerKeys.Y, 
         //     enemyTextures: ApplicationTextures.SPACESHIP2, 
@@ -34,7 +34,7 @@ export class Space1 extends AbstractLevel {
         this.addLineObject({
             triggerKey: TriggerKeys.X, 
             enemyTextures: ApplicationTextures.SPACESHIP1, 
-            line: Line.of(WindowPresets.PSC_UPPER_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept,  -120, false)});
+            line: Line.of(WindowPresets.PSC_UPPER_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept,  -120, true)});
         // this.addLineObject({
         //     triggerKey: TriggerKeys.Y, 
         //     enemyTextures: ApplicationTextures.SPACESHIP2, 
@@ -46,10 +46,10 @@ export class Space1 extends AbstractLevel {
         this.addLineObject({
             triggerKey: TriggerKeys.X, 
             enemyTextures: ApplicationTextures.SPACESHIP1, 
-            line: Line.of(WindowPresets.PSC_BOTTOM_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, -60, false)});
+            line: Line.of(WindowPresets.PSC_BOTTOM_RIGHT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, -60, true)});
         this.addLineObject({
             triggerKey: TriggerKeys.X, 
             enemyTextures: ApplicationTextures.SPACESHIP1, 
-            line: Line.of(WindowPresets.PSC_BOTTOM_MIDDLE, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 360, false)});
+            line: Line.of(WindowPresets.PSC_BOTTOM_MIDDLE, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 360, true)});
     }
 }

@@ -1,6 +1,6 @@
+import { LineObject } from "guki-input-controller";
 import { Container } from "pixi.js";
 import { ApplicationUtils } from "./ApplicationUtils";
-import { LineObject } from "./typings";
 
 export enum TriggerKeys {
     A = "A",
