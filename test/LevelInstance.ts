@@ -17,7 +17,13 @@ export class LevelInstance {
     private highestScore: number = 0;
     private failStreak: number = 0;
     private frameCount: number = 0;
+
+    /**
+     * @Note could be its own object 
+     */
     private enemyNodes: EnemyNode[];
+
+    //bitMapText...
 
     private constructor(application: Application) {
         this.application = application;
@@ -81,6 +87,25 @@ export class LevelInstance {
         for (let node of this.enemyNodes) node.updateNode(delta, this.level?.distancePerFrame as number);
     }
 
+    public sortEnemyNodes(): void {
+        let closestDistance: number = 0;
+        let currentDistance: number;
+        let sortedEnemyNodes: EnemyNode[] = [];
+        for (let node of this.enemyNodes) {
+            currentDistance = node.getDistanceToEndPoint();
+            if (currentDistance <= closestDistance) {
+                sortedEnemyNodes.unshift(node);
+                closestDistance = currentDistance;
+            } else sortedEnemyNodes.push(node);
+        }
+    }
+
+    /**
+     * @problems
+     * - the first node in the list isn't necessarily the closest one to their end point on the screen
+     * - ELSE?
+     * @param key 
+     */
     public onKeyPress(key: string) {
         key = key.toUpperCase();
         if (Object.keys(TriggerKeys).includes(key)) {
@@ -126,6 +151,7 @@ export class LevelInstance {
         const inputManager = new InputManager();
         inputManager.init();
         return (delta: number) => {
+            this.sortEnemyNodes();
             inputManager.update();
             if (this.frameCount % Math.floor(framesBeforeNodeUpdate * speedMultiplier) == 0) {
                 this.updateNodes(delta); 

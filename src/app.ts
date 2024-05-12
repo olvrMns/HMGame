@@ -7,6 +7,7 @@ import { Space1 } from "../test/Levels";
     const instance: GameInstance = GameInstance.getInstance();
     await AssetLoader.load();
     instance.loadLevel(new Space1());
+
     // await new Promise(r => setTimeout(r, 5000));
     // instance.unloadLevel();
     // await new Promise(r => setTimeout(r, 5000));

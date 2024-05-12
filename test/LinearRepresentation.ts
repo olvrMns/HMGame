@@ -39,4 +39,12 @@ export class LinearRepresentation {
     public getCoordinateFromY(y: number): Coordinate {
         return new Coordinate(this.getXFromY(y), y);
     }
+
+    /**
+     * @description d=√((x2 – x1)² + (y2 – y1)²)
+     * @returns the distance between two points
+     */
+    public static getDistance(x1: number, y1: number, x2: number, y2: number) {
+        return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+    }
 }

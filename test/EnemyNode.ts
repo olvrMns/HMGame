@@ -59,7 +59,14 @@ export class EnemyNode extends AnimatedSprite {
 
     public invalidate(): void {
         this.hasNotBeenTriggered = false;
-        this.alpha = 0.5;
+        this.alpha = 0.3;
+    }
+
+    /**
+     * @returns the distance from current position of the node to its endPoint
+     */
+    public getDistanceToEndPoint(): number {
+        return LinearRepresentation.getDistance(this.x, this.y, this.linearRepresentation.endCoordinate.x, this.linearRepresentation.endCoordinate.y);
     }
 
     /**
