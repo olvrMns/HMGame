@@ -1,5 +1,5 @@
 import { LineObject } from "./types";
-import { Application, TickerCallback } from "pixi.js";
+import { Application, BitmapText, TickerCallback } from "pixi.js";
 import { AbstractLevel, TriggerKeys } from "./AbstractLevel";
 import { EnemyNode } from "./EnemyNode";
 import InputManager from "guki-input-controller";
@@ -17,16 +17,12 @@ export class LevelInstance {
     private highestScore: number = 0;
     private failStreak: number = 0;
     private frameCount: number = 0;
-
-    /**
-     * @Note could be its own object 
-     */
     private enemyNodes: EnemyNode[];
-
-    //bitMapText...
+    //private scoreBitMapText: BitmapText;
 
     private constructor(application: Application) {
         this.application = application;
+        //this.scoreBitMapText = new BitmapText('0', {});
         this.enemyNodes = [];
     }
 
@@ -56,7 +52,7 @@ export class LevelInstance {
     }
 
     public initializeEnemyNode(lineObject: LineObject = this.level?.getRandomLineObject() as LineObject): void {
-        let enemyNode: EnemyNode = EnemyNode.of(lineObject, {angle: lineObject.line.inclination, scaleX: 0.5, scaleY: 0.5});
+        let enemyNode: EnemyNode = EnemyNode.of(lineObject, {angle: lineObject.line.inclination, scale: 0.5});
         this.enemyNodes.push(enemyNode);
         this.level?.addChild(enemyNode);
     }
@@ -93,11 +89,12 @@ export class LevelInstance {
         let sortedEnemyNodes: EnemyNode[] = [];
         for (let node of this.enemyNodes) {
             currentDistance = node.getDistanceToEndPoint();
-            if (currentDistance <= closestDistance) {
+            if (currentDistance <= closestDistance && node.hasNotBeenTriggered) {
                 sortedEnemyNodes.unshift(node);
                 closestDistance = currentDistance;
             } else sortedEnemyNodes.push(node);
         }
+        if (this.enemyNodes.length > 0) this.enemyNodes[0].accentuate();
     }
 
     /**

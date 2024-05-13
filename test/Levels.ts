@@ -31,18 +31,18 @@ export class Space1 extends AbstractLevel {
         this.addChild(ApplicationSrpites.SPACE_BACKGROUND1);
         this.addChild(core1);
 
-        this.addLineObject({
-            triggerKey: TriggerKeys.Y, 
-            enemyTextures: ApplicationTextures.SPACESHIP2, 
-            line: Line.of(WindowPresets.PSC_UPPER_MIDDLE, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 180, true)});
-        this.addLineObject({
-            triggerKey: TriggerKeys.Y, 
-            enemyTextures: ApplicationTextures.SPACESHIP2, 
-            line: Line.of(WindowPresets.PSC_UPPER_LEFT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 120, false)});
-        this.addLineObject({
-            triggerKey: TriggerKeys.Y, 
-            enemyTextures: ApplicationTextures.SPACESHIP2, 
-            line: Line.of(WindowPresets.PSC_BOTTOM_LEFT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 60, true)});
+        // this.addLineObject({
+        //     triggerKey: TriggerKeys.Y, 
+        //     enemyTextures: ApplicationTextures.SPACESHIP2, 
+        //     line: Line.of(WindowPresets.PSC_UPPER_MIDDLE, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 180, true)});
+        // this.addLineObject({
+        //     triggerKey: TriggerKeys.Y, 
+        //     enemyTextures: ApplicationTextures.SPACESHIP2, 
+        //     line: Line.of(WindowPresets.PSC_UPPER_LEFT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 120, false)});
+        // this.addLineObject({
+        //     triggerKey: TriggerKeys.Y, 
+        //     enemyTextures: ApplicationTextures.SPACESHIP2, 
+        //     line: Line.of(WindowPresets.PSC_BOTTOM_LEFT, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 60, true)});
         this.addLineObject({
             triggerKey: TriggerKeys.X, 
             enemyTextures: ApplicationTextures.SPACESHIP1, 
@@ -63,8 +63,6 @@ export class Space1 extends AbstractLevel {
 }
 
 export class ClassicGH extends AbstractLevel {
-
-
 
     public build(): void {
         

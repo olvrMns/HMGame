@@ -10,6 +10,8 @@ import { LinearRepresentation } from "./LinearRepresentation";
 export class EnemyNode extends AnimatedSprite {
     public linearRepresentation: LinearRepresentation;
     public interceptionThresholdCoordinate: Coordinate;
+    public distanceMultiplier: number;
+    public accentuatedScale: number;
     public triggerKey: TriggerKeys;
     public hasNotBeenTriggered: boolean = true;
 
@@ -17,8 +19,10 @@ export class EnemyNode extends AnimatedSprite {
         super(lineObject.enemyTextures)
         this.linearRepresentation = lineObject.line.linearRepresentation;
         this.interceptionThresholdCoordinate = lineObject.line.interceptionThresholdCoordinate;
-        this.scale.x = options.scaleX ? options.scaleX : 0.5;
-        this.scale.y = options.scaleY ? options.scaleY : 0.5;
+        this.scale.x = options.scale ? options.scale : 0.5;
+        this.scale.y = options.scale ? options.scale : 0.5;
+        this.accentuatedScale = options.scale ? options.scale * 1.3 : 0.5 * 1.3; 
+        this.distanceMultiplier = 1;
         this.angle = lineObject.line.inclination;
         this.triggerKey = lineObject.triggerKey;
         this.init();
@@ -57,9 +61,16 @@ export class EnemyNode extends AnimatedSprite {
         return this.hasPassed(this.interceptionThresholdCoordinate);
     }
 
+    public accentuate() {
+        this.scale.x = this.accentuatedScale;
+        this.scale.y = this.accentuatedScale;
+        this.tint = '#23d916';
+    }
+
     public invalidate(): void {
         this.hasNotBeenTriggered = false;
-        this.alpha = 0.3;
+        this.distanceMultiplier = 1.5;
+        this.alpha = 0.5;
     }
 
     /**
@@ -81,19 +92,20 @@ export class EnemyNode extends AnimatedSprite {
      */
     public updateNode(delta: number, distance: number): void {
         const {startCoordinate, endCoordinate, yIsAscendant, xIsAscendant} = this.linearRepresentation;
+        const resultingDistance: number = (distance * delta) * this.distanceMultiplier;
         if (startCoordinate.x === endCoordinate.x) {
-            if (yIsAscendant) this.y += distance * delta;
-            else this.y -= distance * delta;
+            if (yIsAscendant) this.y += resultingDistance;
+            else this.y -= resultingDistance;
         } else if (startCoordinate.y === endCoordinate.y) {
-            if (xIsAscendant) this.x += distance * delta;
-            else this.x -= distance * delta;
+            if (xIsAscendant) this.x += resultingDistance;
+            else this.x -= resultingDistance;
         } else {
             let nextCoordinate: Coordinate = new Coordinate(0, 0);
             if (xIsAscendant) { 
-                nextCoordinate.setX(this.x + (distance * delta));
+                nextCoordinate.setX(this.x + (resultingDistance));
                 nextCoordinate.setY(this.linearRepresentation.getYFromX(nextCoordinate.x)); 
             } else {
-                nextCoordinate.setX(this.x - (distance * delta));
+                nextCoordinate.setX(this.x - (resultingDistance));
                 nextCoordinate.setY(this.linearRepresentation.getYFromX(nextCoordinate.x)); 
             }
             this.x = nextCoordinate.x;

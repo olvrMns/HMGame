@@ -17,13 +17,12 @@ export class AssetLoader {
     }
 
     public static async load() {
-
+        
         ApplicationTextures.PLANET1 = await this.getTextures(`${this.PATH}planet1Data.png`, planet1Data, "planet1");
         ApplicationTextures.PLANET2 = await this.getTextures(`${this.PATH}planet2Data.png`, planet2Data, "planet2");
         ApplicationTextures.SPACESHIP1 = await this.getTextures(`${this.PATH}fighter1Data.png`, fighter1Data, "fighter1");
         ApplicationTextures.SPACESHIP2 = await this.getTextures(`${this.PATH}fighter2Data.png`, fighter2Data, "fighter2");
         ApplicationSrpites.SPACE_BACKGROUND1 = Sprite.from("assets/SpaceBackground1.png");
-       
     }
 }
 
