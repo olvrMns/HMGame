@@ -3,6 +3,7 @@ import { AbstractLevel, TriggerKeys } from "./AbstractLevel";
 import { ApplicationTextures, ApplicationSrpites } from "./AssetLoader";
 import { Line } from "./Line";
 import { WindowPresets } from "./WindowPresets";
+import { Coordinate } from "./Coordinate";
 
 //10, 150, 50, 1.5, 5, 0.5
 export class Space1 extends AbstractLevel {
@@ -10,7 +11,7 @@ export class Space1 extends AbstractLevel {
         super({
             distancePerFrame: 10,
             distanceToIntercept: 150,
-            framesBeforeNodeInitialization: 45,
+            framesBeforeNodeInitialization: 90,
             distanceToInterceptMultiplier: 1.5,
             framesBeforeNodeUpdate: 5,
             nodeSpeedMultiplier: 0.5,
@@ -22,8 +23,8 @@ export class Space1 extends AbstractLevel {
         const core1: AnimatedSprite = new AnimatedSprite(ApplicationTextures.PLANET1);
         core1.x = WindowPresets.CENTER_COORDINATE.x;
         core1.y = WindowPresets.CENTER_COORDINATE.y;
-        core1.scale.x = 1.5;
-        core1.scale.y = 1.5;
+        core1.scale.x = 0.5;
+        core1.scale.y = 0.5;
         core1.anchor.x = 0.5;
         core1.anchor.y = 0.5;
         core1.animationSpeed = 0.2;
@@ -64,7 +65,41 @@ export class Space1 extends AbstractLevel {
 
 export class ClassicGH extends AbstractLevel {
 
+    constructor() {
+        super({
+            distancePerFrame: 10,
+            distanceToIntercept: 150,
+            framesBeforeNodeInitialization: 70,
+            distanceToInterceptMultiplier: 1.5,
+            framesBeforeNodeUpdate: 5,
+            nodeSpeedMultiplier: 0.5,
+        });
+    }
+
     public build(): void {
-        
+        const xLineLimit: number = WindowPresets.WINDOW_WIDTH * 0.1;
+        const collisionLine: Line = Line.of(Coordinate.of(xLineLimit, WindowPresets.WINDOW_HEIGHT), Coordinate.of(xLineLimit, 0), 0, 0, true);
+        this.addChild(ApplicationSrpites.SPACE_BACKGROUND1);
+        this.addChild(collisionLine);
+
+        this.addLineObject({
+            triggerKey: TriggerKeys.X, 
+            enemyTextures: ApplicationTextures.SPACESHIP1, 
+            line: Line.of(Coordinate.of(WindowPresets.WINDOW_WIDTH, 100), Coordinate.of(xLineLimit, 100), this.distanceToIntercept,  270, true)});
+
+        this.addLineObject({
+            triggerKey: TriggerKeys.X, 
+            enemyTextures: ApplicationTextures.SPACESHIP1, 
+            line: Line.of(Coordinate.of(WindowPresets.WINDOW_WIDTH, 200), Coordinate.of(xLineLimit, 200), this.distanceToIntercept,  270, true)});
+
+        this.addLineObject({
+            triggerKey: TriggerKeys.X, 
+            enemyTextures: ApplicationTextures.SPACESHIP1, 
+            line: Line.of(Coordinate.of(WindowPresets.WINDOW_WIDTH, 300), Coordinate.of(xLineLimit, 300), this.distanceToIntercept,  270, true)});
+
+        this.addLineObject({
+            triggerKey: TriggerKeys.X, 
+            enemyTextures: ApplicationTextures.SPACESHIP1, 
+            line: Line.of(Coordinate.of(WindowPresets.WINDOW_WIDTH, 400), Coordinate.of(xLineLimit, 400), this.distanceToIntercept,  270, true)});
     }
 }
