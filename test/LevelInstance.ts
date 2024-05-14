@@ -80,6 +80,18 @@ export class LevelInstance {
         for (let node of this.enemyNodes) node.updateNode(delta, this.level?.distancePerFrame as number);
     }
 
+    /**
+     * @description a node can only accentuate if it has not been triggered yet
+     */
+    public accentuateFirstValidNode() {
+        for (let node of this.enemyNodes) {
+            if (node.hasNotBeenTriggered) {
+                node.accentuate();
+                break;
+            }
+        }
+    }
+
     public sortEnemyNodes(): void {
         let closestDistance: number = 0;
         let currentDistance: number;
@@ -91,14 +103,13 @@ export class LevelInstance {
                 closestDistance = currentDistance;
             } else sortedEnemyNodes.push(node);
         }
-        if (this.enemyNodes.length > 0) this.enemyNodes[0].accentuate();
+        this.accentuateFirstValidNode();
     }
 
     /**
      * @problems
      * - should show an explosion on interception/death
      * - the first node in the list isn't necessarily the closest one to their end point on the screen
-     * - ELSE?
      * @param key 
      */
     public onKeyPress(key: string) {
@@ -115,9 +126,7 @@ export class LevelInstance {
                     node.invalidate();
                     this.score.reset();
                     break;
-                } else {
-                    break;
-                }
+                } 
             }
         }
     }
