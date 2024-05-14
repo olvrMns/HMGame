@@ -1,4 +1,4 @@
-import { FrameObject, Resource, Texture } from "pixi.js";
+import { Container, FrameObject, IBitmapTextStyle, Resource, Texture } from "pixi.js";
 import { TriggerKeys } from "./AbstractLevel";
 import { Line } from "./Line";
 
@@ -13,4 +13,11 @@ declare type LevelOptions = {
     framesBeforeNodeInitialization?: number, 
     cadenceMultiplier?: number
 };
+declare type DisplayableNumberOptions = {
+    value?: string,
+    fontName?: string,
+    fontSize?: number,
+    x: number,
+    y: number
+}
 

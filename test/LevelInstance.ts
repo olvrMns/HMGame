@@ -1,28 +1,35 @@
-import { LineObject } from "./types";
-import { Application, BitmapText, TickerCallback } from "pixi.js";
-import { AbstractLevel, TriggerKeys } from "./AbstractLevel";
-import { EnemyNode } from "./EnemyNode";
 import InputManager from "guki-input-controller";
-
+import { Application, BitmapFont, BitmapText, TickerCallback } from "pixi.js";
+import { AbstractLevel, TriggerKeys } from "./AbstractLevel";
+import { DisplayableNumber } from "./DisplayableNumber";
+import { EnemyNode } from "./EnemyNode";
+import { LineObject } from "./types";
 
 /**
  * @description Object containing the logic/lifecycle of the game
- * 
  */
 export class LevelInstance {
     private static instance: LevelInstance;
     private application: Application;
     public level: AbstractLevel | undefined;
-    private score: number = 0;
-    private highestScore: number = 0;
-    private failStreak: number = 0;
+    private score: DisplayableNumber;
+    private highestScore: DisplayableNumber;
+    private failStreak: DisplayableNumber;
     private frameCount: number = 0;
     private enemyNodes: EnemyNode[];
-    //private scoreBitMapText: BitmapText;
 
     private constructor(application: Application) {
         this.application = application;
-        //this.scoreBitMapText = new BitmapText('0', {});
+        /**
+         * @Note Only works on reload
+         * - could be a webpack problem
+         * - or await?
+         * - or this https://chriscourses.com/blog/loading-fonts-with-webpack ?
+         */
+        BitmapFont.from("PixelMapFont1", {fontFamily: 'Pixelfont1', fontSize: 60, fill: '#c4d4b1'});
+        this.score = new DisplayableNumber({x: 50, y: 50});
+        this.highestScore = new DisplayableNumber({x: 50, y: 150});
+        this.failStreak = new DisplayableNumber({x: 50, y: 250});
         this.enemyNodes = [];
     }
 
@@ -31,24 +38,14 @@ export class LevelInstance {
         return this.instance;
     }
 
+    public loadStats(): void {
+        this.level?.addChild(this.score);
+        this.level?.addChild(this.highestScore);
+        this.level?.addChild(this.failStreak);
+    }
+    
     public levelIsActive(): boolean {
         return this.level != null;
-    }
-
-    public incrementScore(): void {
-        this.score++;
-        if (this.highestScore < this.score) this.highestScore = this.score;
-    }
-
-    public resetScore(): void {
-        this.score = 0;
-    }
-
-    /**
-     * @description resets instance attributes
-     */
-    public reset() {    
-        this.resetScore();
     }
 
     public initializeEnemyNode(lineObject: LineObject = this.level?.getRandomLineObject() as LineObject): void {
@@ -70,8 +67,8 @@ export class LevelInstance {
         for (let node of this.enemyNodes) {
             if (node.canBeDestroyed()) {
                 this.destroyEnemyNode(node);
-                this.resetScore();
-                //this.failStreak++;
+                this.score.reset();
+                this.failStreak.increment();
             }
         }
     }
@@ -99,6 +96,7 @@ export class LevelInstance {
 
     /**
      * @problems
+     * - should show an explosion on interception/death
      * - the first node in the list isn't necessarily the closest one to their end point on the screen
      * - ELSE?
      * @param key 
@@ -106,22 +104,18 @@ export class LevelInstance {
     public onKeyPress(key: string) {
         key = key.toUpperCase();
         if (Object.keys(TriggerKeys).includes(key)) {
-            console.log("NUMBER OF ENEMIES : " + this.enemyNodes.length);
             for (let node of this.enemyNodes) {
                 if (node.triggerKey === key && node.canBeIntercepted() && node.hasNotBeenTriggered) {
                     this.destroyEnemyNode(node);
-                    this.incrementScore();
-                    //DESTRCTUCTION ANIMATION ON DESTRUCTION...
-                    //EACH INTERCEPTION SHOULD MAKE THE PLANET FASTER
-                    console.log(this.score);
+                    this.score.increment();
+                    this.failStreak.reset();
+                    if (this.highestScore.getValue() < this.score.getValue()) this.highestScore.setValue(this.score.getValue());
                     break;
                 } else if (node.hasNotBeenTriggered) {
                     node.invalidate();
-                    this.resetScore();
-                    console.log("MISSED - NODE ACCELERATION");
+                    this.score.reset();
                     break;
                 } else {
-                    console.log("ELSE?");
                     break;
                 }
             }
@@ -133,7 +127,7 @@ export class LevelInstance {
     }
 
     public onControllerPress(inputManager: InputManager) {
-        if (inputManager.gamepad.justPressed[0]) this.onKeyPress(inputManager.gamepad.pressed[0]);
+        if (inputManager.gamepad.justPressed[0]) this.onKeyPress(inputManager.gamepad.justPressed[0]);
     }
 
     /**
@@ -141,6 +135,7 @@ export class LevelInstance {
      * @returns TickerCallback
      */
     public getInstanceTicker(): TickerCallback<any> { 
+        window.addEventListener("keydown", (keyboardEvent: KeyboardEvent) => this.getInstanceKeyboardListenner(keyboardEvent));
         const speedMultiplier: number = this.level?.nodeSpeedMultiplier as number;
         const cadenceMultiplier: number = this.level?.cadenceMultiplier as number;
         const framesBeforeNodeUpdate: number = this.level?.framesBeforeNodeUpdate as number;

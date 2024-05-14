@@ -1,9 +1,8 @@
-# Problèmes
+# Problems
 
-- KEY BEING PRESSED MULTIPLE TIMES ON CERTAIN LINES
 - MULTIPLE INTERCEPTION AREAS [perfect,good...]
-- ALGORITHM TO FIND THE CLOSET NODE TO IT'S ENDPOINT AND REARRANGE [ENEMYNODES] ACCORDINGLY
 
 ## IMPRESSION
 
-- aucune instruction
+- aucune instruction 
+- peu intuitif

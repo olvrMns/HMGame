@@ -1,4 +1,4 @@
-import { AnimatedSprite, Resource, Sprite, Spritesheet, Texture } from "pixi.js";
+import { Assets, BitmapFont, Resource, Sprite, Spritesheet, Texture } from "pixi.js";
 import fighter1Data from "../static/assets/fighter1Data.json";
 import fighter2Data from "../static/assets/fighter2Data.json";
 import planet1Data from "../static/assets/planet1Data.json";
@@ -23,6 +23,9 @@ export class AssetLoader {
         ApplicationTextures.SPACESHIP1 = await this.getTextures(`${this.PATH}fighter1Data.png`, fighter1Data, "fighter1");
         ApplicationTextures.SPACESHIP2 = await this.getTextures(`${this.PATH}fighter2Data.png`, fighter2Data, "fighter2");
         ApplicationSrpites.SPACE_BACKGROUND1 = Sprite.from("assets/SpaceBackground1.png");
+        await Assets.load('fonts/pixelFont1.ttf');
+        await Assets.load('fonts/pixelFont2.ttf');
+        
     }
 }
 

@@ -6,3 +6,13 @@ body{
 canvas {
     overflow: hidden;
 }
+
+@font-face {
+    font-family: 'Pixelfont1';
+    src: url("../fonts/pixelFont1.ttf");
+}
+
+@font-face {
+    font-family: 'Pixelfont2';
+    src: url("../fonts/pixelFont2.ttf");
+}
