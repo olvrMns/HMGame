@@ -1,5 +1,18 @@
 {
     "compilerOptions": {
-        "outDir": "./dist/"
-    }
+        "outDir": "./dist/",
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": false,
+        //equivalent to JDK version
+        "target": "ES6",
+        "module": "ES2022"
+    },
+
+    "include": [
+        "./src/*"
+    ],
+
+    "exclude": [
+        "./songs/*"
+    ]
 }
