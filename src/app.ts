@@ -1,2 +1,5 @@
-const n: number = 5;
-console.log(5);
+import * as mm from "music-metadata";
+
+(async() => {
+    
+})();

@@ -19,7 +19,10 @@ module.exports = (env, argv) => {
         performance: {hints: false},
         mode: 'development',
         resolve: {
-            extensions: [".ts", ".js"]
+            extensions: [".ts", ".js"],
+            alias: {
+                
+            }
         },
         module: {
             rules: [

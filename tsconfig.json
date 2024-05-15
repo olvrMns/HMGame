@@ -2,17 +2,24 @@
     "compilerOptions": {
         "outDir": "./dist/",
         "allowSyntheticDefaultImports": true,
-        "sourceMap": false,
-        //equivalent to JDK version
+        "sourceMap": true,
+        //target is equivalent to JDK version
         "target": "ES6",
-        "module": "ES2022"
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "resolveJsonModule": true,
+        "experimentalDecorators": true,
+
+        "strict": true,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noUnusedParameters": false,
+        "noUnusedLocals": false,
+        "noFallthroughCasesInSwitch": false,
+        "noImplicitOverride": false
     },
 
     "include": [
         "./src/*"
-    ],
-
-    "exclude": [
-        "./songs/*"
     ]
 }
