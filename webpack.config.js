@@ -1,6 +1,7 @@
 const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
+const webpack = require("webpack");
 
 
 module.exports = (env, argv) => {
@@ -20,9 +21,10 @@ module.exports = (env, argv) => {
         mode: 'development',
         resolve: {
             extensions: [".ts", ".js"],
-            alias: {
-                
+            fallback: {
+                "buffer": require.resolve("buffer")
             }
+            
         },
         module: {
             rules: [
@@ -40,7 +42,15 @@ module.exports = (env, argv) => {
             }),
 
             new CopyPlugin({
-                patterns: [{ from: "songs/"}]
+                patterns: [{ from: "static/"}]
+            }),
+
+            new webpack.ProvidePlugin({
+                Buffer: ['buffer', 'Buffer']
+            }),
+
+            new webpack.ProvidePlugin({
+                process: 'process/browser',
             })
         ]
     })
