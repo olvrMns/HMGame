@@ -10,7 +10,7 @@ export class LinearRepresentation {
     public initialY: number;
 
     /**
-     * @Note could be replaced by value of slope (positive or negative)
+     * @Change could be replaced by value of slope (positive or negative)
      */
     public xIsAscendant: boolean;
     public yIsAscendant: boolean

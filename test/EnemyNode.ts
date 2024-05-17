@@ -3,11 +3,15 @@ import { AnimatedSprite } from "pixi.js";
 import { TriggerKeys } from "./AbstractLevel";
 import { Coordinate } from "./Coordinate";
 import { LinearRepresentation } from "./LinearRepresentation";
+import { ApplicationUtils } from "./ApplicationUtils";
 
 /**
  * @description 
  */
 export class EnemyNode extends AnimatedSprite {
+    /**
+     * @Note could be changed to just Line
+     */
     public linearRepresentation: LinearRepresentation;
     public interceptionThresholdCoordinate: Coordinate;
     public distanceMultiplier: number;
@@ -64,13 +68,14 @@ export class EnemyNode extends AnimatedSprite {
     public accentuate() {
         this.scale.x = this.accentuatedScale;
         this.scale.y = this.accentuatedScale;
-        this.tint = '#23d916';
+        this.tint = ApplicationUtils.NODE_ACCENTUATION_COLOR;
     }
 
     public invalidate(): void {
         this.hasNotBeenTriggered = false;
         this.distanceMultiplier = 1.5;
         this.alpha = 0.5;
+        this.tint = ApplicationUtils.NODE_INVALIDATION_COLOR;
     }
 
     /**

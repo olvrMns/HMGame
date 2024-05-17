@@ -1,4 +1,4 @@
-import { LineObject } from "guki-input-controller";
+import { LineObject } from "./types";
 import { Container } from "pixi.js";
 import { ApplicationUtils } from "./ApplicationUtils";
 import { LevelOptions } from "./types";

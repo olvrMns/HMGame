@@ -1,4 +1,4 @@
-import { Graphics, Resource, Texture } from "pixi.js";
+import { Graphics } from "pixi.js";
 import { Coordinate } from "./Coordinate";
 import { LinearRepresentation } from "./LinearRepresentation";
 import { ApplicationUtils } from "./ApplicationUtils";
@@ -11,6 +11,10 @@ export class Line extends Graphics {
     public linearRepresentation: LinearRepresentation;
     public interceptionThresholdCoordinate: Coordinate;
     public inclination: number;
+
+    /**
+     * @Change
+     */
     public showInterceptionSegment: boolean;
 
     constructor(
@@ -28,6 +32,9 @@ export class Line extends Graphics {
         this.draw();
     }
 
+    /**
+     * @Change
+     */
     public draw() {
         if (this.showInterceptionSegment) {
             this.lineStyle(ApplicationUtils.DEFAULT_LINE_STYLE);
@@ -42,6 +49,11 @@ export class Line extends Graphics {
         return new Line(startCoordinate, endCoordinate, distanceToIntercept, inclination, showInterceptionSegment);
     }
 
+    /**
+     * @description gets computed once on Line Init
+     * @param distanceToIntercept 
+     * @returns 
+     */
     public computeDistanceInterceptionCoordinate(distanceToIntercept: number): Coordinate {
         let nc = new Coordinate(0, 0);
         const {endCoordinate, xIsAscendant, startCoordinate, yIsAscendant} = this.linearRepresentation;

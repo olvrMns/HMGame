@@ -1,5 +1,5 @@
 import InputManager from "guki-input-controller";
-import { Application, BitmapFont, BitmapText, TickerCallback } from "pixi.js";
+import { BitmapFont, TickerCallback } from "pixi.js";
 import { AbstractLevel, TriggerKeys } from "./AbstractLevel";
 import { DisplayableNumber } from "./DisplayableNumber";
 import { EnemyNode } from "./EnemyNode";
@@ -10,54 +10,46 @@ import { LineObject } from "./types";
  */
 export class LevelInstance {
     private static instance: LevelInstance;
-    private application: Application;
-    public level: AbstractLevel | undefined;
+    public level: AbstractLevel;
     private score: DisplayableNumber;
     private highestScore: DisplayableNumber;
     private failStreak: DisplayableNumber;
     private frameCount: number = 0;
-    private enemyNodes: EnemyNode[];
+    private enemyNodes: EnemyNode[] = [];
 
-    private constructor(application: Application) {
-        this.application = application;
-        /**
-         * @Note Only works on reload
-         * - could be a webpack problem
-         * - or await?
-         * - or this https://chriscourses.com/blog/loading-fonts-with-webpack ?
-         */
-        BitmapFont.from("PixelMapFont1", {fontFamily: 'Pixelfont1', fontSize: 60, fill: '#c4d4b1'});
+    private constructor(level: AbstractLevel) {
+        this.level = level;
+        this.initFonts();
         this.score = new DisplayableNumber({x: 50, y: 50});
         this.highestScore = new DisplayableNumber({x: 50, y: 150});
         this.failStreak = new DisplayableNumber({x: 50, y: 250});
-        this.enemyNodes = [];
+        this.loadStats();
     }
 
-    public static getInstance(application: Application) {
-        if (!this.instance) this.instance = new LevelInstance(application);
+    public static getInstance(level: AbstractLevel) {
+        if (!this.instance) this.instance = new LevelInstance(level);
         return this.instance;
     }
 
+    public initFonts() {
+        /**
+         * @Note ???????????????????????????????????????????????????????
+         */
+        BitmapFont.from("PixelMapFont1", {fontFamily: 'Pixelfont1', fontSize: 60, fill: '#c4d4b1'});
+    }
+
     public loadStats(): void {
-        this.level?.addChild(this.score);
-        this.level?.addChild(this.highestScore);
-        this.level?.addChild(this.failStreak);
-    }
-    
-    public levelIsActive(): boolean {
-        return this.level != null;
+        this.level.addChild(this.score);
+        this.level.addChild(this.highestScore);
+        this.level.addChild(this.failStreak);
     }
 
-    public initializeEnemyNode(lineObject: LineObject = this.level?.getRandomLineObject() as LineObject): void {
-        let enemyNode: EnemyNode = EnemyNode.of(lineObject, {angle: lineObject.line.inclination, scale: 0.5});
+    public initializeEnemyNode(lineObject: LineObject = this.level.getRandomLineObject()): void {
+        let enemyNode: EnemyNode = EnemyNode.of(lineObject, {angle: lineObject.line.inclination, scale: 0.3});
         this.enemyNodes.push(enemyNode);
-        this.level?.addChild(enemyNode);
+        this.level.addChild(enemyNode);
     }
 
-    /**
-     * @Note should probably use .destroy with options...
-     * @param enemyNode 
-     */
     public destroyEnemyNode(enemyNode: EnemyNode) {
         this.enemyNodes = this.enemyNodes.filter(node => node !== enemyNode);
         enemyNode.destroy({texture: false});
@@ -73,16 +65,10 @@ export class LevelInstance {
         }
     }
 
-    /**
-     * @Note moves all the nodes
-     */
     public updateNodes(delta: number): void {
-        for (let node of this.enemyNodes) node.updateNode(delta, this.level?.distancePerFrame as number);
+        for (let node of this.enemyNodes) node.updateNode(delta, this.level.distancePerFrame);
     }
 
-    /**
-     * @description a node can only accentuate if it has not been triggered yet
-     */
     public accentuateFirstValidNode() {
         for (let node of this.enemyNodes) {
             if (node.hasNotBeenTriggered) {
@@ -109,8 +95,6 @@ export class LevelInstance {
     /**
      * @problems
      * - should show an explosion on interception/death
-     * - the first node in the list isn't necessarily the closest one to their end point on the screen
-     * @param key 
      */
     public onKeyPress(key: string) {
         key = key.toUpperCase();
@@ -139,29 +123,43 @@ export class LevelInstance {
         if (inputManager.gamepad.justPressed[0]) this.onKeyPress(inputManager.gamepad.justPressed[0]);
     }
 
+    public onFrameCountEquals(frameThreshold: number, onCallback: () => void) {
+        if (this.frameCount % Math.floor(frameThreshold) == 0) onCallback();
+    }
+
+    /**
+     * @description returns the initial value - a random decimal 0 and 20% of the original number
+     * @param ratio the (percentage) of the initial value 
+     * 
+     */
+    public fluctuate(value: number, ratio: number = 0.2) {
+        return value - (Math.random() * (value * ratio));
+    }
+
     /**
      * @Note Random sequence
      * @returns TickerCallback
      */
-    public getInstanceTicker(): TickerCallback<any> { 
+    public getRandomizedInstanceTicker(): TickerCallback<any> { 
         window.addEventListener("keydown", (keyboardEvent: KeyboardEvent) => this.getInstanceKeyboardListenner(keyboardEvent));
-        const speedMultiplier: number = this.level?.nodeSpeedMultiplier as number;
-        const cadenceMultiplier: number = this.level?.cadenceMultiplier as number;
-        const framesBeforeNodeUpdate: number = this.level?.framesBeforeNodeUpdate as number;
-        const framesBeforeNodeInitialization: number = this.level?.framesBeforeNodeInitialization as number;
+        let speedMultiplier: number = this.level.nodeSpeedMultiplier;
+        let cadenceMultiplier: number = this.level.cadenceMultiplier;
         const inputManager = new InputManager();
-        inputManager.init();
+        inputManager.init("default");
         return (delta: number) => {
             this.sortEnemyNodes();
             inputManager.update();
-            if (this.frameCount % Math.floor(framesBeforeNodeUpdate * speedMultiplier) == 0) {
+            this.onFrameCountEquals(this.level.framesBeforeNodeUpdate * speedMultiplier, () => {
                 this.updateNodes(delta); 
                 this.destroyLineNodes();
-            } 
-            
-            if (this.frameCount % Math.floor(framesBeforeNodeInitialization * cadenceMultiplier) == 0) {
-                this.initializeEnemyNode();
-            }
+            })
+            this.onFrameCountEquals(this.level.framesBeforeNodeInitialization * cadenceMultiplier, () => this.initializeEnemyNode());
+            this.onFrameCountEquals(300, () => {
+                speedMultiplier = this.fluctuate(this.level.nodeSpeedMultiplier, 0.2);
+                cadenceMultiplier = this.fluctuate(this.level.cadenceMultiplier, 0.5);
+                console.log("CADENCE : " + Math.floor(this.level.framesBeforeNodeInitialization * cadenceMultiplier));
+                console.log("DPF : " + Math.floor(this.level.framesBeforeNodeUpdate * speedMultiplier));
+            })
 
             if (this.frameCount > 10000) this.frameCount = 0;
             this.frameCount++;

@@ -9,7 +9,7 @@ import { AbstractLevel } from "./AbstractLevel";
  */
 export class GameInstance extends Application {
     private static instance: GameInstance;
-    public levelInstance: LevelInstance;
+    public levelInstance: LevelInstance | null;
 
     private constructor() {
         super({
@@ -21,7 +21,7 @@ export class GameInstance extends Application {
             autoStart: true,
             view: GameInstance.createCanvas()
         });
-        this.levelInstance = LevelInstance.getInstance(this);
+        this.levelInstance = null;
     }
 
     public static getInstance(): GameInstance {
@@ -37,18 +37,17 @@ export class GameInstance extends Application {
 
     public loadLevel(level: AbstractLevel): void {
         this.unloadLevel();
-        this.levelInstance.level = level;
+        this.levelInstance = LevelInstance.getInstance(level);
         this.stage.addChild(this.levelInstance.level);
-        this.ticker.add(this.levelInstance.getInstanceTicker());
-        this.levelInstance.loadStats();
+        this.ticker.add(this.levelInstance.getRandomizedInstanceTicker());
     }
 
     public unloadLevel(): void {
-        if (this.levelInstance.levelIsActive()) {
-            this.stage.removeChild(this.levelInstance.level as DisplayObject);
-            this.levelInstance.level?.destroy({texture: false});
-            window.removeEventListener("keydown", (keyboardEvent: KeyboardEvent) => this.levelInstance.getInstanceKeyboardListenner(keyboardEvent));
-            this.levelInstance.level = undefined;
+        if (this.levelInstance) {
+            this.stage.removeChild(this.levelInstance.level);
+            window.removeEventListener("keydown", (keyboardEvent: KeyboardEvent) => this.levelInstance?.getInstanceKeyboardListenner(keyboardEvent));
+            this.levelInstance.level.destroy({texture: false});
+            this.levelInstance = null;
         }
     }
 }
