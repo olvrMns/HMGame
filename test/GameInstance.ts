@@ -1,4 +1,4 @@
-import { Application, DisplayObject } from "pixi.js";
+import { Application, DisplayObject, Ticker } from "pixi.js";
 import { WindowPresets } from "./WindowPresets";
 import { LevelInstance } from "./LevelInstance";
 import { AbstractLevel } from "./AbstractLevel";
@@ -45,7 +45,6 @@ export class GameInstance extends Application {
     public unloadLevel(): void {
         if (this.levelInstance) {
             this.stage.removeChild(this.levelInstance.level);
-            window.removeEventListener("keydown", (keyboardEvent: KeyboardEvent) => this.levelInstance?.getInstanceKeyboardListenner(keyboardEvent));
             this.levelInstance.level.destroy({texture: false});
             this.levelInstance = null;
         }

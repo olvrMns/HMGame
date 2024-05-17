@@ -68,8 +68,8 @@ export class ClassicGH extends AbstractLevel {
     constructor() {
         super({
             distancePerFrame: 10,
-            distanceToIntercept: 150,
-            framesBeforeNodeInitialization: 70,
+            distanceToIntercept: 60,
+            framesBeforeNodeInitialization: 60,
             distanceToInterceptMultiplier: 1.5,
             framesBeforeNodeUpdate: 5,
             nodeSpeedMultiplier: 0.5,
@@ -83,8 +83,8 @@ export class ClassicGH extends AbstractLevel {
         this.addChild(collisionLine);
 
         this.addLineObject({
-            triggerKey: TriggerKeys.X, 
-            enemyTextures: ApplicationTextures.SPACESHIP1, 
+            triggerKey: TriggerKeys.A, 
+            enemyTextures: ApplicationTextures.SPACESHIP2, 
             line: Line.of(Coordinate.of(WindowPresets.WINDOW_WIDTH, 100), Coordinate.of(xLineLimit, 100), this.distanceToIntercept,  270, true)});
 
         this.addLineObject({

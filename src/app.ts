@@ -1,7 +1,6 @@
-import { Assets, BitmapFont, BitmapText, Container, Text } from "pixi.js";
 import { AssetLoader } from "../test/AssetLoader";
 import { GameInstance } from "../test/GameInstance";
-import { ClassicGH } from "../test/Levels";
+import { ClassicGH, Space1 } from "../test/Levels";
 
 (async() => {
     const instance: GameInstance = GameInstance.getInstance();

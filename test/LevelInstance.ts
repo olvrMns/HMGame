@@ -16,6 +16,7 @@ export class LevelInstance {
     private failStreak: DisplayableNumber;
     private frameCount: number = 0;
     private enemyNodes: EnemyNode[] = [];
+    private inputManager: InputManager = new InputManager();
 
     private constructor(level: AbstractLevel) {
         this.level = level;
@@ -78,6 +79,9 @@ export class LevelInstance {
         }
     }
 
+    /**
+     * @Node needs to be changed/fixed
+     */
     public sortEnemyNodes(): void {
         let closestDistance: number = 0;
         let currentDistance: number;
@@ -89,14 +93,24 @@ export class LevelInstance {
                 closestDistance = currentDistance;
             } else sortedEnemyNodes.push(node);
         }
+        this.enemyNodes = sortedEnemyNodes;
         this.accentuateFirstValidNode();
     }
 
-    /**
+    public onFrameCountEquals(frameThreshold: number, onCallback: () => void): void {
+        if (this.frameCount % Math.floor(frameThreshold) == 0) onCallback();
+    }
+
+    public onInput() {
+        if (this.inputManager.gamepad.justPressed[0]) this.handleKeyPress(this.inputManager.gamepad.justPressed[0]);
+        if (this.inputManager.keyboard.justPressed[0]) this.handleKeyPress(this.inputManager.keyboard.justPressed[0]);
+    }
+
+     /**
      * @problems
      * - should show an explosion on interception/death
      */
-    public onKeyPress(key: string) {
+     public handleKeyPress(key: string) {
         key = key.toUpperCase();
         if (Object.keys(TriggerKeys).includes(key)) {
             for (let node of this.enemyNodes) {
@@ -115,24 +129,12 @@ export class LevelInstance {
         }
     }
 
-    public getInstanceKeyboardListenner(keyboardEvent: KeyboardEvent): void {
-        this.onKeyPress(keyboardEvent.key);
-    }
-
-    public onControllerPress(inputManager: InputManager) {
-        if (inputManager.gamepad.justPressed[0]) this.onKeyPress(inputManager.gamepad.justPressed[0]);
-    }
-
-    public onFrameCountEquals(frameThreshold: number, onCallback: () => void) {
-        if (this.frameCount % Math.floor(frameThreshold) == 0) onCallback();
-    }
-
     /**
      * @description returns the initial value - a random decimal 0 and 20% of the original number
      * @param ratio the (percentage) of the initial value 
      * 
      */
-    public fluctuate(value: number, ratio: number = 0.2) {
+    public fluctuate(value: number, ratio: number = 0.2): number {
         return value - (Math.random() * (value * ratio));
     }
 
@@ -141,30 +143,23 @@ export class LevelInstance {
      * @returns TickerCallback
      */
     public getRandomizedInstanceTicker(): TickerCallback<any> { 
-        window.addEventListener("keydown", (keyboardEvent: KeyboardEvent) => this.getInstanceKeyboardListenner(keyboardEvent));
-        let speedMultiplier: number = this.level.nodeSpeedMultiplier;
         let cadenceMultiplier: number = this.level.cadenceMultiplier;
-        const inputManager = new InputManager();
-        inputManager.init("default");
+        this.inputManager.init("default");
         return (delta: number) => {
             this.sortEnemyNodes();
-            inputManager.update();
-            this.onFrameCountEquals(this.level.framesBeforeNodeUpdate * speedMultiplier, () => {
+            this.inputManager.update();
+            this.onFrameCountEquals(this.level.framesBeforeNodeUpdate * this.level.nodeSpeedMultiplier, () => {
                 this.updateNodes(delta); 
                 this.destroyLineNodes();
-            })
+            });
+            this.onInput();
             this.onFrameCountEquals(this.level.framesBeforeNodeInitialization * cadenceMultiplier, () => this.initializeEnemyNode());
             this.onFrameCountEquals(300, () => {
-                speedMultiplier = this.fluctuate(this.level.nodeSpeedMultiplier, 0.2);
                 cadenceMultiplier = this.fluctuate(this.level.cadenceMultiplier, 0.5);
                 console.log("CADENCE : " + Math.floor(this.level.framesBeforeNodeInitialization * cadenceMultiplier));
-                console.log("DPF : " + Math.floor(this.level.framesBeforeNodeUpdate * speedMultiplier));
-            })
-
+            });
             if (this.frameCount > 10000) this.frameCount = 0;
             this.frameCount++;
-
-            this.onControllerPress(inputManager);
         };
     }
 }
