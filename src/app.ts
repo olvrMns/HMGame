@@ -1,9 +1,9 @@
-import { AssetLoader } from "../test/AssetLoader";
-import { GameInstance } from "../test/GameInstance";
-import { ClassicGH, Space1 } from "../test/Levels";
+import { AssetLoader } from "./AssetLoader";
+import { GameInstance } from "./GameInstance";
+import { ClassicGH, Space1 } from "./Levels";
 
 (async() => {
     const instance: GameInstance = GameInstance.getInstance();
     await AssetLoader.load();
-    instance.loadLevel(new ClassicGH());
+    instance.loadLevel(new Space1());
 })();

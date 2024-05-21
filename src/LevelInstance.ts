@@ -46,13 +46,22 @@ export class LevelInstance {
     }
 
     public initializeEnemyNode(lineObject: LineObject = this.level.getRandomLineObject()): void {
-        let enemyNode: EnemyNode = EnemyNode.of(lineObject, {angle: lineObject.line.inclination, scale: 0.3});
+        let enemyNode: EnemyNode = EnemyNode.of(lineObject, {angle: lineObject.line.inclination, scale: 0.5});
         this.enemyNodes.push(enemyNode);
         this.level.addChild(enemyNode);
     }
 
-    public destroyEnemyNode(enemyNode: EnemyNode) {
+    public incrementFrameCount() {
+        if (this.frameCount > 10000) this.frameCount = 0;
+        this.frameCount++;
+    }
+
+    public removeEnemyNode(enemyNode: EnemyNode) {
         this.enemyNodes = this.enemyNodes.filter(node => node !== enemyNode);
+    }
+
+    public destroyEnemyNode(enemyNode: EnemyNode) {
+        this.removeEnemyNode(enemyNode);
         enemyNode.destroy({texture: false});
     }
 
@@ -116,7 +125,9 @@ export class LevelInstance {
             for (let node of this.enemyNodes) {
                 if (node.triggerKey === key && node.canBeIntercepted() && node.hasNotBeenTriggered) {
                     console.log(node.getCurrentAriaAlias());
-                    this.destroyEnemyNode(node);
+                    this.removeEnemyNode(node);
+                    node.explode();
+                    //this.destroyEnemyNode(node);
                     this.score.increment();
                     this.failStreak.reset();
                     if (this.highestScore.getValue() < this.score.getValue()) this.highestScore.setValue(this.score.getValue());
@@ -156,8 +167,7 @@ export class LevelInstance {
             this.onInput();
             this.onFrameCountEquals(this.level.framesBeforeNodeInitialization * cadenceMultiplier, () => this.initializeEnemyNode());
             this.onFrameCountEquals(300, () => { cadenceMultiplier = this.fluctuate(this.level.cadenceMultiplier, 0.8); });
-            if (this.frameCount > 10000) this.frameCount = 0;
-            this.frameCount++;
+            this.incrementFrameCount();
         };
     }
 }

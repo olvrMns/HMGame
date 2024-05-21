@@ -44,7 +44,7 @@ export class LinearRepresentation {
      * @description d=√((x2 – x1)² + (y2 – y1)²)
      * @returns the distance between two points
      */
-    public static getDistance(x1: number, y1: number, x2: number, y2: number) {
-        return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+    public static getDistance(c1: Coordinate, c2: Coordinate) {
+        return Math.sqrt(Math.pow((c2.x - c1.x), 2) + Math.pow((c2.y - c1.y), 2));
     }
 }
