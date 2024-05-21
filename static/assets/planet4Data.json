@@ -1,0 +1,303 @@
+{"frames": {
+
+"planet4-0.png":
+{
+	"frame": {"x":1,"y":1,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-1.png":
+{
+	"frame": {"x":1,"y":328,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-2.png":
+{
+	"frame": {"x":1,"y":655,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-4.png":
+{
+	"frame": {"x":1,"y":982,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-5.png":
+{
+	"frame": {"x":1,"y":1309,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-6.png":
+{
+	"frame": {"x":1,"y":1636,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-7.png":
+{
+	"frame": {"x":328,"y":1,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-8.png":
+{
+	"frame": {"x":655,"y":1,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-10.png":
+{
+	"frame": {"x":982,"y":1,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-11.png":
+{
+	"frame": {"x":1309,"y":1,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-12.png":
+{
+	"frame": {"x":1636,"y":1,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-14.png":
+{
+	"frame": {"x":328,"y":328,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-15.png":
+{
+	"frame": {"x":328,"y":655,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-17.png":
+{
+	"frame": {"x":328,"y":982,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-18.png":
+{
+	"frame": {"x":328,"y":1309,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-20.png":
+{
+	"frame": {"x":328,"y":1636,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-21.png":
+{
+	"frame": {"x":655,"y":328,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-22.png":
+{
+	"frame": {"x":982,"y":328,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-23.png":
+{
+	"frame": {"x":1309,"y":328,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-24.png":
+{
+	"frame": {"x":1636,"y":328,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-25.png":
+{
+	"frame": {"x":655,"y":655,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-27.png":
+{
+	"frame": {"x":655,"y":982,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-28.png":
+{
+	"frame": {"x":655,"y":1309,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-30.png":
+{
+	"frame": {"x":655,"y":1636,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-31.png":
+{
+	"frame": {"x":982,"y":655,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-34.png":
+{
+	"frame": {"x":1309,"y":655,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-35.png":
+{
+	"frame": {"x":1636,"y":655,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-37.png":
+{
+	"frame": {"x":982,"y":982,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-38.png":
+{
+	"frame": {"x":982,"y":1309,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-40.png":
+{
+	"frame": {"x":982,"y":1636,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-41.png":
+{
+	"frame": {"x":1309,"y":982,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-42.png":
+{
+	"frame": {"x":1636,"y":982,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-44.png":
+{
+	"frame": {"x":1309,"y":1309,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-45.png":
+{
+	"frame": {"x":1309,"y":1636,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-47.png":
+{
+	"frame": {"x":1636,"y":1309,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+},
+"planet4-48.png":
+{
+	"frame": {"x":1636,"y":1636,"w":325,"h":325},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":325},
+	"sourceSize": {"w":325,"h":325}
+}},
+"animations": {
+	"planet4": ["planet4-0.png","planet4-1.png","planet4-2.png","planet4-4.png","planet4-5.png","planet4-6.png","planet4-7.png","planet4-8.png","planet4-10.png","planet4-11.png","planet4-12.png","planet4-14.png","planet4-15.png","planet4-17.png","planet4-18.png","planet4-20.png","planet4-21.png","planet4-22.png","planet4-23.png","planet4-24.png","planet4-25.png","planet4-27.png","planet4-28.png","planet4-30.png","planet4-31.png","planet4-34.png","planet4-35.png","planet4-37.png","planet4-38.png","planet4-40.png","planet4-41.png","planet4-42.png","planet4-44.png","planet4-45.png","planet4-47.png","planet4-48.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.1",
+	"image": "planet4.png",
+	"format": "RGBA8888",
+	"size": {"w":1962,"h":1962},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:476d49063492b7b59591b5f3acf2e42c:b47a30021093fc1a8ae66138e5af2261:8d678857e5aee7538a0b06e6aba2a89a$"
+}
+}

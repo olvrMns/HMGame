@@ -37,20 +37,11 @@ export class Line extends Graphics {
         return new Line(startCoordinate, endCoordinate, distanceToIntercept, inclination, interceptionPercentages, showInterceptionSegment);
     }
 
-    public test(distanceToIntercept: number, interceptionPercentages: InterceptionPercentages) {
-        for (let elem of interceptionPercentages) {
-            this.interceptionCoordiantes.push({
-                areaAlias: elem.areaAlias, 
-                coordinate: Coordinate.of(this.linearRepresentation.endCoordinate.x, this.linearRepresentation.endCoordinate.y - (distanceToIntercept * elem.percentage))});
-        }
-    }
-
     /**
      * @description NEEDS TO BE REFORMATED TO REDUCE REPEATED CODE
      * @param distanceToIntercept 
      */
     public computeDistanceInterceptionCoordinates(distanceToIntercept: number, interceptionPercentages: InterceptionPercentages): void {
-        let nc = new Coordinate(0, 0);
         let nx: number;
         const {endCoordinate, xIsAscendant, startCoordinate, yIsAscendant} = this.linearRepresentation;
         if (endCoordinate.x === startCoordinate.x) {

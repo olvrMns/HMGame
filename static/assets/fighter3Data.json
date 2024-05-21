@@ -1,0 +1,95 @@
+{"frames": {
+
+"fighter3-0.png":
+{
+	"frame": {"x":109,"y":1,"w":14,"h":24},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":0,"w":14,"h":24},
+	"sourceSize": {"w":16,"h":24}
+},
+"fighter3-1.png":
+{
+	"frame": {"x":1,"y":1,"w":16,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":24},
+	"sourceSize": {"w":16,"h":24}
+},
+"fighter3-2.png":
+{
+	"frame": {"x":19,"y":1,"w":16,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":24},
+	"sourceSize": {"w":16,"h":24}
+},
+"fighter3-3.png":
+{
+	"frame": {"x":37,"y":1,"w":16,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":24},
+	"sourceSize": {"w":16,"h":24}
+},
+"fighter3-4.png":
+{
+	"frame": {"x":125,"y":1,"w":14,"h":24},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":0,"w":14,"h":24},
+	"sourceSize": {"w":16,"h":24}
+},
+"fighter3-5.png":
+{
+	"frame": {"x":141,"y":1,"w":14,"h":24},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":0,"w":14,"h":24},
+	"sourceSize": {"w":16,"h":24}
+},
+"fighter3-6.png":
+{
+	"frame": {"x":55,"y":1,"w":16,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":24},
+	"sourceSize": {"w":16,"h":24}
+},
+"fighter3-7.png":
+{
+	"frame": {"x":73,"y":1,"w":16,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":24},
+	"sourceSize": {"w":16,"h":24}
+},
+"fighter3-8.png":
+{
+	"frame": {"x":91,"y":1,"w":16,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":24},
+	"sourceSize": {"w":16,"h":24}
+},
+"fighter3-9.png":
+{
+	"frame": {"x":157,"y":1,"w":14,"h":24},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":0,"w":14,"h":24},
+	"sourceSize": {"w":16,"h":24}
+}},
+"animations": {
+	"fighter3": ["fighter3-0.png","fighter3-1.png","fighter3-2.png","fighter3-3.png","fighter3-4.png","fighter3-5.png","fighter3-6.png","fighter3-7.png","fighter3-8.png","fighter3-9.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.1",
+	"image": "fighter3.png",
+	"format": "RGBA8888",
+	"size": {"w":172,"h":26},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:e01e4f2b601ac29fa4a6a8f61e9b6a70:adf3b9a5ba8968ad02573587298e5313:9d9811abbbaa7bf11267944c30ae239f$"
+}
+}
