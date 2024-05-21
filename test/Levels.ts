@@ -82,7 +82,7 @@ export class ClassicGH extends AbstractLevel {
 
     public build(): void {
         const xLineLimit: number = WindowPresets.WINDOW_WIDTH * 0.1;
-        this.addChild(ApplicationSrpites.SPACE_BACKGROUND1);
+        this.addChild(ApplicationSrpites.SPACE_BACKGROUND3);
 
         // this.addLineObject({
         //     triggerKey: TriggerKeys.A, 
