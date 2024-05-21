@@ -1,9 +1,9 @@
 import InputManager from "guki-input-controller";
 import { BitmapFont, TickerCallback } from "pixi.js";
+import { LineObject } from "../types";
 import { AbstractLevel, TriggerKeys } from "./AbstractLevel";
 import { DisplayableNumber } from "./DisplayableNumber";
 import { EnemyNode } from "./EnemyNode";
-import { LineObject } from "./types";
 
 /**
  * @description Object containing the logic/lifecycle of the game
@@ -94,7 +94,7 @@ export class LevelInstance {
             } else sortedEnemyNodes.push(node);
         }
         this.enemyNodes = sortedEnemyNodes;
-        this.accentuateFirstValidNode();
+        //this.accentuateFirstValidNode();
     }
 
     public onFrameCountEquals(frameThreshold: number, onCallback: () => void): void {
@@ -115,6 +115,7 @@ export class LevelInstance {
         if (Object.keys(TriggerKeys).includes(key)) {
             for (let node of this.enemyNodes) {
                 if (node.triggerKey === key && node.canBeIntercepted() && node.hasNotBeenTriggered) {
+                    console.log(node.getCurrentAriaAlias());
                     this.destroyEnemyNode(node);
                     this.score.increment();
                     this.failStreak.reset();
@@ -130,7 +131,7 @@ export class LevelInstance {
     }
 
     /**
-     * @description returns the initial value - a random decimal 0 and 20% of the original number
+     * @description returns the initial value - a random decimal 0 and 20% of the original number (reduces frame interval)
      * @param ratio the (percentage) of the initial value 
      * 
      */
@@ -154,10 +155,7 @@ export class LevelInstance {
             });
             this.onInput();
             this.onFrameCountEquals(this.level.framesBeforeNodeInitialization * cadenceMultiplier, () => this.initializeEnemyNode());
-            this.onFrameCountEquals(300, () => {
-                cadenceMultiplier = this.fluctuate(this.level.cadenceMultiplier, 0.5);
-                console.log("CADENCE : " + Math.floor(this.level.framesBeforeNodeInitialization * cadenceMultiplier));
-            });
+            this.onFrameCountEquals(300, () => { cadenceMultiplier = this.fluctuate(this.level.cadenceMultiplier, 0.8); });
             if (this.frameCount > 10000) this.frameCount = 0;
             this.frameCount++;
         };

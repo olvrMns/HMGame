@@ -1,7 +1,6 @@
-import { LineObject } from "./types";
 import { Container } from "pixi.js";
+import { InterceptionPercentages, LevelOptions, LineObject } from "../types";
 import { ApplicationUtils } from "./ApplicationUtils";
-import { LevelOptions } from "./types";
 
 export enum TriggerKeys {
     A = "A",
@@ -28,10 +27,9 @@ export abstract class AbstractLevel extends Container  {
     public framesBeforeNodeInitialization: number;
     public cadenceMultiplier: number;
     public lineObjects: LineObject[];
+    public interceptionPercentages: InterceptionPercentages;
 
-    constructor(
-        options: LevelOptions) {
-
+    constructor(options: LevelOptions) {
         super()
         this.distancePerFrame = options.distancePerFrame ? options.distancePerFrame : 2;
         this.distanceToIntercept = options.distanceToIntercept ? options.distanceToIntercept : 60;
@@ -41,6 +39,7 @@ export abstract class AbstractLevel extends Container  {
         this.framesBeforeNodeInitialization = options.framesBeforeNodeInitialization ? options.framesBeforeNodeInitialization : 60;
         this.cadenceMultiplier = options.cadenceMultiplier ? options.cadenceMultiplier : 1;
         this.lineObjects = [];
+        this.interceptionPercentages = options.interceptionPercentages ? options.interceptionPercentages : ApplicationUtils.DEFAULT_INTERCEPTION_PERCENTAGES; 
         this.build();
     }
 

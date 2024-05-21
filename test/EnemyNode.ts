@@ -1,9 +1,10 @@
-import { EnemyNodeOptions, LineObject } from "./types";
 import { AnimatedSprite } from "pixi.js";
+import { EnemyNodeOptions, LineInterceptionAreaObject, LineObject } from "../types";
 import { TriggerKeys } from "./AbstractLevel";
+import { ApplicationUtils } from "./ApplicationUtils";
 import { Coordinate } from "./Coordinate";
 import { LinearRepresentation } from "./LinearRepresentation";
-import { ApplicationUtils } from "./ApplicationUtils";
+import { Line } from "./Line";
 
 /**
  * @description 
@@ -12,8 +13,7 @@ export class EnemyNode extends AnimatedSprite {
     /**
      * @Note could be changed to just Line
      */
-    public linearRepresentation: LinearRepresentation;
-    public interceptionThresholdCoordinate: Coordinate;
+    public line: Line;
     public distanceMultiplier: number;
     public accentuatedScale: number;
     public triggerKey: TriggerKeys;
@@ -21,8 +21,7 @@ export class EnemyNode extends AnimatedSprite {
 
     constructor(lineObject: LineObject, options: EnemyNodeOptions) {
         super(lineObject.enemyTextures)
-        this.linearRepresentation = lineObject.line.linearRepresentation;
-        this.interceptionThresholdCoordinate = lineObject.line.interceptionThresholdCoordinate;
+        this.line = lineObject.line;
         this.scale.x = options.scale ? options.scale : 0.5;
         this.scale.y = options.scale ? options.scale : 0.5;
         this.accentuatedScale = options.scale ? options.scale * 1.3 : 0.5 * 1.3; 
@@ -38,8 +37,8 @@ export class EnemyNode extends AnimatedSprite {
 
     public init() {
         this.play();
-        this.x = this.linearRepresentation.startCoordinate.x;
-        this.y = this.linearRepresentation.startCoordinate.y;
+        this.x = this.line.linearRepresentation.startCoordinate.x;
+        this.y = this.line.linearRepresentation.startCoordinate.y;
         this.anchor.x = 0.5;
         this.anchor.y = 0.5;
     }
@@ -47,9 +46,9 @@ export class EnemyNode extends AnimatedSprite {
     public hasPassed(c1: Coordinate): boolean {
         let xHasPassed: boolean;
         let yHasPassed: boolean;
-        if (this.linearRepresentation.xIsAscendant) xHasPassed = this.x >= c1.x;
+        if (this.line.linearRepresentation.xIsAscendant) xHasPassed = this.x >= c1.x;
         else xHasPassed = this.x <= c1.x;
-        if (this.linearRepresentation.yIsAscendant) yHasPassed = this.y >= c1.y;
+        if (this.line.linearRepresentation.yIsAscendant) yHasPassed = this.y >= c1.y;
         else yHasPassed = this.y <= c1.y;
         return xHasPassed && yHasPassed;
     }
@@ -58,11 +57,24 @@ export class EnemyNode extends AnimatedSprite {
      * @returns if the Node can be destroyed (as reached it's end point on the graph)
      */
     public canBeDestroyed(): boolean {
-        return this.hasPassed(this.linearRepresentation.endCoordinate);
+        return this.hasPassed(this.line.linearRepresentation.endCoordinate);
     }
 
+    /**
+     * @returns if node hasPassed first coordinate threshold 
+     */
     public canBeIntercepted(): boolean {
-        return this.hasPassed(this.interceptionThresholdCoordinate);
+        return this.hasPassed(this.line.interceptionCoordiantes[0].coordinate);
+    }
+
+    /**
+     * @description will return an object in the future (enum/animatedSprite)
+     */
+    public getCurrentAriaAlias(): string {
+        for (let elem of ApplicationUtils.getReversedArray<LineInterceptionAreaObject>(this.line.interceptionCoordiantes)) 
+            if (this.hasPassed(elem.coordinate)) return elem.areaAlias;
+        
+        return "...";
     }
 
     public accentuate() {
@@ -82,11 +94,11 @@ export class EnemyNode extends AnimatedSprite {
      * @returns the distance from current position of the node to its endPoint
      */
     public getDistanceToEndPoint(): number {
-        return LinearRepresentation.getDistance(this.x, this.y, this.linearRepresentation.endCoordinate.x, this.linearRepresentation.endCoordinate.y);
+        return LinearRepresentation.getDistance(this.x, this.y, this.line.linearRepresentation.endCoordinate.x, this.line.linearRepresentation.endCoordinate.y);
     }
 
     /**
-     * @Note y/xIsAscendant could be calculated only once at the creation of the node for more optimization
+     * @Note 
      * - if the staring and ending x coordinate of the linearRepresentation are the same, then only increment y coordinate of Graphic...same thing y
      * - else use getXFromY in the current linearRepresentation to get the next point based on distance...
      *   (because it'll be just a normal(inversed...) linear equation)
@@ -96,7 +108,7 @@ export class EnemyNode extends AnimatedSprite {
      * @param distance 
      */
     public updateNode(delta: number, distance: number): void {
-        const {startCoordinate, endCoordinate, yIsAscendant, xIsAscendant} = this.linearRepresentation;
+        const {startCoordinate, endCoordinate, yIsAscendant, xIsAscendant} = this.line.linearRepresentation;
         const resultingDistance: number = (distance * delta) * this.distanceMultiplier;
         if (startCoordinate.x === endCoordinate.x) {
             if (yIsAscendant) this.y += resultingDistance;
@@ -108,10 +120,10 @@ export class EnemyNode extends AnimatedSprite {
             let nextCoordinate: Coordinate = new Coordinate(0, 0);
             if (xIsAscendant) { 
                 nextCoordinate.setX(this.x + (resultingDistance));
-                nextCoordinate.setY(this.linearRepresentation.getYFromX(nextCoordinate.x)); 
+                nextCoordinate.setY(this.line.linearRepresentation.getYFromX(nextCoordinate.x)); 
             } else {
                 nextCoordinate.setX(this.x - (resultingDistance));
-                nextCoordinate.setY(this.linearRepresentation.getYFromX(nextCoordinate.x)); 
+                nextCoordinate.setY(this.line.linearRepresentation.getYFromX(nextCoordinate.x)); 
             }
             this.x = nextCoordinate.x;
             this.y = nextCoordinate.y;

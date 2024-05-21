@@ -1,5 +1,5 @@
-import { BitmapFont, BitmapText, IBitmapTextStyle } from "pixi.js";
-import { DisplayableNumberOptions } from "./types";
+import { BitmapText } from "pixi.js";
+import { DisplayableNumberOptions } from "../types";
 import { Coordinate } from "./Coordinate";
 
 
