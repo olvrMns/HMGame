@@ -1,0 +1,255 @@
+{"frames": {
+
+"fighter1-0.png":
+{
+	"frame": {"x":1,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-1.png":
+{
+	"frame": {"x":77,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-2.png":
+{
+	"frame": {"x":153,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-3.png":
+{
+	"frame": {"x":229,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-4.png":
+{
+	"frame": {"x":305,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-5.png":
+{
+	"frame": {"x":381,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-6.png":
+{
+	"frame": {"x":457,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-7.png":
+{
+	"frame": {"x":1,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-8.png":
+{
+	"frame": {"x":1,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-9.png":
+{
+	"frame": {"x":77,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-10.png":
+{
+	"frame": {"x":153,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-11.png":
+{
+	"frame": {"x":229,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-12.png":
+{
+	"frame": {"x":305,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-13.png":
+{
+	"frame": {"x":381,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-14.png":
+{
+	"frame": {"x":457,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-15.png":
+{
+	"frame": {"x":1,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-16.png":
+{
+	"frame": {"x":533,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-17.png":
+{
+	"frame": {"x":609,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-18.png":
+{
+	"frame": {"x":685,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-19.png":
+{
+	"frame": {"x":761,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-20.png":
+{
+	"frame": {"x":837,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-21.png":
+{
+	"frame": {"x":913,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-22.png":
+{
+	"frame": {"x":1,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-23.png":
+{
+	"frame": {"x":1,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-24.png":
+{
+	"frame": {"x":533,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-25.png":
+{
+	"frame": {"x":609,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-26.png":
+{
+	"frame": {"x":685,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-27.png":
+{
+	"frame": {"x":761,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-28.png":
+{
+	"frame": {"x":837,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+},
+"fighter1-29.png":
+{
+	"frame": {"x":913,"y":1,"w":74,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":89},
+	"sourceSize": {"w":128,"h":101}
+}},
+"animations": {
+	"fighter1": ["fighter1-0.png","fighter1-1.png","fighter1-2.png","fighter1-3.png","fighter1-4.png","fighter1-5.png","fighter1-6.png","fighter1-7.png","fighter1-8.png","fighter1-9.png","fighter1-10.png","fighter1-11.png","fighter1-12.png","fighter1-13.png","fighter1-14.png","fighter1-15.png","fighter1-16.png","fighter1-17.png","fighter1-18.png","fighter1-19.png","fighter1-20.png","fighter1-21.png","fighter1-22.png","fighter1-23.png","fighter1-24.png","fighter1-25.png","fighter1-26.png","fighter1-27.png","fighter1-28.png","fighter1-29.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.1",
+	"image": "fighter1Data.png",
+	"format": "RGBA8888",
+	"size": {"w":988,"h":91},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:2216982f95428443a8d26d937773d747:7c9782c00bb394e8662c9e9f6d0f160c:6d386c2534b69de62335058219033026$"
+}
+}

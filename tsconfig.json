@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        // Settings for the compiler
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "target": "es2015",
+        "module": "ESNext",
+    
+        // Rules for your code
+        "strict": true,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noUnusedParameters": false,
+        "noUnusedLocals": false,
+        "noFallthroughCasesInSwitch": false,
+        "noImplicitOverride": false,
+
+        // Settings for linking source files
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+
+        "skipLibCheck": true,
+    },
+    // Folder for your code
+    "include": [
+        "./src/*"
+, "src/obj/DisplayableNumber.ts", "src/obj/DisposableText.ts", "src/obj/Coordinate.ts", "src/obj/EnemyNode.ts", "src/obj/Line.ts", "src/obj/LinearRepresentation.ts", "src/obj/Levels.ts", "src/util/AssetLoader.ts", "src/util/ApplicationUtils.ts", "src/obj/AbstractLevel.ts", "src/util/WindowPresets.ts"    ]
+}

@@ -1,0 +1,127 @@
+{"frames": {
+
+"fighter1Ex-0.png":
+{
+	"frame": {"x":101,"y":63,"w":74,"h":90},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":90},
+	"sourceSize": {"w":128,"h":128}
+},
+"fighter1Ex-1.png":
+{
+	"frame": {"x":193,"y":71,"w":74,"h":90},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":90},
+	"sourceSize": {"w":128,"h":128}
+},
+"fighter1Ex-2.png":
+{
+	"frame": {"x":285,"y":71,"w":74,"h":90},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":90},
+	"sourceSize": {"w":128,"h":128}
+},
+"fighter1Ex-3.png":
+{
+	"frame": {"x":377,"y":71,"w":74,"h":90},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":90},
+	"sourceSize": {"w":128,"h":128}
+},
+"fighter1Ex-4.png":
+{
+	"frame": {"x":1,"y":124,"w":74,"h":90},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":90},
+	"sourceSize": {"w":128,"h":128}
+},
+"fighter1Ex-5.png":
+{
+	"frame": {"x":93,"y":139,"w":74,"h":90},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":90},
+	"sourceSize": {"w":128,"h":128}
+},
+"fighter1Ex-6.png":
+{
+	"frame": {"x":185,"y":147,"w":74,"h":92},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":92},
+	"sourceSize": {"w":128,"h":128}
+},
+"fighter1Ex-7.png":
+{
+	"frame": {"x":279,"y":147,"w":74,"h":96},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":12,"w":74,"h":96},
+	"sourceSize": {"w":128,"h":128}
+},
+"fighter1Ex-8.png":
+{
+	"frame": {"x":70,"y":1,"w":51,"h":91},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":37,"y":20,"w":51,"h":91},
+	"sourceSize": {"w":128,"h":128}
+},
+"fighter1Ex-9.png":
+{
+	"frame": {"x":163,"y":1,"w":60,"h":97},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":35,"y":16,"w":60,"h":97},
+	"sourceSize": {"w":128,"h":128}
+},
+"fighter1Ex-10.png":
+{
+	"frame": {"x":262,"y":1,"w":68,"h":101},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":31,"y":16,"w":68,"h":101},
+	"sourceSize": {"w":128,"h":128}
+},
+"fighter1Ex-11.png":
+{
+	"frame": {"x":1,"y":54,"w":68,"h":98},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":31,"y":20,"w":68,"h":98},
+	"sourceSize": {"w":128,"h":128}
+},
+"fighter1Ex-12.png":
+{
+	"frame": {"x":365,"y":1,"w":68,"h":90},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":31,"y":26,"w":68,"h":90},
+	"sourceSize": {"w":128,"h":128}
+},
+"fighter1Ex-13.png":
+{
+	"frame": {"x":1,"y":1,"w":46,"h":67},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":39,"y":48,"w":46,"h":67},
+	"sourceSize": {"w":128,"h":128}
+}},
+"animations": {
+	"fighter1Explosion": ["fighter1Ex-0.png","fighter1Ex-1.png","fighter1Ex-2.png","fighter1Ex-3.png","fighter1Ex-4.png","fighter1Ex-5.png","fighter1Ex-6.png","fighter1Ex-7.png","fighter1Ex-8.png","fighter1Ex-9.png","fighter1Ex-10.png","fighter1Ex-11.png","fighter1Ex-12.png","fighter1Ex-13.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.1",
+	"image": "fighter1Explosion.png",
+	"format": "RGBA8888",
+	"size": {"w":456,"h":222},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:81de68b543ea864e73d95abdbdedc2f2:6057696c4258b862dd40d268edc7a12c:74c68eb9f351341ae95b55154ff5aa2c$"
+}
+}
