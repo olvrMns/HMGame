@@ -12,8 +12,8 @@ export class DisplayableNumber extends BitmapText {
             fontName: options.fontName ? options.fontName : 'PixelMapFont1',
             fontSize: options.fontSize ? options.fontSize : 30, 
         });
-        this.x = options.x;
-        this.y = options.y;
+        this.x = options.coordinate.x;
+        this.y = options.coordinate.y;
         this.value = 0;
     }
 

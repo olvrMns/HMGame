@@ -2,10 +2,11 @@ import { FrameObject, Resource, Texture } from "pixi.js";
 import { TriggerKeys } from "./src/obj/AbstractLevel";
 import { Coordinate } from "./src/obj/Coordinate";
 import { Line } from "./src/obj/Line";
+import { InterceptionAreaAliases } from "./src/util/ApplicationUtils";
 
-declare type LineInterceptionAreaObject = {areaAlias: string, coordinate: Coordinate};
+declare type LineInterceptionAreaObject = {areaAlias: InterceptionAreaAliases, coordinate: Coordinate};
 
-declare type InterceptionPercentages = {areaAlias: string, percentage: number, areaColor: string}[];
+declare type InterceptionPercentages = {areaAlias: InterceptionAreaAliases, percentage: number, areaColor: string}[];
 
 declare type InterceptionCoordinates = LineInterceptionAreaObject[];
 
@@ -25,7 +26,8 @@ declare type LevelOptions = {
     nodeSpeedMultiplier?: number, 
     framesBeforeNodeInitialization?: number, 
     cadenceMultiplier?: number,
-    interceptionPercentages?: InterceptionPercentages
+    interceptionPercentages?: InterceptionPercentages,
+    disposableTextCoordinate?: Coordinate,
 };
 
 declare type DisplayableNumberOptions = {
@@ -33,12 +35,13 @@ declare type DisplayableNumberOptions = {
     fontName?: string,
     fontSize?: number,
     color?: string,
-    x: number,
-    y: number
+    coordinate: Coordinate
 };
 
 declare interface DisposableTextOptions extends DisplayableNumberOptions {
     yPositionIncrement?: number,
     framesBeforeDestruction?: number
 }
+
+declare type PRDisposableTexts = {[key in InterceptionAreaAliases]?: DisposableTextOptions};
 

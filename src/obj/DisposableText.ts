@@ -1,5 +1,6 @@
-import { BitmapText, Container } from "pixi.js";
+import { BitmapText } from "pixi.js";
 import { DisposableTextOptions } from "../../types";
+import { Coordinate } from "./Coordinate";
 
 
 export class DisposableText extends BitmapText {
@@ -9,11 +10,14 @@ export class DisposableText extends BitmapText {
 
     constructor(options: DisposableTextOptions) {
         super(options.value ? options.value : '...', {fontName: options.fontName ? options.fontName : 'PixelMapFont1', fontSize: options.fontSize ? options.fontSize : 30});
-        this.x = options.x;
-        this.y = options.y;
+        this.x = options.coordinate.x;
+        this.y = options.coordinate.y;
         this.yPositionIncrement = options.yPositionIncrement ? options.yPositionIncrement : 5;
         this.framesBeforeDestruction = options.framesBeforeDestruction ? options.framesBeforeDestruction : 8;
         this.currentFrameCount = 0;
+        this.tint = options.color ? options.color : "#50C878";
+        this.anchor.x = 0.5;
+        this.anchor.y = 0.5;
     };
 
     public static of(options: DisposableTextOptions): DisposableText {
@@ -24,6 +28,11 @@ export class DisposableText extends BitmapText {
         return this.currentFrameCount >= this.framesBeforeDestruction;
     }
 
+    public moveTo(coordinate: Coordinate) {
+        this.x = coordinate.x;
+        this.y = coordinate.y;
+    }
+
     /**
      * @description """Animates""" the bitMapText by changing it's scale x/y and y position
      */
@@ -31,34 +40,4 @@ export class DisposableText extends BitmapText {
         this.y = this.y - (this.yPositionIncrement * delta);
         this.currentFrameCount++;
     }
-}
-
-export class DisposableTextController {
-    public rootContainer: Container;
-    public disposableTexts: DisposableText[];
-
-    constructor(rootContainer: Container) {
-        this.rootContainer = rootContainer;
-        this.disposableTexts = [];
-    }
-
-    public add(disposableText: DisposableText) {
-        this.disposableTexts.push(disposableText);
-        this.rootContainer.addChild(disposableText);
-    }
-
-    public remove(disposableText: DisposableText) {
-        this.disposableTexts = this.disposableTexts.filter(dt => dt !== disposableText);
-        this.rootContainer.removeChild(disposableText);
-        disposableText.destroy({texture: false});
-    }
-
-    public updateAll(delta: number) {
-        for (let disposableText of this.disposableTexts) {
-            if (disposableText.canBeDestroyed()) this.remove(disposableText);
-            else disposableText.update(delta);
-        }
-    }
-
-
 }

@@ -1,6 +1,8 @@
 import { Container } from "pixi.js";
 import { InterceptionPercentages, LevelOptions, LineObject } from "../../types";
 import { ApplicationUtils } from "../util/ApplicationUtils";
+import { Coordinate } from "./Coordinate";
+import { WindowPresets } from "../util/WindowPresets";
 
 export enum TriggerKeys {
     A = "A",
@@ -28,6 +30,7 @@ export abstract class AbstractLevel extends Container  {
     public cadenceMultiplier: number;
     public lineObjects: LineObject[];
     public interceptionPercentages: InterceptionPercentages;
+    public disposableTextCoordinate: Coordinate;
 
     constructor(options: LevelOptions) {
         super()
@@ -40,6 +43,7 @@ export abstract class AbstractLevel extends Container  {
         this.cadenceMultiplier = options.cadenceMultiplier ? options.cadenceMultiplier : 1;
         this.lineObjects = [];
         this.interceptionPercentages = options.interceptionPercentages ? options.interceptionPercentages : ApplicationUtils.DEFAULT_INTERCEPTION_PERCENTAGES; 
+        this.disposableTextCoordinate = options.disposableTextCoordinate ? options.disposableTextCoordinate : WindowPresets.CENTER_COORDINATE;
         this.build();
     }
 

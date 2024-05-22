@@ -4,6 +4,8 @@ import { LineObject } from "../types";
 import { AbstractLevel, TriggerKeys } from "./obj/AbstractLevel";
 import { DisplayableNumber } from "./obj/DisplayableNumber";
 import { EnemyNode } from "./obj/EnemyNode";
+import { Coordinate } from "./obj/Coordinate";
+import { DisposableTextController } from "./obj/DisposableTextController";
 
 /**
  * @description Object containing the logic/lifecycle of the game
@@ -17,13 +19,15 @@ export class LevelInstance {
     private frameCount: number = 0;
     private enemyNodes: EnemyNode[] = [];
     private inputManager: InputManager = new InputManager();
+    private disposableTextController: DisposableTextController;
 
     private constructor(level: AbstractLevel) {
         this.level = level;
         this.initFonts();
-        this.score = new DisplayableNumber({x: 50, y: 50});
-        this.highestScore = new DisplayableNumber({x: 50, y: 150});
-        this.failStreak = new DisplayableNumber({x: 50, y: 250});
+        this.score = new DisplayableNumber({coordinate: Coordinate.of(50, 50)});
+        this.highestScore = new DisplayableNumber({coordinate: Coordinate.of(50, 150)});
+        this.failStreak = new DisplayableNumber({coordinate: Coordinate.of(50, 250)});
+        this.disposableTextController = new DisposableTextController(this.level);
         this.loadStats();
     }
 
@@ -124,7 +128,7 @@ export class LevelInstance {
         if (Object.keys(TriggerKeys).includes(key)) {
             for (let node of this.enemyNodes) {
                 if (node.triggerKey === key && node.canBeIntercepted() && node.hasNotBeenTriggered) {
-                    console.log(node.getCurrentAriaAlias());
+                    this.disposableTextController.addFromPresetAliases(node.getCurrentAriaAlias(), this.level.disposableTextCoordinate);
                     this.removeEnemyNode(node);
                     node.explode();
                     //this.destroyEnemyNode(node);
@@ -165,6 +169,7 @@ export class LevelInstance {
                 this.destroyLineNodes();
             });
             this.onInput();
+            this.disposableTextController.updateAll(delta);
             this.onFrameCountEquals(this.level.framesBeforeNodeInitialization * cadenceMultiplier, () => this.initializeEnemyNode());
             this.onFrameCountEquals(300, () => { cadenceMultiplier = this.fluctuate(this.level.cadenceMultiplier, 0.8); });
             this.incrementFrameCount();

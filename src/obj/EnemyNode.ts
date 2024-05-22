@@ -1,6 +1,6 @@
 import { AnimatedSprite } from "pixi.js";
 import { EnemyNodeOptions, LineInterceptionAreaObject, LineObject } from "../../types";
-import { ApplicationUtils } from "../util/ApplicationUtils";
+import { ApplicationUtils, InterceptionAreaAliases } from "../util/ApplicationUtils";
 import { TriggerKeys } from "./AbstractLevel";
 import { Coordinate } from "./Coordinate";
 import { LinearRepresentation } from "./LinearRepresentation";
@@ -76,11 +76,10 @@ export class EnemyNode extends AnimatedSprite {
     /**
      * @description will return an object in the future (enum/animatedSprite)
      */
-    public getCurrentAriaAlias(): string {
+    public getCurrentAriaAlias(): InterceptionAreaAliases {
         for (let elem of ApplicationUtils.getReversedArray<LineInterceptionAreaObject>(this.lineObject.line.interceptionCoordiantes)) 
             if (this.hasPassed(elem.coordinate)) return elem.areaAlias;
-        
-        return "...";
+        return InterceptionAreaAliases.FAIL;
     }
 
     public accentuate() {

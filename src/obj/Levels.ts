@@ -77,6 +77,7 @@ export class ClassicGH extends AbstractLevel {
             distanceToInterceptMultiplier: 1.5,
             framesBeforeNodeUpdate: 5,
             nodeSpeedMultiplier: 0.5,
+            disposableTextCoordinate: Coordinate.of(WindowPresets.PSC_BOTTOM_RIGHT.x - 150, WindowPresets.PSC_BOTTOM_RIGHT.y - 150)
         });
     }
 
