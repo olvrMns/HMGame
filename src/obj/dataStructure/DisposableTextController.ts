@@ -1,9 +1,12 @@
 import { Container } from "pixi.js";
-import { DisposableText } from "./DisposableText";
-import { InterceptionAreaAliases, prDisposableTexts } from "../util/ApplicationUtils";
-import { DisposableTextOptions } from "../../types";
-import { Coordinate } from "./Coordinate";
+import { DisposableText } from "../DisposableText";
+import { InterceptionAreaAliases, prDisposableTexts } from "../../util/ApplicationUtils";
+import { DisposableTextOptions } from "../../../types";
+import { Coordinate } from "../Coordinate";
 
+/**
+ * @description data structure that controls the life cycle of popup BitMapTexts (DisposableText)
+ */
 export class DisposableTextController {
     public rootContainer: Container;
     public disposableTexts: DisposableText[];

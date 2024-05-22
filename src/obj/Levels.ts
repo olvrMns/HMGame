@@ -1,7 +1,7 @@
 import { AnimatedSprite } from "pixi.js";
 import { ApplicationSrpites, ApplicationTextures } from "../util/AssetLoader";
 import { WindowPresets } from "../util/WindowPresets";
-import { AbstractLevel, TriggerKeys } from "./AbstractLevel";
+import { AbstractLevel, TriggerKeys } from "./abstract/AbstractLevel";
 import { Coordinate } from "./Coordinate";
 import { Line } from "./Line";
 

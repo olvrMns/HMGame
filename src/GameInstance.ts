@@ -1,6 +1,6 @@
 import { Application } from "pixi.js";
 import { LevelInstance } from "./LevelInstance";
-import { AbstractLevel } from "./obj/AbstractLevel";
+import { AbstractLevel } from "./obj/abstract/AbstractLevel";
 import { WindowPresets } from "./util/WindowPresets";
 
 
@@ -39,14 +39,14 @@ export class GameInstance extends Application {
         this.unloadLevel();
         this.levelInstance = LevelInstance.getInstance(level);
         this.stage.addChild(this.levelInstance.level);
-        this.ticker.add(this.levelInstance.getRandomizedInstanceTicker());
     }
 
     public unloadLevel(): void {
         if (this.levelInstance) {
             this.stage.removeChild(this.levelInstance.level);
             this.levelInstance.level.destroy({texture: false});
-            this.levelInstance = null;
+            this.levelInstance.tickerController.destroyAll();
+            this.levelInstance = LevelInstance.closeInstance();
         }
     }
 }

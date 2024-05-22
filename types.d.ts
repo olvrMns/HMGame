@@ -1,5 +1,5 @@
 import { FrameObject, Resource, Texture } from "pixi.js";
-import { TriggerKeys } from "./src/obj/AbstractLevel";
+import { TriggerKeys } from "./src/obj/abstract/AbstractLevel";
 import { Coordinate } from "./src/obj/Coordinate";
 import { Line } from "./src/obj/Line";
 import { InterceptionAreaAliases } from "./src/util/ApplicationUtils";
