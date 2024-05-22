@@ -134,7 +134,7 @@ export class Space2 extends AbstractLevel {
 
         this.addLineObject({
             triggerKey: TriggerKeys.Y, 
-            enemyTextures: {base: ApplicationTextures.SPACESHIP3, destruction: ApplicationTextures.EXPLOSION3},
+            enemyTextures: {base: ApplicationTextures.SPACESHIP3, destruction: ApplicationTextures.EXPLOSION3, scale: 1.2},
             line: Line.of(WindowPresets.PSC_BOTTOM_MIDDLE, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 360, this.interceptionPercentages, true)
         });
     }

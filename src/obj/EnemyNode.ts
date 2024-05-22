@@ -18,9 +18,9 @@ export class EnemyNode extends AnimatedSprite {
     constructor(lineObject: LineObject, options: EnemyNodeOptions) {
         super(lineObject.enemyTextures.base)
         this.lineObject = lineObject;
-        this.scale.x = options.scale ? options.scale : 0.5;
-        this.scale.y = options.scale ? options.scale : 0.5;
-        this.accentuatedScale = options.scale ? options.scale * 1.3 : 0.5 * 1.3; 
+        this.scale.x = lineObject.enemyTextures.scale ? lineObject.enemyTextures.scale : 0.5;
+        this.scale.y = lineObject.enemyTextures.scale ? lineObject.enemyTextures.scale : 0.5;
+        this.accentuatedScale = lineObject.enemyTextures.scale ? lineObject.enemyTextures.scale * 1.3 : 0.5 * 1.3; 
         this.distanceMultiplier = 1;
         this.angle = lineObject.line.inclination;
         this.triggerKey = lineObject.triggerKey;

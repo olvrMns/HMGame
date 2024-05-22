@@ -12,11 +12,11 @@ declare type InterceptionCoordinates = LineInterceptionAreaObject[];
 
 declare type LineObject = {
     line: Line, 
-    enemyTextures: {base: FrameObject[] | Texture<Resource>[], destruction: FrameObject[] | Texture<Resource>[]}, 
+    enemyTextures: {base: FrameObject[] | Texture<Resource>[], destruction: FrameObject[] | Texture<Resource>[], scale?: number}, 
     triggerKey: TriggerKeys
 };
 
-declare type EnemyNodeOptions = {angle?: number, scale?: number};
+declare type EnemyNodeOptions = {angle?: number};
 
 declare type LevelOptions = {
     distancePerFrame?: number, 

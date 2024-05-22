@@ -50,7 +50,7 @@ export class LevelInstance {
     }
 
     public initializeEnemyNode(lineObject: LineObject = this.level.getRandomLineObject()): void {
-        let enemyNode: EnemyNode = EnemyNode.of(lineObject, {angle: lineObject.line.inclination, scale: 0.5});
+        let enemyNode: EnemyNode = EnemyNode.of(lineObject, {angle: lineObject.line.inclination});
         this.enemyNodes.push(enemyNode);
         this.level.addChild(enemyNode);
     }
