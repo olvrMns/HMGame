@@ -6,4 +6,12 @@ import { ClassicGH, Space1, Space2 } from "./obj/Levels";
     const instance: GameInstance = GameInstance.getInstance();
     await AssetLoader.load();
     instance.loadLevel(new Space2());
+
+    await new Promise(resolve => setTimeout(resolve, 3000));
+
+    instance.loadLevel(new Space1());
+
+    await new Promise(resolve => setTimeout(resolve, 3000));
+
+    instance.loadLevel(new ClassicGH());
 })();

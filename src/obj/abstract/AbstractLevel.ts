@@ -1,8 +1,8 @@
 import { Container } from "pixi.js";
-import { InterceptionPercentages, LevelOptions, LineObject } from "../../types";
-import { ApplicationUtils } from "../util/ApplicationUtils";
-import { Coordinate } from "./Coordinate";
-import { WindowPresets } from "../util/WindowPresets";
+import { InterceptionPercentages, LevelOptions, LineObject } from "../../../types";
+import { ApplicationUtils } from "../../util/ApplicationUtils";
+import { Coordinate } from "../Coordinate";
+import { WindowPresets } from "../../util/WindowPresets";
 
 export enum TriggerKeys {
     A = "A",

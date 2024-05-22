@@ -1,17 +1,18 @@
 import InputManager from "guki-input-controller";
 import { BitmapFont, TickerCallback } from "pixi.js";
 import { LineObject } from "../types";
-import { AbstractLevel, TriggerKeys } from "./obj/AbstractLevel";
+import { AbstractLevel, TriggerKeys } from "./obj/abstract/AbstractLevel";
 import { DisplayableNumber } from "./obj/DisplayableNumber";
 import { EnemyNode } from "./obj/EnemyNode";
 import { Coordinate } from "./obj/Coordinate";
-import { DisposableTextController } from "./obj/DisposableTextController";
+import { DisposableTextController } from "./obj/dataStructure/DisposableTextController";
+import { TickerController } from "./obj/dataStructure/TickerController";
 
 /**
  * @description Object containing the logic/lifecycle of the game
  */
 export class LevelInstance {
-    private static instance: LevelInstance;
+    private static instance: LevelInstance | null;
     public level: AbstractLevel;
     private score: DisplayableNumber;
     private highestScore: DisplayableNumber;
@@ -20,6 +21,7 @@ export class LevelInstance {
     private enemyNodes: EnemyNode[] = [];
     private inputManager: InputManager = new InputManager();
     private disposableTextController: DisposableTextController;
+    public tickerController: TickerController;
 
     private constructor(level: AbstractLevel) {
         this.level = level;
@@ -29,11 +31,18 @@ export class LevelInstance {
         this.failStreak = new DisplayableNumber({coordinate: Coordinate.of(50, 250)});
         this.disposableTextController = new DisposableTextController(this.level);
         this.loadStats();
+        this.tickerController = TickerController.of(this.getRandomizedInstanceTickerCallback());
+        this.tickerController.addAllUnPausableTickers(this.getInputTickerCallback());
     }
 
     public static getInstance(level: AbstractLevel) {
         if (!this.instance) this.instance = new LevelInstance(level);
         return this.instance;
+    }
+
+    public static closeInstance(): null {
+        this.instance = null;
+        return null;
     }
 
     public initFonts() {
@@ -131,7 +140,6 @@ export class LevelInstance {
                     this.disposableTextController.addFromPresetAliases(node.getCurrentAriaAlias(), this.level.disposableTextCoordinate);
                     this.removeEnemyNode(node);
                     node.explode();
-                    //this.destroyEnemyNode(node);
                     this.score.increment();
                     this.failStreak.reset();
                     if (this.highestScore.getValue() < this.score.getValue()) this.highestScore.setValue(this.score.getValue());
@@ -142,6 +150,9 @@ export class LevelInstance {
                     break;
                 } 
             }
+        } else if (key === "ESCAPE") {
+            if (this.tickerController.isPaused()) this.tickerController.unPause();
+            else this.tickerController.pause();
         }
     }
 
@@ -158,21 +169,26 @@ export class LevelInstance {
      * @Note Random sequence
      * @returns TickerCallback
      */
-    public getRandomizedInstanceTicker(): TickerCallback<any> { 
+    public getRandomizedInstanceTickerCallback(): TickerCallback<any> { 
         let cadenceMultiplier: number = this.level.cadenceMultiplier;
-        this.inputManager.init("default");
         return (delta: number) => {
             this.sortEnemyNodes();
-            this.inputManager.update();
             this.onFrameCountEquals(this.level.framesBeforeNodeUpdate * this.level.nodeSpeedMultiplier, () => {
                 this.updateNodes(delta); 
                 this.destroyLineNodes();
             });
-            this.onInput();
             this.disposableTextController.updateAll(delta);
             this.onFrameCountEquals(this.level.framesBeforeNodeInitialization * cadenceMultiplier, () => this.initializeEnemyNode());
             this.onFrameCountEquals(300, () => { cadenceMultiplier = this.fluctuate(this.level.cadenceMultiplier, 0.8); });
             this.incrementFrameCount();
         };
+    }
+
+    public getInputTickerCallback(): TickerCallback<any> {
+        this.inputManager.init("default");
+        return (delta: number) => {
+            this.inputManager.update();
+            this.onInput();
+        }
     }
 }
