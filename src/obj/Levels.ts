@@ -18,7 +18,7 @@ export class Space1 extends AbstractLevel {
         });
     }
 
-    public build(): void {
+    public override build(): void {
         //need to make core attribute to change speed of animation
         const core1: AnimatedSprite = new AnimatedSprite(ApplicationTextures.PLANET1);
         core1.x = WindowPresets.CENTER_COORDINATE.x;
@@ -81,7 +81,7 @@ export class ClassicGH extends AbstractLevel {
         });
     }
 
-    public build(): void {
+    public override build(): void {
         const xLineLimit: number = WindowPresets.WINDOW_WIDTH * 0.1;
         this.addChild(ApplicationSrpites.SPACE_BACKGROUND3);
 
@@ -103,5 +103,39 @@ export class ClassicGH extends AbstractLevel {
             triggerKey: TriggerKeys.X, 
             enemyTextures: {base: ApplicationTextures.SPACESHIP1, destruction: ApplicationTextures.SPACESHIP1_EXPLOSION}, 
             line: Line.of(Coordinate.of(WindowPresets.WINDOW_WIDTH, 400), Coordinate.of(xLineLimit, 400), this.distanceToIntercept,  270, this.interceptionPercentages, true)});
+    }
+}
+
+export class Space2 extends AbstractLevel {
+
+    constructor() {
+        super({
+            distancePerFrame: 5,
+            distanceToIntercept: 100,
+            framesBeforeNodeInitialization: 60,
+            distanceToInterceptMultiplier: 1.3,
+            framesBeforeNodeUpdate: 5,
+            nodeSpeedMultiplier: 0.8,
+        });
+    }
+
+    public override build(): void {
+        this.addChild(ApplicationSrpites.SPACE_BACKGROUND2);
+        const core1: AnimatedSprite = new AnimatedSprite(ApplicationTextures.PLANET4);
+        core1.x = WindowPresets.CENTER_COORDINATE.x;
+        core1.y = WindowPresets.CENTER_COORDINATE.y;
+        core1.scale.x = 1;
+        core1.scale.y = 1;
+        core1.anchor.x = 0.5;
+        core1.anchor.y = 0.5;
+        core1.animationSpeed = 0.2;
+        core1.play();
+        this.addChild(core1);
+
+        this.addLineObject({
+            triggerKey: TriggerKeys.Y, 
+            enemyTextures: {base: ApplicationTextures.SPACESHIP3, destruction: ApplicationTextures.EXPLOSION3},
+            line: Line.of(WindowPresets.PSC_BOTTOM_MIDDLE, WindowPresets.CENTER_COORDINATE, this.distanceToIntercept, 360, this.interceptionPercentages, true)
+        });
     }
 }
