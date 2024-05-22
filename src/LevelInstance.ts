@@ -32,6 +32,7 @@ export class LevelInstance {
         this.disposableTextController = new DisposableTextController(this.level);
         this.loadStats();
         this.tickerController = TickerController.of(this.getRandomizedInstanceTickerCallback());
+        this.tickerController.addAllUnPausableTickers(this.getInputTickerCallback());
     }
 
     public static getInstance(level: AbstractLevel) {
@@ -149,6 +150,9 @@ export class LevelInstance {
                     break;
                 } 
             }
+        } else if (key === "ESCAPE") {
+            if (this.tickerController.isPaused()) this.tickerController.unPause();
+            else this.tickerController.pause();
         }
     }
 
@@ -167,19 +171,24 @@ export class LevelInstance {
      */
     public getRandomizedInstanceTickerCallback(): TickerCallback<any> { 
         let cadenceMultiplier: number = this.level.cadenceMultiplier;
-        this.inputManager.init("default");
         return (delta: number) => {
             this.sortEnemyNodes();
-            this.inputManager.update();
             this.onFrameCountEquals(this.level.framesBeforeNodeUpdate * this.level.nodeSpeedMultiplier, () => {
                 this.updateNodes(delta); 
                 this.destroyLineNodes();
             });
-            this.onInput();
             this.disposableTextController.updateAll(delta);
             this.onFrameCountEquals(this.level.framesBeforeNodeInitialization * cadenceMultiplier, () => this.initializeEnemyNode());
             this.onFrameCountEquals(300, () => { cadenceMultiplier = this.fluctuate(this.level.cadenceMultiplier, 0.8); });
             this.incrementFrameCount();
         };
+    }
+
+    public getInputTickerCallback(): TickerCallback<any> {
+        this.inputManager.init("default");
+        return (delta: number) => {
+            this.inputManager.update();
+            this.onInput();
+        }
     }
 }

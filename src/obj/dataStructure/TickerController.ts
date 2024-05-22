@@ -4,29 +4,66 @@ import { Ticker, TickerCallback } from "pixi.js";
      * @description will be it's own data structure for the whole application at some point
      */
 export class TickerController {
-    private tickers: Ticker[] = [];
+    private unPausableTickers: Ticker[] = [];
+    private pausableTickers: Ticker[] = [];
+    private paused: boolean = false;
 
-    constructor(...tickers: TickerCallback<any>[]) {
-        this.addAll(...tickers);
+    constructor(...pausableTickers: TickerCallback<any>[]) {
+        this.addAllPausableTickers(...pausableTickers);
     }
 
-    public static of(...tickers: TickerCallback<any>[]) {
-        return new TickerController(...tickers);
+    public static of(...pausableTickers: TickerCallback<any>[]) {
+        return new TickerController(...pausableTickers);
     }
 
-    public addAll(...tickers: TickerCallback<any>[]) {
-        for (let elem of tickers) this.add(elem);
-    }
-
-    public add(callback: TickerCallback<any>) {
+    public getTicker(callback: TickerCallback<any>): Ticker {
         const nTicker: Ticker = new Ticker();
         nTicker.add(callback);
         nTicker.start();
-        this.tickers.push(nTicker);
+        return nTicker;
+    }
+
+    public pause() {
+        this.paused = true;
+        this.stopPausableTickers();
+    }
+
+    public unPause() {
+        this.paused = false;
+        this.startPausableTickers();
+    }
+
+    public isPaused() {
+        return this.paused == true;
+    }
+
+    public addPausableTicker(callback: TickerCallback<any>) {
+        this.pausableTickers.push(this.getTicker(callback));
+    }
+
+    public addAllPausableTickers(...pausableTickers: TickerCallback<any>[]) {
+        for (let elem of pausableTickers) this.addPausableTicker(elem);
+    }
+
+    public addUnPausableTicker(callback: TickerCallback<any>) {
+        this.unPausableTickers.push(this.getTicker(callback));
+    }
+
+    public addAllUnPausableTickers(...unPausableTickers: TickerCallback<any>[]) {
+        for (let elem of unPausableTickers) this.addUnPausableTicker(elem);
     }
 
     public destroyAll() {
-        this.tickers.forEach(tickter => tickter.destroy());
+        this.pausableTickers.forEach(tickter => tickter.destroy());
+        this.unPausableTickers.forEach(tickter => tickter.destroy());
+    }
+
+    public stopPausableTickers() {
+        this.pausableTickers.forEach(ticker => ticker.stop());
+    }
+
+    public startPausableTickers() {
+        this.pausableTickers.forEach(ticker => ticker.start());
     }
 
     /**
