@@ -1,7 +1,7 @@
-import { Application, DisplayObject, Ticker } from "pixi.js";
-import { WindowPresets } from "./WindowPresets";
+import { Application } from "pixi.js";
 import { LevelInstance } from "./LevelInstance";
-import { AbstractLevel } from "./AbstractLevel";
+import { AbstractLevel } from "./obj/AbstractLevel";
+import { WindowPresets } from "./util/WindowPresets";
 
 
 /**

@@ -27,5 +27,5 @@
     // Folder for your code
     "include": [
         "./src/*"
-    ]
+, "src/obj/DisplayableNumber.ts", "src/obj/DisposableText.ts", "src/obj/Coordinate.ts", "src/obj/EnemyNode.ts", "src/obj/Line.ts", "src/obj/LinearRepresentation.ts", "src/obj/Levels.ts", "src/util/AssetLoader.ts", "src/util/ApplicationUtils.ts", "src/obj/AbstractLevel.ts", "src/util/WindowPresets.ts"    ]
 }

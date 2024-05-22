@@ -1,7 +1,7 @@
 import { FrameObject, Resource, Texture } from "pixi.js";
-import { TriggerKeys } from "./src/AbstractLevel";
-import { Coordinate } from "./src/Coordinate";
-import { Line } from "./src/Line";
+import { TriggerKeys } from "./src/obj/AbstractLevel";
+import { Coordinate } from "./src/obj/Coordinate";
+import { Line } from "./src/obj/Line";
 
 declare type LineInterceptionAreaObject = {areaAlias: string, coordinate: Coordinate};
 
@@ -32,7 +32,13 @@ declare type DisplayableNumberOptions = {
     value?: string,
     fontName?: string,
     fontSize?: number,
+    color?: string,
     x: number,
     y: number
 };
+
+declare interface DisposableTextOptions extends DisplayableNumberOptions {
+    yPositionIncrement?: number,
+    framesBeforeDestruction?: number
+}
 

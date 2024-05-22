@@ -1,6 +1,6 @@
 import { Container } from "pixi.js";
-import { InterceptionPercentages, LevelOptions, LineObject } from "../types";
-import { ApplicationUtils } from "./ApplicationUtils";
+import { InterceptionPercentages, LevelOptions, LineObject } from "../../types";
+import { ApplicationUtils } from "../util/ApplicationUtils";
 
 export enum TriggerKeys {
     A = "A",

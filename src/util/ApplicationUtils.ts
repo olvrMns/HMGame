@@ -1,5 +1,5 @@
 import { ILineStyleOptions } from "pixi.js";
-import { InterceptionPercentages } from "../types";
+import { InterceptionPercentages } from "../../types";
 
 
 export class ApplicationUtils {

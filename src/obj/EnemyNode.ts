@@ -1,11 +1,9 @@
 import { AnimatedSprite } from "pixi.js";
-import { EnemyNodeOptions, LineInterceptionAreaObject, LineObject } from "../types";
+import { EnemyNodeOptions, LineInterceptionAreaObject, LineObject } from "../../types";
+import { ApplicationUtils } from "../util/ApplicationUtils";
 import { TriggerKeys } from "./AbstractLevel";
-import { ApplicationUtils } from "./ApplicationUtils";
 import { Coordinate } from "./Coordinate";
 import { LinearRepresentation } from "./LinearRepresentation";
-import { Line } from "./Line";
-import { ApplicationTextures } from "./AssetLoader";
 
 /**
  * @description 

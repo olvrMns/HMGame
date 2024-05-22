@@ -1,9 +1,9 @@
 import InputManager from "guki-input-controller";
 import { BitmapFont, TickerCallback } from "pixi.js";
 import { LineObject } from "../types";
-import { AbstractLevel, TriggerKeys } from "./AbstractLevel";
-import { DisplayableNumber } from "./DisplayableNumber";
-import { EnemyNode } from "./EnemyNode";
+import { AbstractLevel, TriggerKeys } from "./obj/AbstractLevel";
+import { DisplayableNumber } from "./obj/DisplayableNumber";
+import { EnemyNode } from "./obj/EnemyNode";
 
 /**
  * @description Object containing the logic/lifecycle of the game

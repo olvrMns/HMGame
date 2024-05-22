@@ -1,9 +1,9 @@
 import { AnimatedSprite } from "pixi.js";
+import { ApplicationSrpites, ApplicationTextures } from "../util/AssetLoader";
+import { WindowPresets } from "../util/WindowPresets";
 import { AbstractLevel, TriggerKeys } from "./AbstractLevel";
-import { ApplicationTextures, ApplicationSrpites } from "./AssetLoader";
-import { Line } from "./Line";
-import { WindowPresets } from "./WindowPresets";
 import { Coordinate } from "./Coordinate";
+import { Line } from "./Line";
 
 //10, 150, 50, 1.5, 5, 0.5
 export class Space1 extends AbstractLevel {
@@ -73,7 +73,7 @@ export class ClassicGH extends AbstractLevel {
         super({
             distancePerFrame: 10,
             distanceToIntercept: 150,
-            framesBeforeNodeInitialization: 150,
+            framesBeforeNodeInitialization: 80,
             distanceToInterceptMultiplier: 1.5,
             framesBeforeNodeUpdate: 5,
             nodeSpeedMultiplier: 0.5,

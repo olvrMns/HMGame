@@ -1,7 +1,7 @@
 import { Graphics } from "pixi.js";
+import { InterceptionCoordinates, InterceptionPercentages } from "../../types";
 import { Coordinate } from "./Coordinate";
 import { LinearRepresentation } from "./LinearRepresentation";
-import { InterceptionCoordinates, InterceptionPercentages } from "../types";
 
 /**
  * @description Object encapsulating data on a line where [EnemyNode] will traverse

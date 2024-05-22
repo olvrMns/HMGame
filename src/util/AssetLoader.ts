@@ -1,14 +1,14 @@
-import { Assets, BitmapFont, Resource, Sprite, Spritesheet, Texture } from "pixi.js";
-import fighter1Data from "../static/assets/fighter1Data.json";
-import fighter1ExplosionData from "../static/assets/fighter1ExplosionData.json";
-import fighter2Data from "../static/assets/fighter2Data.json";
-import fighter2ExplosionData from "../static/assets/fighter2ExplosionData.json";
-import fighter3Data from "../static/assets/fighter3Data.json";
-import explosion3Data from "../static/assets/explosion3Data.json";
-import planet1Data from "../static/assets/planet1Data.json";
-import planet2Data from "../static/assets/planet2Data.json";
-import planet3Data from "../static/assets/planet3Data.json";
-import planet4Data from "../static/assets/planet4Data.json";
+import { Assets, Resource, Sprite, Spritesheet, Texture } from "pixi.js";
+import explosion3Data from "../../static/assets/explosion3Data.json";
+import fighter1Data from "../../static/assets/fighter1Data.json";
+import fighter1ExplosionData from "../../static/assets/fighter1ExplosionData.json";
+import fighter2Data from "../../static/assets/fighter2Data.json";
+import fighter2ExplosionData from "../../static/assets/fighter2ExplosionData.json";
+import fighter3Data from "../../static/assets/fighter3Data.json";
+import planet1Data from "../../static/assets/planet1Data.json";
+import planet2Data from "../../static/assets/planet2Data.json";
+import planet3Data from "../../static/assets/planet3Data.json";
+import planet4Data from "../../static/assets/planet4Data.json";
 /**
  * @description Utility class containing Assets/Animations of the application and methods
  * @Note returns a clone of a texture/sprite so that the .destroy() method of containers doesn't destroy the referenced object
