@@ -1,8 +1,10 @@
 import { Ticker, TickerCallback } from "pixi.js";
 
 /**
-     * @description will be it's own data structure for the whole application at some point
-     */
+ * @description will be it's own data structure for the whole application at some point
+ * - UnPausable tickers are the ones that shouldn't be stopped (ex: input reading ticker, so we can unpause)
+ * - Pausable tickers (ex: mian game loop)
+ */
 export class TickerController {
     private unPausableTickers: Ticker[] = [];
     private pausableTickers: Ticker[] = [];
