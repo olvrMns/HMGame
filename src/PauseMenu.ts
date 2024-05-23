@@ -1,6 +1,7 @@
-import { BitmapText, Container } from "pixi.js";
+import { Container, Graphics } from "pixi.js";
 import { BitMapTextGrid } from "./obj/bitMapText/BitMapTextGrid";
 import { WindowPresets } from "./util/WindowPresets";
+import { ApplicationUtils } from "./util/ApplicationUtils";
 
 export class PauseMenu extends Container {
     private grid: BitMapTextGrid;
@@ -13,8 +14,8 @@ export class PauseMenu extends Container {
             columns: 1, 
             rows: 2, 
             gridCenterCoordinate: WindowPresets.CENTER_COORDINATE, 
-            height: WindowPresets.WINDOW_HEIGHT * 0.2,
-            width: WindowPresets.WINDOW_WIDTH * 0.2
+            height: WindowPresets.WINDOW_HEIGHT * 0.15,
+            width: WindowPresets.WINDOW_WIDTH * 0.15
         });
         this.resumeCallback = resumeCallback;
         this.menuCallback = menuCallback;
@@ -26,16 +27,16 @@ export class PauseMenu extends Container {
     }
 
     public build() {
-        const resumeButton = new BitmapText("Resume", {fontName: "MenuFont"});
-        resumeButton.eventMode = 'static';
-        resumeButton.onclick = () => this.resumeCallback();
-        this.grid.setBitMapTextAt(resumeButton, 0, 0);
-
-        const backButton = new BitmapText("Back to Menu", {fontName: "MenuFont"});
-        backButton.eventMode = 'static';
-        backButton.onclick = () => this.menuCallback();
-        this.grid.setBitMapTextAt(backButton, 0, 1);
-
+        const background: Graphics = new Graphics();
+        background.beginFill(ApplicationUtils.PAUSE_MENU_BACKGROUND_COLOR, 0.5);
+        background.drawRect(0, 0, WindowPresets.WINDOW_WIDTH, WindowPresets.WINDOW_HEIGHT);
+        background.endFill();
+        this.addChild(background);
+        
+        this.grid.setBitMapTextsFromArray(
+            ApplicationUtils.getCustomBitMapText({text: "RESUME", onClick: this.resumeCallback}), 
+            ApplicationUtils.getCustomBitMapText({text: "EXIT", onClick: this.menuCallback})
+        );
         this.addChild(this.grid);
     }
 

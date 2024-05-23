@@ -7,12 +7,13 @@ import { WindowPresets } from "./util/WindowPresets";
 import { AbstractLevel } from "./obj/abstract/AbstractLevel";
 import { BitMapTextGrid } from "./obj/bitMapText/BitMapTextGrid";
 import { Coordinate } from "./obj/Coordinate";
+import { ApplicationUtils } from "./util/ApplicationUtils";
 
 export enum Levels {
     SPACE1 = "Space 1",
     SPACE2 = "Space 2",
     SPACE3 = "Space 3",
-    CGH = "Classic Hero"
+    CGH = "Hero"
 }
 
 /**
@@ -38,7 +39,7 @@ export class Menu extends Container {
             columns: 1, 
             rows: 3, height: WindowPresets.WINDOW_HEIGHT * 0.2, 
             width: WindowPresets.WINDOW_WIDTH * 0.15, 
-            gridCenterCoordinate: WindowPresets.CENTER_COORDINATE});
+            gridCenterCoordinate: Coordinate.of(WindowPresets.CENTER_COORDINATE.x, WindowPresets.CENTER_COORDINATE.y + (WindowPresets.CENTER_COORDINATE.y * 0.5))});
         this.build();
     }
 
@@ -54,24 +55,16 @@ export class Menu extends Container {
     private build(): void {
         BitmapFont.from("MenuFont", {fontFamily: 'Pixelfont2', fontSize: 30, fill: '#c4d4b1'});
         this.addChild(ApplicationSrpites.MENU_BACKGROUND);
-        //this.filters?.push(new BlurFilter(8, 4));
         this.setLevelsGrid();
     }
 
     private setLevelsGrid(): void {
         let bitMapTexts: BitmapText[] = [];
         Object.keys(levelInstances).forEach((levelName) => {
-            bitMapTexts.push(this.getLevelButtonBitMapText(levelName));
+            bitMapTexts.push(ApplicationUtils.getCustomBitMapText({onClick: () => this.loadLevel(levelInstances[levelName]), text: levelName}));
         });
         this.levelsGrid.setBitMapTextsFromArray(...bitMapTexts);
         this.addChildAt(this.levelsGrid, 1);
-    }
-
-    private getLevelButtonBitMapText(levelName: string): BitmapText {
-        const bitMapText = new BitmapText(levelName, {fontName: "MenuFont"});
-        bitMapText.eventMode = 'static';
-        bitMapText.onclick = () => this.loadLevel(levelInstances[levelName]);
-        return bitMapText;
     }
 
     private loadLevel(levelCallback: () => AbstractLevel): void {

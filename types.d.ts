@@ -1,4 +1,4 @@
-import { BitmapText, FrameObject, Resource, Texture } from "pixi.js";
+import { BitmapText, EventMode, FrameObject, Resource, Texture } from "pixi.js";
 import { AbstractLevel, TriggerKeys } from "./src/obj/abstract/AbstractLevel";
 import { Coordinate } from "./src/obj/Coordinate";
 import { Line } from "./src/obj/Line";
@@ -54,5 +54,15 @@ declare type BitMapTextGridOptions = {
     columns: number,
     rows: number,
     gridCenterCoordinate: Coordinate,
+}
+
+declare type CustomBitMapTextOptions = {
+    text: string,
+    eventMode?: EventMode,
+    fontName?: string,
+    fontSize?: string,
+    onClick(): void,
+    color?: string,
+    colorOnHover?: string
 }
 
