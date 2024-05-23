@@ -7,9 +7,10 @@ import { EnemyNode } from "./obj/EnemyNode";
 import { Coordinate } from "./obj/Coordinate";
 import { DisposableTextController } from "./obj/dataStructure/DisposableTextController";
 import { TickerController } from "./obj/dataStructure/TickerController";
+import { Menu } from "./Menu";
 
 /**
- * @description Object containing the logic/lifecycle of the game
+ * @description Singleton Object containing the logic/lifecycle of the game (level)
  */
 export class LevelInstance {
     private static instance: LevelInstance | null;
@@ -40,9 +41,23 @@ export class LevelInstance {
         return this.instance;
     }
 
-    public static closeInstance(): null {
+    public static closeInstance() {
         this.instance = null;
-        return null;
+    }
+
+    /**
+     * @description 
+     * 1) Adds back the menu to the application stage (the root container)
+     * 2) Destroys all the tickers of the instance
+     * 3) Removes the current level (container) from the application stage
+     * 4) Destroys the current level
+     * 5) Sets the static instance to null
+     */
+    public unStage() {
+        this.level.parent.addChildAt(Menu.getInstance(), 0);
+        this.tickerController.destroyAll();
+        this.level.unStage();
+        LevelInstance.closeInstance();
     }
 
     public initFonts() {

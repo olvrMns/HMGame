@@ -1,15 +1,13 @@
 import { Application } from "pixi.js";
-import { LevelInstance } from "./LevelInstance";
-import { AbstractLevel } from "./obj/abstract/AbstractLevel";
+import { AssetLoader } from "./util/AssetLoader";
 import { WindowPresets } from "./util/WindowPresets";
-
+import { Menu } from "./Menu";
 
 /**
  * @description Singleton Application Object
  */
 export class GameInstance extends Application {
     private static instance: GameInstance;
-    public levelInstance: LevelInstance | null;
 
     private constructor() {
         super({
@@ -21,11 +19,14 @@ export class GameInstance extends Application {
             autoStart: true,
             view: GameInstance.createCanvas()
         });
-        this.levelInstance = null;
+        this.stage.addChild(Menu.getInstance());
     }
 
-    public static getInstance(): GameInstance {
-        if (!this.instance) this.instance = new GameInstance();
+    public static async start() {
+        if (!this.instance) {
+            await AssetLoader.load();
+            this.instance = new GameInstance();
+        };
         return this.instance;
     }
 
@@ -33,20 +34,5 @@ export class GameInstance extends Application {
         const canvas: HTMLCanvasElement = document.createElement("canvas") as HTMLCanvasElement;
         document.body.appendChild(canvas);
         return canvas;
-    }
-
-    public loadLevel(level: AbstractLevel): void {
-        this.unloadLevel();
-        this.levelInstance = LevelInstance.getInstance(level);
-        this.stage.addChild(this.levelInstance.level);
-    }
-
-    public unloadLevel(): void {
-        if (this.levelInstance) {
-            this.stage.removeChild(this.levelInstance.level);
-            this.levelInstance.level.destroy({texture: false});
-            this.levelInstance.tickerController.destroyAll();
-            this.levelInstance = LevelInstance.closeInstance();
-        }
     }
 }

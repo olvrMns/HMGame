@@ -1,12 +1,15 @@
 import { FrameObject, Resource, Texture } from "pixi.js";
-import { TriggerKeys } from "./src/obj/abstract/AbstractLevel";
+import { AbstractLevel, TriggerKeys } from "./src/obj/abstract/AbstractLevel";
 import { Coordinate } from "./src/obj/Coordinate";
 import { Line } from "./src/obj/Line";
 import { InterceptionAreaAliases } from "./src/util/ApplicationUtils";
+import { Levels } from "./src/Menu";
 
 declare type LineInterceptionAreaObject = {areaAlias: InterceptionAreaAliases, coordinate: Coordinate};
 
 declare type InterceptionPercentages = {areaAlias: InterceptionAreaAliases, percentage: number, areaColor: string}[];
+
+declare type LevelInstances = {[key in Levels]?: () => AbstractLevel};
 
 declare type InterceptionCoordinates = LineInterceptionAreaObject[];
 

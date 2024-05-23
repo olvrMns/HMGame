@@ -1,22 +1,71 @@
-import { Container } from "pixi.js";
+import { BitmapFont, BitmapText, Container, FederatedPointerEvent } from "pixi.js";
+import { LevelInstances } from "../types";
+import { ClassicGH, Space1, Space2 } from "./obj/Levels";
+import { ApplicationSrpites } from "./util/AssetLoader";
+import { LevelInstance } from "./LevelInstance";
+import { WindowPresets } from "./util/WindowPresets";
+import { AbstractLevel } from "./obj/abstract/AbstractLevel";
 
-enum Levels {
+export enum Levels {
     SPACE1 = "Space 1",
     SPACE2 = "Space 2",
-    CGH = "Hero"
+    CGH = "Classic Hero"
 }
 
+/**
+ * @description as a callback as value so it can return a NEW level after unload(level/container destruction)
+ */
+export const levelInstances: LevelInstances = {
+    // [Levels.SPACE1]: () => new Space1(),
+    // [Levels.SPACE2]: () => new Space2(),
+    [Levels.CGH]: () => new ClassicGH()
+}
 
-
+/**
+ * @description 
+ * - Parent : Stage Container object of application
+ */
 export class Menu extends Container {
+    private static instance: Menu;
 
     constructor() {
         super();
         this.build();
     }
 
-    private build() {
+    public static getInstance(): Menu {
+        if (!this.instance) this.instance = new Menu();
+        return this.instance;
+    }
 
+    private unStage(): void {
+        this.parent.removeChild(this);
+    }
+
+    private build(): void {
+        BitmapFont.from("MenuFont", {fontFamily: 'Pixelfont2', fontSize: 60, fill: '#c4d4b1'});
+        this.addChildAt(ApplicationSrpites.MENU_BACKGROUND, 0);
+        this.addChildAt(this.getLevelButtonContainer(), 1);
+    }
+
+    private getLevelButtonContainer(): Container {
+        const container = new Container();
+        Object.keys(levelInstances).forEach((levelName) => container.addChild(this.getLevelButtonBitMapText(levelName)) );
+        return container;
+    }
+
+    private getLevelButtonBitMapText(levelName: string): BitmapText {
+        const bitMapText = new BitmapText(levelName, {fontName: "MenuFont"});
+        bitMapText.eventMode = 'static';
+        bitMapText.onclick = () => this.loadLevel(levelInstances[levelName]);
+        return bitMapText;
+    }
+
+    private loadLevel(levelCallback: () => AbstractLevel): void {
+        const level = levelCallback();
+        LevelInstance.getInstance(level);
+        this.parent.addChild(level);
+        this.unStage();
     }
 
 }
