@@ -6,10 +6,12 @@ import { LevelInstance } from "./LevelInstance";
 import { WindowPresets } from "./util/WindowPresets";
 import { AbstractLevel } from "./obj/abstract/AbstractLevel";
 import { BitMapTextGrid } from "./obj/bitMapText/BitMapTextGrid";
+import { Coordinate } from "./obj/Coordinate";
 
 export enum Levels {
     SPACE1 = "Space 1",
     SPACE2 = "Space 2",
+    SPACE3 = "Space 3",
     CGH = "Classic Hero"
 }
 
@@ -32,7 +34,11 @@ export class Menu extends Container {
 
     constructor() {
         super();
-        this.levelsGrid = BitMapTextGrid.of({columns: 1, rows: 3, height: WindowPresets.WINDOW_HEIGHT/2, width: WindowPresets.WINDOW_WIDTH/2, x: 50, y: 50});
+        this.levelsGrid = BitMapTextGrid.of({
+            columns: 1, 
+            rows: 3, height: WindowPresets.WINDOW_HEIGHT * 0.2, 
+            width: WindowPresets.WINDOW_WIDTH * 0.15, 
+            gridCenterCoordinate: WindowPresets.CENTER_COORDINATE});
         this.build();
     }
 
@@ -46,7 +52,7 @@ export class Menu extends Container {
     }
 
     private build(): void {
-        BitmapFont.from("MenuFont", {fontFamily: 'Pixelfont2', fontSize: 60, fill: '#c4d4b1'});
+        BitmapFont.from("MenuFont", {fontFamily: 'Pixelfont2', fontSize: 30, fill: '#c4d4b1'});
         this.addChildAt(ApplicationSrpites.MENU_BACKGROUND, 0);
         this.setLevelsGrid();
     }

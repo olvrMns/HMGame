@@ -51,10 +51,8 @@ declare type PRDisposableTexts = {[key in InterceptionAreaAliases]?: DisposableT
 declare type BitMapTextGridOptions = {
     width: number,
     height: number,
-    x: number,
-    y: number,
     columns: number,
     rows: number,
-    //gridCenterCoordinate: Coordinate,
+    gridCenterCoordinate: Coordinate,
 }
 

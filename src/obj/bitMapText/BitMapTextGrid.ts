@@ -45,11 +45,10 @@ export class BitMapTextGrid extends Container {
         this.virtualHeight = params.height;
         this.columns = params.columns;
         this.rows = params.rows;
-        this.x = params.x;
-        this.y = params.y;
         this.columnsWidth = this.virtualWidth/this.columns;
         this.rowsHeight = this.virtualHeight/this.rows;
-        this.build();
+        this.setGridSpaces();
+        this.rePosition(params.gridCenterCoordinate);
     }
 
     public static of(params: BitMapTextGridOptions): BitMapTextGrid {
@@ -61,7 +60,7 @@ export class BitMapTextGrid extends Container {
      * - ((the current X position + half of the width of a column) and (the current y position + half of the height of a row))
      * - after reaching the last column of a row, the current Y position is incremented by the height of a row to "switch" rows
      */
-    public build() {
+    public setGridSpaces() {
         let currentXPosition: number;
         let currentYPosition: number = this.y;
         for (let row = 0; row < this.rows; row++) {
@@ -75,15 +74,35 @@ export class BitMapTextGrid extends Container {
         };
     }
 
+    /**
+     * @description ...
+     * @param coordinate where the center of the container will be moved 
+     */
+    public rePosition(coordinate: Coordinate) {
+        this.x = coordinate.x - this.virtualWidth;
+        this.y = coordinate.y - this.virtualHeight;
+    }
+
+    public addBitMapText(bitMapText: BitmapText) {
+        this.reSizeBitMapTextToGridSpace(bitMapText);
+        this.addChild(bitMapText);
+    }
+
+    public removeBitMapText(bitMapText: BitmapText) {
+        this.removeChild(bitMapText);
+    }
+
     public getBitMapTextAt(column: number, row: number): BitmapText | null{
         return this.gridElements[row][column].bitMapText;
     }
 
-    public reSizeBitMapTextToSpace(bitMapText: BitmapText): void {
-        throw new Error("NOT YET IMPLEMENTED");
+    public reSizeBitMapTextToGridSpace(bitMapText: BitmapText): void {
+        bitMapText.width = this.columnsWidth;
+        bitMapText.height = this.rowsHeight;
     }
 
     public setBitMapTextAt(bitMapText: BitmapText, column: number, row: number): void {
+        this.addBitMapText(bitMapText);
         this.gridElements[row][column].setBitMapText(bitMapText);
     }
 
@@ -95,7 +114,7 @@ export class BitMapTextGrid extends Container {
         let currentRow: number = 0; 
         let currentColumn: number = 0;
         for (let elem = 0; elem < bitMapTexts.length; elem++) {
-            this.addChild(bitMapTexts[elem]);
+            this.addBitMapText(bitMapTexts[elem]);
             this.setBitMapTextAt(bitMapTexts[elem], currentColumn, currentRow);
             currentColumn++;
             if (currentColumn >= this.columns) {
@@ -103,6 +122,5 @@ export class BitMapTextGrid extends Container {
                 currentRow++;
             };
         };
-        console.log(this.gridElements);
     }
 }

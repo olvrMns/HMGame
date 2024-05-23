@@ -8,6 +8,7 @@ import { AbstractLevel, TriggerKeys } from "./obj/abstract/AbstractLevel";
 import { DisplayableNumber } from "./obj/bitMapText/DisplayableNumber";
 import { DisposableTextController } from "./obj/dataStructure/DisposableTextController";
 import { TickerController } from "./obj/dataStructure/TickerController";
+import { PauseMenu } from "./PauseMenu";
 
 /**
  * @description Singleton Object containing the logic/lifecycle of the game (level)
@@ -23,6 +24,7 @@ export class LevelInstance {
     private inputManager: InputManager = new InputManager();
     private disposableTextController: DisposableTextController;
     public tickerController: TickerController;
+    private pauseMenu: PauseMenu;
 
     private constructor(level: AbstractLevel) {
         this.level = level;
@@ -34,6 +36,7 @@ export class LevelInstance {
         this.loadStats();
         this.tickerController = TickerController.of(this.getRandomizedInstanceTickerCallback());
         this.tickerController.addAllUnPausableTickers(this.getInputTickerCallback());
+        this.pauseMenu = this.initPauseMenu();
     }
 
     public static getInstance(level: AbstractLevel) {
@@ -65,6 +68,16 @@ export class LevelInstance {
          * @Note ???????????????????????????????????????????????????????
          */
         BitmapFont.from("PixelMapFont1", {fontFamily: 'Pixelfont1', fontSize: 60, fill: '#c4d4b1'});
+    }
+
+    public initPauseMenu(): PauseMenu {
+        return PauseMenu.getInstance(() => { 
+            this.tickerController.unPause();
+            this.level.removeChild(this.pauseMenu); 
+        }, () => {
+            this.level.removeChild(this.pauseMenu); 
+            this.unStage();
+        });
     }
 
     public loadStats(): void {
@@ -165,9 +178,13 @@ export class LevelInstance {
                     break;
                 } 
             }
-        } else if (key === "ESCAPE") {
-            if (this.tickerController.isPaused()) this.tickerController.unPause();
-            else this.tickerController.pause();
+        } else if (key === "ESCAPE" || key === "MENU") {
+            if (this.tickerController.isPaused()) {
+                this.tickerController.unPause();
+            } else {
+                this.tickerController.pause();
+                this.level.addChild(this.pauseMenu);
+            }
         }
     }
 
