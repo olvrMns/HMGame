@@ -1,13 +1,13 @@
 import InputManager from "guki-input-controller";
 import { BitmapFont, TickerCallback } from "pixi.js";
 import { LineObject } from "../types";
-import { AbstractLevel, TriggerKeys } from "./obj/abstract/AbstractLevel";
-import { DisplayableNumber } from "./obj/DisplayableNumber";
-import { EnemyNode } from "./obj/EnemyNode";
+import { Menu } from "./Menu";
 import { Coordinate } from "./obj/Coordinate";
+import { EnemyNode } from "./obj/EnemyNode";
+import { AbstractLevel, TriggerKeys } from "./obj/abstract/AbstractLevel";
+import { DisplayableNumber } from "./obj/bitMapText/DisplayableNumber";
 import { DisposableTextController } from "./obj/dataStructure/DisposableTextController";
 import { TickerController } from "./obj/dataStructure/TickerController";
-import { Menu } from "./Menu";
 
 /**
  * @description Singleton Object containing the logic/lifecycle of the game (level)

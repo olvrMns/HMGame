@@ -5,6 +5,7 @@ import { ApplicationSrpites } from "./util/AssetLoader";
 import { LevelInstance } from "./LevelInstance";
 import { WindowPresets } from "./util/WindowPresets";
 import { AbstractLevel } from "./obj/abstract/AbstractLevel";
+import { BitMapTextGrid } from "./obj/bitMapText/BitMapTextGrid";
 
 export enum Levels {
     SPACE1 = "Space 1",
@@ -16,8 +17,8 @@ export enum Levels {
  * @description as a callback as value so it can return a NEW level after unload(level/container destruction)
  */
 export const levelInstances: LevelInstances = {
-    // [Levels.SPACE1]: () => new Space1(),
-    // [Levels.SPACE2]: () => new Space2(),
+    [Levels.SPACE1]: () => new Space1(),
+    [Levels.SPACE2]: () => new Space2(),
     [Levels.CGH]: () => new ClassicGH()
 }
 
@@ -27,9 +28,11 @@ export const levelInstances: LevelInstances = {
  */
 export class Menu extends Container {
     private static instance: Menu;
+    private levelsGrid: BitMapTextGrid;
 
     constructor() {
         super();
+        this.levelsGrid = BitMapTextGrid.of({columns: 1, rows: 3, height: WindowPresets.WINDOW_HEIGHT/2, width: WindowPresets.WINDOW_WIDTH/2, x: 50, y: 50});
         this.build();
     }
 
@@ -45,13 +48,16 @@ export class Menu extends Container {
     private build(): void {
         BitmapFont.from("MenuFont", {fontFamily: 'Pixelfont2', fontSize: 60, fill: '#c4d4b1'});
         this.addChildAt(ApplicationSrpites.MENU_BACKGROUND, 0);
-        this.addChildAt(this.getLevelButtonContainer(), 1);
+        this.setLevelsGrid();
     }
 
-    private getLevelButtonContainer(): Container {
-        const container = new Container();
-        Object.keys(levelInstances).forEach((levelName) => container.addChild(this.getLevelButtonBitMapText(levelName)) );
-        return container;
+    private setLevelsGrid(): void {
+        let bitMapTexts: BitmapText[] = [];
+        Object.keys(levelInstances).forEach((levelName) => {
+            bitMapTexts.push(this.getLevelButtonBitMapText(levelName));
+        });
+        this.levelsGrid.setBitMapTextsFromArray(...bitMapTexts);
+        this.addChildAt(this.levelsGrid, 1);
     }
 
     private getLevelButtonBitMapText(levelName: string): BitmapText {

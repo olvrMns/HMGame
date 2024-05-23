@@ -1,6 +1,6 @@
 import { BitmapText } from "pixi.js";
-import { DisposableTextOptions } from "../../types";
-import { Coordinate } from "./Coordinate";
+import { DisposableTextOptions } from "../../../types";
+import { Coordinate } from "../Coordinate";
 
 
 export class DisposableText extends BitmapText {

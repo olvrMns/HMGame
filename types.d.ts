@@ -1,4 +1,4 @@
-import { FrameObject, Resource, Texture } from "pixi.js";
+import { BitmapText, FrameObject, Resource, Texture } from "pixi.js";
 import { AbstractLevel, TriggerKeys } from "./src/obj/abstract/AbstractLevel";
 import { Coordinate } from "./src/obj/Coordinate";
 import { Line } from "./src/obj/Line";
@@ -47,4 +47,14 @@ declare interface DisposableTextOptions extends DisplayableNumberOptions {
 }
 
 declare type PRDisposableTexts = {[key in InterceptionAreaAliases]?: DisposableTextOptions};
+
+declare type BitMapTextGridOptions = {
+    width: number,
+    height: number,
+    x: number,
+    y: number,
+    columns: number,
+    rows: number,
+    //gridCenterCoordinate: Coordinate,
+}
 
