@@ -1,4 +1,4 @@
-import { BitmapFont, BitmapText, Container, FederatedPointerEvent } from "pixi.js";
+import { BitmapFont, BitmapText, Container, FederatedPointerEvent, BlurFilter, Filter } from "pixi.js";
 import { LevelInstances } from "../types";
 import { ClassicGH, Space1, Space2 } from "./obj/Levels";
 import { ApplicationSrpites } from "./util/AssetLoader";
@@ -53,7 +53,8 @@ export class Menu extends Container {
 
     private build(): void {
         BitmapFont.from("MenuFont", {fontFamily: 'Pixelfont2', fontSize: 30, fill: '#c4d4b1'});
-        this.addChildAt(ApplicationSrpites.MENU_BACKGROUND, 0);
+        this.addChild(ApplicationSrpites.MENU_BACKGROUND);
+        //this.filters?.push(new BlurFilter(8, 4));
         this.setLevelsGrid();
     }
 
@@ -75,8 +76,8 @@ export class Menu extends Container {
 
     private loadLevel(levelCallback: () => AbstractLevel): void {
         const level = levelCallback();
-        LevelInstance.getInstance(level);
         this.parent.addChild(level);
+        LevelInstance.getInstance(level);
         this.unStage();
     }
 

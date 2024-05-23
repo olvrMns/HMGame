@@ -9,6 +9,7 @@ import { DisplayableNumber } from "./obj/bitMapText/DisplayableNumber";
 import { DisposableTextController } from "./obj/dataStructure/DisposableTextController";
 import { TickerController } from "./obj/dataStructure/TickerController";
 import { PauseMenu } from "./PauseMenu";
+import { GameInstance } from "./GameInstance";
 
 /**
  * @description Singleton Object containing the logic/lifecycle of the game (level)
@@ -34,9 +35,10 @@ export class LevelInstance {
         this.failStreak = new DisplayableNumber({coordinate: Coordinate.of(50, 250)});
         this.disposableTextController = new DisposableTextController(this.level);
         this.loadStats();
+        this.inputManager.init("default");
         this.tickerController = TickerController.of(this.getRandomizedInstanceTickerCallback());
         this.tickerController.addAllUnPausableTickers(this.getInputTickerCallback());
-        this.pauseMenu = this.initPauseMenu();
+        this.pauseMenu = this.getPauseMenu();
     }
 
     public static getInstance(level: AbstractLevel) {
@@ -56,28 +58,36 @@ export class LevelInstance {
      * 4) Destroys the current level
      * 5) Sets the static instance to null
      */
-    public unStage() {
-        this.level.parent.addChildAt(Menu.getInstance(), 0);
+    public destroy() {
+        this.level.parent.addChild(Menu.getInstance());
         this.tickerController.destroyAll();
         this.level.unStage();
         LevelInstance.closeInstance();
     }
 
     public initFonts() {
-        /**
-         * @Note ???????????????????????????????????????????????????????
-         */
         BitmapFont.from("PixelMapFont1", {fontFamily: 'Pixelfont1', fontSize: 60, fill: '#c4d4b1'});
     }
 
-    public initPauseMenu(): PauseMenu {
-        return PauseMenu.getInstance(() => { 
-            this.tickerController.unPause();
-            this.level.removeChild(this.pauseMenu); 
-        }, () => {
-            this.level.removeChild(this.pauseMenu); 
-            this.unStage();
-        });
+    public resume() {
+        this.pauseMenu.unStage();
+        this.tickerController.unPause();
+    }
+
+    /**
+     * @description sets the attribute and returns it
+     * - this needs to be done (I think) because of the behevior of the Container object which stops "existing"
+     * after have it's parent sets to null
+     * - probably needs a better fix
+     */
+    public getPauseMenu(): PauseMenu {
+        this.pauseMenu = PauseMenu.of(
+            () => this.resume(), 
+            () => {
+                this.pauseMenu.unStage(); 
+                this.destroy();
+            });
+        return this.pauseMenu;
     }
 
     public loadStats(): void {
@@ -179,11 +189,10 @@ export class LevelInstance {
                 } 
             }
         } else if (key === "ESCAPE" || key === "MENU") {
-            if (this.tickerController.isPaused()) {
-                this.tickerController.unPause();
-            } else {
+            if (this.tickerController.isPaused()) this.resume()
+            else { //if game isn't paused
                 this.tickerController.pause();
-                this.level.addChild(this.pauseMenu);
+                this.level.addChild(this.getPauseMenu());
             }
         }
     }
@@ -217,7 +226,6 @@ export class LevelInstance {
     }
 
     public getInputTickerCallback(): TickerCallback<any> {
-        this.inputManager.init("default");
         return (delta: number) => {
             this.inputManager.update();
             this.onInput();

@@ -22,6 +22,10 @@ export class GameInstance extends Application {
         this.stage.addChild(Menu.getInstance());
     }
 
+    public static getInstance(): GameInstance {
+        return this.instance;
+    }
+
     public static async start() {
         if (!this.instance) {
             await AssetLoader.load();

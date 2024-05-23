@@ -2,9 +2,7 @@ import { BitmapText, Container } from "pixi.js";
 import { BitMapTextGrid } from "./obj/bitMapText/BitMapTextGrid";
 import { WindowPresets } from "./util/WindowPresets";
 
-
 export class PauseMenu extends Container {
-    private static instance: PauseMenu;
     private grid: BitMapTextGrid;
     private resumeCallback: () => void;
     private menuCallback: () => void;
@@ -23,9 +21,8 @@ export class PauseMenu extends Container {
         this.build();
     }
 
-    public static getInstance(resumeCallback: () => void, menuCallback: () => void): PauseMenu {
-        if (!this.instance) this.instance = new PauseMenu(resumeCallback, menuCallback);
-        return this.instance;
+    public static of(resumeCallback: () => void, menuCallback: () => void): PauseMenu {
+        return new PauseMenu(resumeCallback, menuCallback);
     }
 
     public build() {
@@ -42,7 +39,7 @@ export class PauseMenu extends Container {
         this.addChild(this.grid);
     }
 
-    public dispose() {
+    public unStage() {
         this.parent.removeChild(this);
         this.destroy({texture: false});
     }
