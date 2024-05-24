@@ -2,6 +2,7 @@ import { BitmapText, Container, Graphics } from "pixi.js";
 import { GridContainer } from "./GenericGrid";
 import { ApplicationUtils } from "../util/ApplicationUtils";
 import { WindowPresets } from "../util/WindowPresets";
+import { ApplicationSrpites } from "../util/AssetLoader";
 
 export class PauseMenu extends Container {
     private grid: GridContainer<BitmapText>;
@@ -32,6 +33,7 @@ export class PauseMenu extends Container {
         background.drawRect(0, 0, WindowPresets.WINDOW_WIDTH, WindowPresets.WINDOW_HEIGHT);
         background.endFill();
         this.addChild(background);
+        this.addChild(ApplicationUtils.getTitleSprite(ApplicationSrpites.PAUSE_TITLE, 0.6, 0.4));
         
         this.grid.setContainersFromArray(
             ApplicationUtils.getCustomBitMapText({text: "RESUME", onClick: this.resumeCallback}), 

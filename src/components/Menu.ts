@@ -54,14 +54,9 @@ export class Menu extends Container {
 
     private build(): void {
         BitmapFont.from("MenuFont", {fontFamily: 'Pixelfont2', fontSize: 30, fill: '#c4d4b1'});
-
-        const title: Sprite = ApplicationSrpites.MENU_TITLE;
-        title.skew.x = 0.1;
-        title.scale.set(0.7);
-        title.position.set(WindowPresets.CENTER_COORDINATE.x * 0.5, -WindowPresets.CENTER_COORDINATE.y * 0.4);
         
         this.addChild(ApplicationSrpites.MENU_BACKGROUND);
-        this.addChild(title);
+        this.addChild(ApplicationUtils.getTitleSprite(ApplicationSrpites.MENU_TITLE, 0.4));
         this.setLevelsGrid();
     }
 

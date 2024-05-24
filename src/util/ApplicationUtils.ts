@@ -1,4 +1,4 @@
-import { BitmapText, ILineStyleOptions } from "pixi.js";
+import { BitmapText, ILineStyleOptions, Sprite } from "pixi.js";
 import { CustomBitMapTextOptions, InterceptionPercentages, PRDisposableTexts } from "../../types";
 import { WindowPresets } from "./WindowPresets";
 
@@ -63,6 +63,13 @@ export class ApplicationUtils {
             nBitMapText.onmouseout = () => nBitMapText.tint = options.colorOnHover ? options.colorOnHover : ApplicationUtils.DEFAULT_BUTTON_COLOR;
         }
         return nBitMapText;
+    }
+    
+    public static getTitleSprite(sprite: Sprite, yOffSet: number, scale?: number) {
+        sprite.skew.x = 0.1;
+        sprite.scale.set(scale ? scale : 0.7);
+        sprite.position.set(WindowPresets.CENTER_COORDINATE.x - sprite.width/2, (WindowPresets.CENTER_COORDINATE.y - sprite.height/2) - WindowPresets.CENTER_COORDINATE.y * yOffSet);
+        return sprite;
     }
     
 }
