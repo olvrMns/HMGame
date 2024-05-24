@@ -4,7 +4,7 @@ import { LevelInstance } from "../LevelInstance";
 import { Coordinate } from "../obj/Coordinate";
 import { ClassicGH, Space1, Space2 } from "../obj/Levels";
 import { AbstractLevel } from "../obj/abstract/AbstractLevel";
-import { BitMapTextGrid } from "../obj/bitMapText/BitMapTextGrid";
+import { GridContainer } from "../components/GenericGrid";
 import { ApplicationUtils } from "../util/ApplicationUtils";
 import { ApplicationSrpites } from "../util/AssetLoader";
 import { WindowPresets } from "../util/WindowPresets";
@@ -31,11 +31,11 @@ export const levelInstances: LevelInstances = {
  */
 export class Menu extends Container {
     private static instance: Menu;
-    private levelsGrid: BitMapTextGrid;
+    private levelsGrid: GridContainer<BitmapText>;
 
     constructor() {
         super();
-        this.levelsGrid = BitMapTextGrid.of({
+        this.levelsGrid = new GridContainer<BitmapText>({
             columns: 1, 
             rows: 3, height: WindowPresets.WINDOW_HEIGHT * 0.2, 
             width: WindowPresets.WINDOW_WIDTH * 0.15, 
@@ -70,7 +70,7 @@ export class Menu extends Container {
         Object.keys(levelInstances).forEach((levelName) => {
             bitMapTexts.push(ApplicationUtils.getCustomBitMapText({onClick: () => this.loadLevel(levelInstances[levelName]), text: levelName}));
         });
-        this.levelsGrid.setBitMapTextsFromArray(...bitMapTexts);
+        this.levelsGrid.setContainersFromArray(...bitMapTexts);
         this.addChildAt(this.levelsGrid, 1);
     }
 

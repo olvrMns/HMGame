@@ -1,9 +1,9 @@
-import { EventMode, FrameObject, Resource, Texture } from "pixi.js";
-import { Levels } from "./src/components/Menu";
+import { BitmapText, EventMode, FrameObject, Resource, Texture } from "pixi.js";
+import { AbstractLevel, TriggerKeys } from "./src/obj/abstract/AbstractLevel";
 import { Coordinate } from "./src/obj/Coordinate";
 import { Line } from "./src/obj/Line";
-import { AbstractLevel, TriggerKeys } from "./src/obj/abstract/AbstractLevel";
 import { InterceptionAreaAliases } from "./src/util/ApplicationUtils";
+import { Levels } from "./src/components/Menu";
 
 declare type LineInterceptionAreaObject = {areaAlias: InterceptionAreaAliases, coordinate: Coordinate};
 
@@ -48,7 +48,7 @@ declare interface DisposableTextOptions extends DisplayableNumberOptions {
 
 declare type PRDisposableTexts = {[key in InterceptionAreaAliases]?: DisposableTextOptions};
 
-declare type BitMapTextGridOptions = {
+declare type GridOptions = {
     width: number,
     height: number,
     columns: number,

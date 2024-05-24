@@ -1,16 +1,16 @@
-import { Container, Graphics } from "pixi.js";
-import { BitMapTextGrid } from "../obj/bitMapText/BitMapTextGrid";
+import { BitmapText, Container, Graphics } from "pixi.js";
+import { GridContainer } from "./GenericGrid";
 import { ApplicationUtils } from "../util/ApplicationUtils";
 import { WindowPresets } from "../util/WindowPresets";
 
 export class PauseMenu extends Container {
-    private grid: BitMapTextGrid;
+    private grid: GridContainer<BitmapText>;
     private resumeCallback: () => void;
     private menuCallback: () => void;
 
     constructor(resumeCallback: () => void, menuCallback: () => void) {
         super();
-        this.grid = BitMapTextGrid.of({
+        this.grid = new GridContainer<BitmapText>({
             columns: 1, 
             rows: 2, 
             gridCenterCoordinate: WindowPresets.CENTER_COORDINATE, 
@@ -33,7 +33,7 @@ export class PauseMenu extends Container {
         background.endFill();
         this.addChild(background);
         
-        this.grid.setBitMapTextsFromArray(
+        this.grid.setContainersFromArray(
             ApplicationUtils.getCustomBitMapText({text: "RESUME", onClick: this.resumeCallback}), 
             ApplicationUtils.getCustomBitMapText({text: "EXIT", onClick: this.menuCallback})
         );
