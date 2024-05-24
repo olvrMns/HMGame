@@ -37,32 +37,51 @@ export class Line extends Graphics {
         return new Line(startCoordinate, endCoordinate, distanceToIntercept, inclination, interceptionPercentages, showInterceptionSegment);
     }
 
+    public computeCoordinatesFromIdenticalX(distanceToIntercept: number, interceptionPercentages: InterceptionPercentages): void {
+        const {endCoordinate, yIsAscendant} = this.linearRepresentation;
+        if (yIsAscendant) 
+            for (let elem of interceptionPercentages) 
+                this.interceptionCoordiantes.push({areaAlias: elem.areaAlias, coordinate: Coordinate.of(endCoordinate.x, endCoordinate.y - (distanceToIntercept * elem.percentage))});
+        else 
+            for (let elem of interceptionPercentages) 
+                this.interceptionCoordiantes.push({areaAlias: elem.areaAlias, coordinate: Coordinate.of(endCoordinate.x, endCoordinate.y + (distanceToIntercept * elem.percentage))});
+    }
+
+    public computeCoordinatesFromIdenticalY(distanceToIntercept: number, interceptionPercentages: InterceptionPercentages): void {
+        const {endCoordinate, xIsAscendant} = this.linearRepresentation;
+        if (xIsAscendant) 
+            for (let elem of interceptionPercentages) 
+                this.interceptionCoordiantes.push({areaAlias: elem.areaAlias, coordinate: Coordinate.of(endCoordinate.x - (distanceToIntercept * elem.percentage), endCoordinate.y)});
+        else 
+            for (let elem of interceptionPercentages) 
+                this.interceptionCoordiantes.push({areaAlias: elem.areaAlias, coordinate: Coordinate.of(endCoordinate.x + (distanceToIntercept * elem.percentage), endCoordinate.y)});
+    }
+
+    public computeCoordinatesFromLinear(distanceToIntercept: number, interceptionPercentages: InterceptionPercentages) {
+        let xValue: number;
+        const {endCoordinate, xIsAscendant} = this.linearRepresentation;
+        if (xIsAscendant) {
+            for (let elem of interceptionPercentages) {
+                xValue = endCoordinate.x - (distanceToIntercept * elem.percentage);
+                this.interceptionCoordiantes.push({areaAlias: elem.areaAlias, coordinate: Coordinate.of(xValue, this.linearRepresentation.getYFromX(xValue))});
+            };
+        } else {
+            for (let elem of interceptionPercentages) {
+                xValue = endCoordinate.x + (distanceToIntercept * elem.percentage);
+                this.interceptionCoordiantes.push({areaAlias: elem.areaAlias, coordinate: Coordinate.of(xValue, this.linearRepresentation.getYFromX(xValue))});
+            };
+        }
+    }
+
     /**
      * @description NEEDS TO BE REFORMATED TO REDUCE REPEATED CODE
      * @param distanceToIntercept 
      */
     public computeDistanceInterceptionCoordinates(distanceToIntercept: number, interceptionPercentages: InterceptionPercentages): void {
-        let nx: number;
-        const {endCoordinate, xIsAscendant, startCoordinate, yIsAscendant} = this.linearRepresentation;
-        if (endCoordinate.x === startCoordinate.x) {
-            if (yIsAscendant) for (let elem of interceptionPercentages) this.interceptionCoordiantes.push({areaAlias: elem.areaAlias, coordinate: Coordinate.of(endCoordinate.x, endCoordinate.y - (distanceToIntercept * elem.percentage))});
-            else for (let elem of interceptionPercentages) this.interceptionCoordiantes.push({areaAlias: elem.areaAlias, coordinate: Coordinate.of(endCoordinate.x, endCoordinate.y + (distanceToIntercept * elem.percentage))});
-        } else if (endCoordinate.y === startCoordinate.y) {
-            if (xIsAscendant) for (let elem of interceptionPercentages) this.interceptionCoordiantes.push({areaAlias: elem.areaAlias, coordinate: Coordinate.of(endCoordinate.x - (distanceToIntercept * elem.percentage), endCoordinate.y)});
-            else for (let elem of interceptionPercentages) this.interceptionCoordiantes.push({areaAlias: elem.areaAlias, coordinate: Coordinate.of(endCoordinate.x + (distanceToIntercept * elem.percentage), endCoordinate.y)});
-        } else {
-            if (xIsAscendant) {
-                for (let elem of interceptionPercentages) {
-                    nx = endCoordinate.x - (distanceToIntercept * elem.percentage);
-                    this.interceptionCoordiantes.push({areaAlias: elem.areaAlias, coordinate: Coordinate.of(nx, this.linearRepresentation.getYFromX(nx))});
-                };
-            } else {
-                for (let elem of interceptionPercentages) {
-                    nx = endCoordinate.x + (distanceToIntercept * elem.percentage);
-                    this.interceptionCoordiantes.push({areaAlias: elem.areaAlias, coordinate: Coordinate.of(nx, this.linearRepresentation.getYFromX(nx))});
-                };
-            }
-        }
+        const {endCoordinate, startCoordinate} = this.linearRepresentation;
+        if (endCoordinate.x === startCoordinate.x) this.computeCoordinatesFromIdenticalX(distanceToIntercept, interceptionPercentages);
+        else if (endCoordinate.y === startCoordinate.y) this.computeCoordinatesFromIdenticalY(distanceToIntercept, interceptionPercentages);
+        else this.computeCoordinatesFromLinear(distanceToIntercept, interceptionPercentages);
     }
 
 }

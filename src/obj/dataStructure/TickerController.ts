@@ -55,9 +55,15 @@ export class TickerController {
         for (let elem of unPausableTickers) this.addUnPausableTicker(elem);
     }
 
+    public clear() {
+        this.unPausableTickers = [];
+        this.pausableTickers = [];
+    }
+
     public destroyAll() {
         this.pausableTickers.forEach(tickter => tickter.destroy());
         this.unPausableTickers.forEach(tickter => tickter.destroy());
+        this.clear();
     }
 
     public stopPausableTickers() {

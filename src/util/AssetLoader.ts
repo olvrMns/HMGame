@@ -36,6 +36,7 @@ export class AssetLoader {
         ApplicationSrpites.SPACE_BACKGROUND1 = Sprite.from("assets/SpaceBackground1.png");
         ApplicationSrpites.SPACE_BACKGROUND2 = Sprite.from("assets/SpaceBackground2.png");
         ApplicationSrpites.SPACE_BACKGROUND3 = Sprite.from("assets/SpaceBackground3.png");
+        ApplicationSrpites.MENU_BACKGROUND = Sprite.from("assets/SpaceBackground4.png");
         await Assets.load('fonts/pixelFont1.ttf');
         await Assets.load('fonts/pixelFont2.ttf');
         
@@ -60,6 +61,7 @@ export class ApplicationSrpites {
     public static SPACE_BACKGROUND1: Sprite;
     public static SPACE_BACKGROUND2: Sprite;
     public static SPACE_BACKGROUND3: Sprite;
+    public static MENU_BACKGROUND: Sprite;
 }   
 
 

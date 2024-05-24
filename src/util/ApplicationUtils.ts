@@ -1,5 +1,5 @@
-import { ILineStyleOptions } from "pixi.js";
-import { InterceptionPercentages, PRDisposableTexts } from "../../types";
+import { BitmapText, ILineStyleOptions } from "pixi.js";
+import { CustomBitMapTextOptions, InterceptionPercentages, PRDisposableTexts } from "../../types";
 import { WindowPresets } from "./WindowPresets";
 
 export enum InterceptionAreaAliases {
@@ -24,6 +24,8 @@ export class ApplicationUtils {
     public static DEBUG_LINE_STYLE: ILineStyleOptions = {color: 'green', width: 5};
     public static NODE_ACCENTUATION_COLOR = '#23d916';
     public static NODE_INVALIDATION_COLOR = '#1D221E';
+    public static DEFAULT_BUTTON_COLOR = "pink";
+    public static PAUSE_MENU_BACKGROUND_COLOR = '#664C51';
     public static NODE_INTERCEPTABLE_STATE_COLOR = '#117EEB';
     public static DEFAULT_INTERCEPTION_PERCENTAGES: InterceptionPercentages = [
         {areaAlias: InterceptionAreaAliases.FINE, percentage: 1, areaColor: '#DBDF18'},
@@ -45,6 +47,19 @@ export class ApplicationUtils {
         let nArray: T[] = [];
         for (let elem = array.length - 1; elem > -1; elem--) nArray.push(array[elem]);
         return nArray;
+    }
+
+    /**
+     * @Note will be it's own class that extends bitMapText in the future
+     */
+    public static getCustomBitMapText(options: CustomBitMapTextOptions): BitmapText {
+        const nBitMapText: BitmapText = new BitmapText(options.text, {fontName: options.fontName ? options.fontName : "MenuFont"});
+        nBitMapText.eventMode = options.eventMode ? options.eventMode : "static";
+        nBitMapText.onclick = options.onClick;
+        nBitMapText.tint = options.color ? options.color : ApplicationUtils.DEFAULT_BUTTON_COLOR;
+        nBitMapText.onmouseenter = () => nBitMapText.tint = "red";
+        nBitMapText.onmouseout = () => nBitMapText.tint = options.colorOnHover ? options.colorOnHover : ApplicationUtils.DEFAULT_BUTTON_COLOR;
+        return nBitMapText;
     }
     
 }

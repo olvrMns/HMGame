@@ -1,6 +1,6 @@
 import { BitmapText } from "pixi.js";
-import { DisplayableNumberOptions } from "../../types";
-import { Coordinate } from "./Coordinate";
+import { DisplayableNumberOptions } from "../../../types";
+import { Coordinate } from "../Coordinate";
 
 
 export class DisplayableNumber extends BitmapText {

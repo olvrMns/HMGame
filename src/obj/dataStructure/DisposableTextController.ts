@@ -1,5 +1,5 @@
 import { Container } from "pixi.js";
-import { DisposableText } from "../DisposableText";
+import { DisposableText } from "../bitMapText/DisposableText";
 import { InterceptionAreaAliases, prDisposableTexts } from "../../util/ApplicationUtils";
 import { DisposableTextOptions } from "../../../types";
 import { Coordinate } from "../Coordinate";

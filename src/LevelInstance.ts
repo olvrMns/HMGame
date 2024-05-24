@@ -1,15 +1,18 @@
 import InputManager from "guki-input-controller";
 import { BitmapFont, TickerCallback } from "pixi.js";
 import { LineObject } from "../types";
-import { AbstractLevel, TriggerKeys } from "./obj/abstract/AbstractLevel";
-import { DisplayableNumber } from "./obj/DisplayableNumber";
-import { EnemyNode } from "./obj/EnemyNode";
+import { Menu } from "./Menu";
 import { Coordinate } from "./obj/Coordinate";
+import { EnemyNode } from "./obj/EnemyNode";
+import { AbstractLevel, TriggerKeys } from "./obj/abstract/AbstractLevel";
+import { DisplayableNumber } from "./obj/bitMapText/DisplayableNumber";
 import { DisposableTextController } from "./obj/dataStructure/DisposableTextController";
 import { TickerController } from "./obj/dataStructure/TickerController";
+import { PauseMenu } from "./PauseMenu";
+import { GameInstance } from "./GameInstance";
 
 /**
- * @description Object containing the logic/lifecycle of the game
+ * @description Singleton Object containing the logic/lifecycle of the game (level)
  */
 export class LevelInstance {
     private static instance: LevelInstance | null;
@@ -22,6 +25,7 @@ export class LevelInstance {
     private inputManager: InputManager = new InputManager();
     private disposableTextController: DisposableTextController;
     public tickerController: TickerController;
+    private pauseMenu: PauseMenu;
 
     private constructor(level: AbstractLevel) {
         this.level = level;
@@ -31,8 +35,10 @@ export class LevelInstance {
         this.failStreak = new DisplayableNumber({coordinate: Coordinate.of(50, 250)});
         this.disposableTextController = new DisposableTextController(this.level);
         this.loadStats();
+        this.inputManager.init("default");
         this.tickerController = TickerController.of(this.getRandomizedInstanceTickerCallback());
         this.tickerController.addAllUnPausableTickers(this.getInputTickerCallback());
+        this.pauseMenu = this.getPauseMenu();
     }
 
     public static getInstance(level: AbstractLevel) {
@@ -40,16 +46,48 @@ export class LevelInstance {
         return this.instance;
     }
 
-    public static closeInstance(): null {
+    public static closeInstance() {
         this.instance = null;
-        return null;
+    }
+
+    /**
+     * @description 
+     * 1) Adds back the menu to the application stage (the root container)
+     * 2) Destroys all the tickers of the instance
+     * 3) Removes the current level (container) from the application stage
+     * 4) Destroys the current level
+     * 5) Sets the static instance to null
+     */
+    public destroy() {
+        this.level.parent.addChild(Menu.getInstance());
+        this.tickerController.destroyAll();
+        this.level.unStage();
+        LevelInstance.closeInstance();
     }
 
     public initFonts() {
-        /**
-         * @Note ???????????????????????????????????????????????????????
-         */
         BitmapFont.from("PixelMapFont1", {fontFamily: 'Pixelfont1', fontSize: 60, fill: '#c4d4b1'});
+    }
+
+    public resume() {
+        this.pauseMenu.unStage();
+        this.tickerController.unPause();
+    }
+
+    /**
+     * @description sets the attribute and returns it
+     * - this needs to be done (I think) because of the behevior of the Container object which stops "existing"
+     * after have it's parent sets to null
+     * - probably needs a better fix
+     */
+    public getPauseMenu(): PauseMenu {
+        this.pauseMenu = PauseMenu.of(
+            () => this.resume(), 
+            () => {
+                this.pauseMenu.unStage(); 
+                this.destroy();
+            });
+        return this.pauseMenu;
     }
 
     public loadStats(): void {
@@ -105,18 +143,20 @@ export class LevelInstance {
      * @Node needs to be changed/fixed
      */
     public sortEnemyNodes(): void {
-        let closestDistance: number = 0;
-        let currentDistance: number;
-        let sortedEnemyNodes: EnemyNode[] = [];
-        for (let node of this.enemyNodes) {
-            currentDistance = node.getDistanceToEndPoint();
-            if (currentDistance <= closestDistance && node.hasNotBeenTriggered) {
-                sortedEnemyNodes.unshift(node);
-                closestDistance = currentDistance;
-            } else sortedEnemyNodes.push(node);
+        if (this.enemyNodes.length > 0) {
+            let closestDistance: number = this.enemyNodes[0].getDistanceToEndPoint();
+            let currentDistance: number;
+            let sortedEnemyNodes: EnemyNode[] = [];
+            for (let node of this.enemyNodes) {
+                currentDistance = node.getDistanceToEndPoint();
+                if (currentDistance <= closestDistance && node.hasNotBeenTriggered) {
+                    sortedEnemyNodes.unshift(node);
+                    closestDistance = currentDistance;
+                } else sortedEnemyNodes.push(node);
+            }
+            this.enemyNodes = sortedEnemyNodes;
+            this.accentuateFirstValidNode();
         }
-        this.enemyNodes = sortedEnemyNodes;
-        //this.accentuateFirstValidNode();
     }
 
     public onFrameCountEquals(frameThreshold: number, onCallback: () => void): void {
@@ -150,9 +190,12 @@ export class LevelInstance {
                     break;
                 } 
             }
-        } else if (key === "ESCAPE") {
-            if (this.tickerController.isPaused()) this.tickerController.unPause();
-            else this.tickerController.pause();
+        } else if (key === "ESCAPE" || key === "MENU") {
+            if (this.tickerController.isPaused()) this.resume()
+            else { //if game isn't paused
+                this.tickerController.pause();
+                this.level.addChild(this.getPauseMenu());
+            }
         }
     }
 
@@ -185,7 +228,6 @@ export class LevelInstance {
     }
 
     public getInputTickerCallback(): TickerCallback<any> {
-        this.inputManager.init("default");
         return (delta: number) => {
             this.inputManager.update();
             this.onInput();

@@ -57,4 +57,9 @@ export abstract class AbstractLevel extends Container  {
         this.lineObjects.push(lineObject);
         this.addChild(lineObject.line);
     }
+
+    public unStage() {
+        this.parent.removeChild(this);
+        this.destroy({texture: false});
+    }
 }
