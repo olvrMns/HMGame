@@ -18,6 +18,10 @@ class GridSpace<T extends Container> {
     }
 }
 
+/**
+ * @Note (generic should probably be removed?)
+ * @description Container representing a customizable (only on initialization) grid
+ */
 export class GridContainer<T extends Container> extends Container {
     private columns: number;
     private rows: number;

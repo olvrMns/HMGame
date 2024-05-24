@@ -3,8 +3,9 @@ import { GridContainer } from "./GenericGrid";
 import { ApplicationUtils } from "../util/ApplicationUtils";
 import { WindowPresets } from "../util/WindowPresets";
 import { ApplicationSrpites } from "../util/AssetLoader";
+import { Buildable } from "../util/Buildable";
 
-export class PauseMenu extends Container {
+export class PauseMenu extends Container implements Buildable {
     private grid: GridContainer<BitmapText>;
     private resumeCallback: () => void;
     private menuCallback: () => void;

@@ -1,4 +1,4 @@
-import { BitmapFont, BitmapText, Container, Sprite } from "pixi.js";
+import { BitmapFont, BitmapText, Container } from "pixi.js";
 import { LevelInstances } from "../../types";
 import { LevelInstance } from "../LevelInstance";
 import { Coordinate } from "../obj/Coordinate";
@@ -8,6 +8,7 @@ import { GridContainer } from "../components/GenericGrid";
 import { ApplicationUtils } from "../util/ApplicationUtils";
 import { ApplicationSrpites } from "../util/AssetLoader";
 import { WindowPresets } from "../util/WindowPresets";
+import { Buildable } from "../util/Buildable";
 
 export enum Levels {
     SPACE1 = "Space 1",
@@ -29,7 +30,7 @@ export const levelInstances: LevelInstances = {
  * @description 
  * - Parent : Stage Container object of application
  */
-export class Menu extends Container {
+export class Menu extends Container implements Buildable {
     private static instance: Menu;
     private levelsGrid: GridContainer<BitmapText>;
 
@@ -52,7 +53,7 @@ export class Menu extends Container {
         this.parent.removeChild(this);
     }
 
-    private build(): void {
+    public build(): void {
         BitmapFont.from("MenuFont", {fontFamily: 'Pixelfont2', fontSize: 30, fill: '#c4d4b1'});
         
         this.addChild(ApplicationSrpites.MENU_BACKGROUND);

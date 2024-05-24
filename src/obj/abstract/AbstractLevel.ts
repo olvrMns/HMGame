@@ -3,6 +3,7 @@ import { InterceptionPercentages, LevelOptions, LineObject } from "../../../type
 import { ApplicationUtils } from "../../util/ApplicationUtils";
 import { Coordinate } from "../Coordinate";
 import { WindowPresets } from "../../util/WindowPresets";
+import { Buildable } from "../../util/Buildable";
 
 export enum TriggerKeys {
     A = "A",
@@ -20,7 +21,7 @@ export enum TriggerKeys {
 /**
  * @description Not instantiable Object that encapsulates the data relative to each level
  */
-export abstract class AbstractLevel extends Container  {
+export abstract class AbstractLevel extends Container implements Buildable {
     public distancePerFrame: number;
     public distanceToIntercept: number;
     public distanceToInterceptMultiplier: number;
