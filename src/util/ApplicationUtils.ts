@@ -54,11 +54,14 @@ export class ApplicationUtils {
      */
     public static getCustomBitMapText(options: CustomBitMapTextOptions): BitmapText {
         const nBitMapText: BitmapText = new BitmapText(options.text, {fontName: options.fontName ? options.fontName : "MenuFont"});
+        nBitMapText.fontSize = options.fontSize ? options.fontSize : 30;
         nBitMapText.eventMode = options.eventMode ? options.eventMode : "static";
-        nBitMapText.onclick = options.onClick;
+        nBitMapText.onclick = options.onClick ? options.onClick : null;
         nBitMapText.tint = options.color ? options.color : ApplicationUtils.DEFAULT_BUTTON_COLOR;
-        nBitMapText.onmouseenter = () => nBitMapText.tint = "red";
-        nBitMapText.onmouseout = () => nBitMapText.tint = options.colorOnHover ? options.colorOnHover : ApplicationUtils.DEFAULT_BUTTON_COLOR;
+        if (options.onClick) {
+            nBitMapText.onmouseenter = () => nBitMapText.tint = "red";
+            nBitMapText.onmouseout = () => nBitMapText.tint = options.colorOnHover ? options.colorOnHover : ApplicationUtils.DEFAULT_BUTTON_COLOR;
+        }
         return nBitMapText;
     }
     

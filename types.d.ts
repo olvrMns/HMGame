@@ -1,9 +1,9 @@
-import { BitmapText, EventMode, FrameObject, Resource, Texture } from "pixi.js";
-import { AbstractLevel, TriggerKeys } from "./src/obj/abstract/AbstractLevel";
+import { EventMode, FrameObject, Resource, Texture } from "pixi.js";
+import { Levels } from "./src/components/Menu";
 import { Coordinate } from "./src/obj/Coordinate";
 import { Line } from "./src/obj/Line";
+import { AbstractLevel, TriggerKeys } from "./src/obj/abstract/AbstractLevel";
 import { InterceptionAreaAliases } from "./src/util/ApplicationUtils";
-import { Levels } from "./src/Menu";
 
 declare type LineInterceptionAreaObject = {areaAlias: InterceptionAreaAliases, coordinate: Coordinate};
 
@@ -60,8 +60,8 @@ declare type CustomBitMapTextOptions = {
     text: string,
     eventMode?: EventMode,
     fontName?: string,
-    fontSize?: string,
-    onClick(): void,
+    fontSize?: number,
+    onClick?(): void,
     color?: string,
     colorOnHover?: string
 }

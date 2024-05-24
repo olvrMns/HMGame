@@ -1,13 +1,13 @@
-import { BitmapFont, BitmapText, Container, FederatedPointerEvent, BlurFilter, Filter } from "pixi.js";
-import { LevelInstances } from "../types";
-import { ClassicGH, Space1, Space2 } from "./obj/Levels";
-import { ApplicationSrpites } from "./util/AssetLoader";
-import { LevelInstance } from "./LevelInstance";
-import { WindowPresets } from "./util/WindowPresets";
-import { AbstractLevel } from "./obj/abstract/AbstractLevel";
-import { BitMapTextGrid } from "./obj/bitMapText/BitMapTextGrid";
-import { Coordinate } from "./obj/Coordinate";
-import { ApplicationUtils } from "./util/ApplicationUtils";
+import { BitmapFont, BitmapText, Container, Sprite } from "pixi.js";
+import { LevelInstances } from "../../types";
+import { LevelInstance } from "../LevelInstance";
+import { Coordinate } from "../obj/Coordinate";
+import { ClassicGH, Space1, Space2 } from "../obj/Levels";
+import { AbstractLevel } from "../obj/abstract/AbstractLevel";
+import { BitMapTextGrid } from "../obj/bitMapText/BitMapTextGrid";
+import { ApplicationUtils } from "../util/ApplicationUtils";
+import { ApplicationSrpites } from "../util/AssetLoader";
+import { WindowPresets } from "../util/WindowPresets";
 
 export enum Levels {
     SPACE1 = "Space 1",
@@ -54,7 +54,14 @@ export class Menu extends Container {
 
     private build(): void {
         BitmapFont.from("MenuFont", {fontFamily: 'Pixelfont2', fontSize: 30, fill: '#c4d4b1'});
+
+        const title: Sprite = ApplicationSrpites.MENU_TITLE;
+        title.skew.x = 0.1;
+        title.scale.set(0.7);
+        title.position.set(WindowPresets.CENTER_COORDINATE.x * 0.5, -WindowPresets.CENTER_COORDINATE.y * 0.4);
+        
         this.addChild(ApplicationSrpites.MENU_BACKGROUND);
+        this.addChild(title);
         this.setLevelsGrid();
     }
 

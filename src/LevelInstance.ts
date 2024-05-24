@@ -1,15 +1,14 @@
 import InputManager from "guki-input-controller";
 import { BitmapFont, TickerCallback } from "pixi.js";
 import { LineObject } from "../types";
-import { Menu } from "./Menu";
+import { Menu } from "./components/Menu";
+import { PauseMenu } from "./components/PauseMenu";
 import { Coordinate } from "./obj/Coordinate";
 import { EnemyNode } from "./obj/EnemyNode";
 import { AbstractLevel, TriggerKeys } from "./obj/abstract/AbstractLevel";
 import { DisplayableNumber } from "./obj/bitMapText/DisplayableNumber";
 import { DisposableTextController } from "./obj/dataStructure/DisposableTextController";
 import { TickerController } from "./obj/dataStructure/TickerController";
-import { PauseMenu } from "./PauseMenu";
-import { GameInstance } from "./GameInstance";
 
 /**
  * @description Singleton Object containing the logic/lifecycle of the game (level)
@@ -155,7 +154,7 @@ export class LevelInstance {
                 } else sortedEnemyNodes.push(node);
             }
             this.enemyNodes = sortedEnemyNodes;
-            this.accentuateFirstValidNode();
+            //this.accentuateFirstValidNode();
         }
     }
 

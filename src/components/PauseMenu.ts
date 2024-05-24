@@ -1,7 +1,7 @@
 import { Container, Graphics } from "pixi.js";
-import { BitMapTextGrid } from "./obj/bitMapText/BitMapTextGrid";
-import { WindowPresets } from "./util/WindowPresets";
-import { ApplicationUtils } from "./util/ApplicationUtils";
+import { BitMapTextGrid } from "../obj/bitMapText/BitMapTextGrid";
+import { ApplicationUtils } from "../util/ApplicationUtils";
+import { WindowPresets } from "../util/WindowPresets";
 
 export class PauseMenu extends Container {
     private grid: BitMapTextGrid;
