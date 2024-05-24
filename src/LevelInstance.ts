@@ -143,18 +143,20 @@ export class LevelInstance {
      * @Node needs to be changed/fixed
      */
     public sortEnemyNodes(): void {
-        let closestDistance: number = 0;
-        let currentDistance: number;
-        let sortedEnemyNodes: EnemyNode[] = [];
-        for (let node of this.enemyNodes) {
-            currentDistance = node.getDistanceToEndPoint();
-            if (currentDistance <= closestDistance && node.hasNotBeenTriggered) {
-                sortedEnemyNodes.unshift(node);
-                closestDistance = currentDistance;
-            } else sortedEnemyNodes.push(node);
+        if (this.enemyNodes.length > 0) {
+            let closestDistance: number = this.enemyNodes[0].getDistanceToEndPoint();
+            let currentDistance: number;
+            let sortedEnemyNodes: EnemyNode[] = [];
+            for (let node of this.enemyNodes) {
+                currentDistance = node.getDistanceToEndPoint();
+                if (currentDistance <= closestDistance && node.hasNotBeenTriggered) {
+                    sortedEnemyNodes.unshift(node);
+                    closestDistance = currentDistance;
+                } else sortedEnemyNodes.push(node);
+            }
+            this.enemyNodes = sortedEnemyNodes;
+            this.accentuateFirstValidNode();
         }
-        this.enemyNodes = sortedEnemyNodes;
-        //this.accentuateFirstValidNode();
     }
 
     public onFrameCountEquals(frameThreshold: number, onCallback: () => void): void {
