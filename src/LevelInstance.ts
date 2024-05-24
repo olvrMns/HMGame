@@ -9,6 +9,7 @@ import { AbstractLevel, TriggerKeys } from "./obj/abstract/AbstractLevel";
 import { DisplayableNumber } from "./obj/bitMapText/DisplayableNumber";
 import { DisposableTextController } from "./obj/dataStructure/DisposableTextController";
 import { TickerController } from "./obj/dataStructure/TickerController";
+import { InterceptionAreaAliases } from "./util/ApplicationUtils";
 
 /**
  * @description Singleton Object containing the logic/lifecycle of the game (level)
@@ -23,7 +24,7 @@ export class LevelInstance {
     private enemyNodes: EnemyNode[] = [];
     private inputManager: InputManager = new InputManager();
     private disposableTextController: DisposableTextController;
-    public tickerController: TickerController;
+    private tickerController: TickerController;
     private pauseMenu: PauseMenu;
 
     private constructor(level: AbstractLevel) {
@@ -121,6 +122,7 @@ export class LevelInstance {
                 this.destroyEnemyNode(node);
                 this.score.reset();
                 this.failStreak.increment();
+                this.disposableTextController.addFromPresetAliases(InterceptionAreaAliases.FAIL, this.level.disposableTextCoordinate);
             }
         }
     }

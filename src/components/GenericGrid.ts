@@ -42,7 +42,7 @@ export class GridContainer<T extends Container> extends Container {
         this.columnsWidth = this.virtualWidth/this.columns;
         this.rowsHeight = this.virtualHeight/this.rows;
         this.setGridSpaces();
-        this.rePosition(params.gridCenterCoordinate);
+        this.rePosition(params.centerCoordinate);
     }
 
     /**

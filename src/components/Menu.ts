@@ -40,7 +40,7 @@ export class Menu extends Container implements Buildable {
             columns: 1, 
             rows: 3, height: WindowPresets.WINDOW_HEIGHT * 0.2, 
             width: WindowPresets.WINDOW_WIDTH * 0.15, 
-            gridCenterCoordinate: Coordinate.of(WindowPresets.CENTER_COORDINATE.x, WindowPresets.CENTER_COORDINATE.y + (WindowPresets.CENTER_COORDINATE.y * 0.5))});
+            centerCoordinate: Coordinate.of(WindowPresets.CENTER_COORDINATE.x, WindowPresets.CENTER_COORDINATE.y + (WindowPresets.CENTER_COORDINATE.y * 0.5))});
         this.build();
     }
 

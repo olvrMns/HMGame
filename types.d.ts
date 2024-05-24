@@ -47,14 +47,17 @@ declare interface DisposableTextOptions extends DisplayableNumberOptions {
     framesBeforeDestruction?: number
 }
 
-declare type PRDisposableTexts = {[key in InterceptionAreaAliases]?: DisposableTextOptions};
+/**
+ * @description Preset options for disposable text objects to be used in a LevelInstance
+ */
+declare type PresetDisposableTextOptions = {[key in InterceptionAreaAliases]?: DisposableTextOptions};
 
 declare type GridOptions = {
     width: number,
     height: number,
     columns: number,
     rows: number,
-    gridCenterCoordinate: Coordinate,
+    centerCoordinate: Coordinate,
 }
 
 declare type CustomBitMapTextOptions = {

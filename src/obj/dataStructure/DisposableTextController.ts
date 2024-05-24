@@ -1,6 +1,6 @@
 import { Container } from "pixi.js";
 import { DisposableText } from "../bitMapText/DisposableText";
-import { InterceptionAreaAliases, prDisposableTexts } from "../../util/ApplicationUtils";
+import { InterceptionAreaAliases, presetDisposableTextOptions } from "../../util/ApplicationUtils";
 import { DisposableTextOptions } from "../../../types";
 import { Coordinate } from "../Coordinate";
 
@@ -22,7 +22,7 @@ export class DisposableTextController {
     }
 
     public addFromPresetAliases(alias: InterceptionAreaAliases, coordinate: Coordinate) {
-        let disposableText: DisposableText = DisposableText.of(prDisposableTexts[alias] as DisposableTextOptions);
+        let disposableText: DisposableText = DisposableText.of(presetDisposableTextOptions[alias] as DisposableTextOptions);
         disposableText.moveTo(coordinate);
         this.add(disposableText);
     }

@@ -15,7 +15,7 @@ export class PauseMenu extends Container implements Buildable {
         this.grid = new GridContainer<BitmapText>({
             columns: 1, 
             rows: 2, 
-            gridCenterCoordinate: WindowPresets.CENTER_COORDINATE, 
+            centerCoordinate: WindowPresets.CENTER_COORDINATE, 
             height: WindowPresets.WINDOW_HEIGHT * 0.15,
             width: WindowPresets.WINDOW_WIDTH * 0.15
         });
