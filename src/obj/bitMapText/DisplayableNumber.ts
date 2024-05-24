@@ -2,19 +2,21 @@ import { BitmapText } from "pixi.js";
 import { DisplayableNumberOptions } from "../../../types";
 import { Coordinate } from "../Coordinate";
 
-
 export class DisplayableNumber extends BitmapText {
     private value: number;
+    private label: string;
 
     constructor(options: DisplayableNumberOptions) {
         super(
-            options.value ? options.value : '0', {
+            "", {
             fontName: options.fontName ? options.fontName : 'PixelMapFont1',
             fontSize: options.fontSize ? options.fontSize : 30, 
         });
+        this.label = options.label ? options.label + " " : "";
         this.x = options.coordinate.x;
         this.y = options.coordinate.y;
-        this.value = 0;
+        this.value = options.value ? parseInt(options.value) : 0;
+        this.text = this.label + this.value.toString();
     }
 
     public moveTo(coordinate: Coordinate): void {
@@ -44,7 +46,7 @@ export class DisplayableNumber extends BitmapText {
 
     public setTextToValue(operation: () => void): void {
         operation();
-        this.text = this.value.toString();
+        this.text = this.label + this.value.toString();
     }
 
 }

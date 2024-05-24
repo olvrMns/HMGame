@@ -16,3 +16,8 @@ canvas {
     font-family: 'Pixelfont2';
     src: url("../fonts/pixelFont2.ttf");
 }
+
+@font-face {
+    font-family: 'MFont';
+    src: url("../fonts/Crang.ttf");
+}

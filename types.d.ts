@@ -35,6 +35,7 @@ declare type LevelOptions = {
 
 declare type DisplayableNumberOptions = {
     value?: string,
+    label?: string,
     fontName?: string,
     fontSize?: number,
     color?: string,

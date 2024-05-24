@@ -29,9 +29,9 @@ export class LevelInstance {
     private constructor(level: AbstractLevel) {
         this.level = level;
         this.initFonts();
-        this.score = new DisplayableNumber({coordinate: Coordinate.of(50, 50)});
-        this.highestScore = new DisplayableNumber({coordinate: Coordinate.of(50, 150)});
-        this.failStreak = new DisplayableNumber({coordinate: Coordinate.of(50, 250)});
+        this.score = new DisplayableNumber({coordinate: Coordinate.of(50, 50), label: "Score"});
+        this.highestScore = new DisplayableNumber({coordinate: Coordinate.of(50, 150), label: "Highest score"});
+        this.failStreak = new DisplayableNumber({coordinate: Coordinate.of(50, 250), label: "Fail streak"});
         this.disposableTextController = new DisposableTextController(this.level);
         this.loadStats();
         this.inputManager.init("default");
