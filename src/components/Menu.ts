@@ -1,13 +1,15 @@
-import { BitmapFont, BitmapText, Container, FederatedPointerEvent, BlurFilter, Filter } from "pixi.js";
-import { LevelInstances } from "../types";
-import { ClassicGH, Space1, Space2 } from "./obj/Levels";
-import { ApplicationSrpites } from "./util/AssetLoader";
-import { LevelInstance } from "./LevelInstance";
-import { WindowPresets } from "./util/WindowPresets";
-import { AbstractLevel } from "./obj/abstract/AbstractLevel";
-import { BitMapTextGrid } from "./obj/bitMapText/BitMapTextGrid";
-import { Coordinate } from "./obj/Coordinate";
-import { ApplicationUtils } from "./util/ApplicationUtils";
+import { BitmapFont, BitmapText, Container } from "pixi.js";
+import { LevelInstances } from "../../types";
+import { LevelInstance } from "../LevelInstance";
+import { Coordinate } from "../obj/Coordinate";
+import { ClassicGH, Space1, Space2, Space3 } from "../obj/Levels";
+import { AbstractLevel } from "../obj/abstract/AbstractLevel";
+import { GridContainer } from "../components/GenericGrid";
+import { ApplicationUtils } from "../util/ApplicationUtils";
+import { ApplicationSrpites } from "../util/AssetLoader";
+import { WindowPresets } from "../util/WindowPresets";
+import { Buildable } from "../util/Buildable";
+import { Instructions } from "./Instructions";
 
 export enum Levels {
     SPACE1 = "Space 1",
@@ -22,6 +24,7 @@ export enum Levels {
 export const levelInstances: LevelInstances = {
     [Levels.SPACE1]: () => new Space1(),
     [Levels.SPACE2]: () => new Space2(),
+    [Levels.SPACE3]: () => new Space3(),
     [Levels.CGH]: () => new ClassicGH()
 }
 
@@ -29,17 +32,22 @@ export const levelInstances: LevelInstances = {
  * @description 
  * - Parent : Stage Container object of application
  */
-export class Menu extends Container {
+export class Menu extends Container implements Buildable {
     private static instance: Menu;
-    private levelsGrid: BitMapTextGrid;
+    private levelsGrid: GridContainer<BitmapText>;
 
     constructor() {
         super();
-        this.levelsGrid = BitMapTextGrid.of({
+        this.levelsGrid = new GridContainer<BitmapText>({
             columns: 1, 
-            rows: 3, height: WindowPresets.WINDOW_HEIGHT * 0.2, 
+            rows: Object.keys(levelInstances).length, 
+            height: WindowPresets.WINDOW_HEIGHT * 0.2, 
             width: WindowPresets.WINDOW_WIDTH * 0.15, 
-            gridCenterCoordinate: Coordinate.of(WindowPresets.CENTER_COORDINATE.x, WindowPresets.CENTER_COORDINATE.y + (WindowPresets.CENTER_COORDINATE.y * 0.5))});
+            centerCoordinate: Coordinate.of(WindowPresets.CENTER_COORDINATE.x, WindowPresets.CENTER_COORDINATE.y + (WindowPresets.CENTER_COORDINATE.y * 0.5)), 
+            showBorders: false,
+            xSpacing: 10,
+            ySpacing: 20
+        });
         this.build();
     }
 
@@ -52,9 +60,12 @@ export class Menu extends Container {
         this.parent.removeChild(this);
     }
 
-    private build(): void {
+    public build(): void {
         BitmapFont.from("MenuFont", {fontFamily: 'Pixelfont2', fontSize: 30, fill: '#c4d4b1'});
+        
         this.addChild(ApplicationSrpites.MENU_BACKGROUND);
+        this.addChild(Instructions.getInstance());
+        this.addChild(ApplicationUtils.getTitleSprite(ApplicationSrpites.MENU_TITLE2, 0.4));
         this.setLevelsGrid();
     }
 
@@ -63,7 +74,7 @@ export class Menu extends Container {
         Object.keys(levelInstances).forEach((levelName) => {
             bitMapTexts.push(ApplicationUtils.getCustomBitMapText({onClick: () => this.loadLevel(levelInstances[levelName]), text: levelName}));
         });
-        this.levelsGrid.setBitMapTextsFromArray(...bitMapTexts);
+        this.levelsGrid.setContainersFromArray(true, ...bitMapTexts);
         this.addChildAt(this.levelsGrid, 1);
     }
 

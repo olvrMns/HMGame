@@ -3,6 +3,7 @@ import { InterceptionPercentages, LevelOptions, LineObject } from "../../../type
 import { ApplicationUtils } from "../../util/ApplicationUtils";
 import { Coordinate } from "../Coordinate";
 import { WindowPresets } from "../../util/WindowPresets";
+import { Buildable } from "../../util/Buildable";
 
 export enum TriggerKeys {
     A = "A",
@@ -20,7 +21,7 @@ export enum TriggerKeys {
 /**
  * @description Not instantiable Object that encapsulates the data relative to each level
  */
-export abstract class AbstractLevel extends Container  {
+export abstract class AbstractLevel extends Container implements Buildable {
     public distancePerFrame: number;
     public distanceToIntercept: number;
     public distanceToInterceptMultiplier: number;
@@ -31,6 +32,8 @@ export abstract class AbstractLevel extends Container  {
     public lineObjects: LineObject[];
     public interceptionPercentages: InterceptionPercentages;
     public disposableTextCoordinate: Coordinate;
+    public randomInitializationFluctuationPercentage: number;
+    public randomSpeedFluctuationPercentage: number;
 
     constructor(options: LevelOptions) {
         super()
@@ -44,6 +47,8 @@ export abstract class AbstractLevel extends Container  {
         this.lineObjects = [];
         this.interceptionPercentages = options.interceptionPercentages ? options.interceptionPercentages : ApplicationUtils.DEFAULT_INTERCEPTION_PERCENTAGES; 
         this.disposableTextCoordinate = options.disposableTextCoordinate ? options.disposableTextCoordinate : WindowPresets.CENTER_COORDINATE;
+        this.randomInitializationFluctuationPercentage = options.randomInitializationFluctuationPercentage ? options.randomInitializationFluctuationPercentage : 0.5;
+        this.randomSpeedFluctuationPercentage = options.randomSpeedFluctuationPercentage ? options.randomSpeedFluctuationPercentage : 0.5;
         this.build();
     }
 

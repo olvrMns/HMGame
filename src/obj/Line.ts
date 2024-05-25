@@ -26,7 +26,7 @@ export class Line extends Graphics {
      */
     public draw(interceptionPercentages: InterceptionPercentages) {
         for (let elem = 0; elem < this.interceptionCoordiantes.length; elem++) {
-            this.lineStyle({color: interceptionPercentages[elem].areaColor, width: 5});
+            this.lineStyle({color: interceptionPercentages[elem].areaColor, width: 5, alpha: 0.4});
             this.moveTo(this.interceptionCoordiantes[elem].coordinate.x, this.interceptionCoordiantes[elem].coordinate.y);
             if (this.interceptionCoordiantes[elem + 1]) this.lineTo(this.interceptionCoordiantes[elem + 1].coordinate.x, this.interceptionCoordiantes[elem + 1].coordinate.y);
             else this.lineTo(this.linearRepresentation.endCoordinate.x, this.linearRepresentation.endCoordinate.y);

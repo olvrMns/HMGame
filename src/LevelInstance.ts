@@ -1,15 +1,15 @@
 import InputManager from "guki-input-controller";
 import { BitmapFont, TickerCallback } from "pixi.js";
 import { LineObject } from "../types";
-import { Menu } from "./Menu";
+import { Menu } from "./components/Menu";
+import { PauseMenu } from "./components/PauseMenu";
 import { Coordinate } from "./obj/Coordinate";
 import { EnemyNode } from "./obj/EnemyNode";
 import { AbstractLevel, TriggerKeys } from "./obj/abstract/AbstractLevel";
 import { DisplayableNumber } from "./obj/bitMapText/DisplayableNumber";
 import { DisposableTextController } from "./obj/dataStructure/DisposableTextController";
 import { TickerController } from "./obj/dataStructure/TickerController";
-import { PauseMenu } from "./PauseMenu";
-import { GameInstance } from "./GameInstance";
+import { InterceptionAreaAliases } from "./obj/DisposableTextPresetOptions";
 
 /**
  * @description Singleton Object containing the logic/lifecycle of the game (level)
@@ -24,15 +24,15 @@ export class LevelInstance {
     private enemyNodes: EnemyNode[] = [];
     private inputManager: InputManager = new InputManager();
     private disposableTextController: DisposableTextController;
-    public tickerController: TickerController;
+    private tickerController: TickerController;
     private pauseMenu: PauseMenu;
 
     private constructor(level: AbstractLevel) {
         this.level = level;
         this.initFonts();
-        this.score = new DisplayableNumber({coordinate: Coordinate.of(50, 50)});
-        this.highestScore = new DisplayableNumber({coordinate: Coordinate.of(50, 150)});
-        this.failStreak = new DisplayableNumber({coordinate: Coordinate.of(50, 250)});
+        this.score = new DisplayableNumber({coordinate: Coordinate.of(50, 50), label: "Score"});
+        this.highestScore = new DisplayableNumber({coordinate: Coordinate.of(50, 150), label: "Highest score"});
+        this.failStreak = new DisplayableNumber({coordinate: Coordinate.of(50, 250), label: "Fail streak"});
         this.disposableTextController = new DisposableTextController(this.level);
         this.loadStats();
         this.inputManager.init("default");
@@ -97,7 +97,7 @@ export class LevelInstance {
     }
 
     public initializeEnemyNode(lineObject: LineObject = this.level.getRandomLineObject()): void {
-        let enemyNode: EnemyNode = EnemyNode.of(lineObject, {angle: lineObject.line.inclination});
+        let enemyNode: EnemyNode = EnemyNode.of(lineObject);
         this.enemyNodes.push(enemyNode);
         this.level.addChild(enemyNode);
     }
@@ -122,6 +122,7 @@ export class LevelInstance {
                 this.destroyEnemyNode(node);
                 this.score.reset();
                 this.failStreak.increment();
+                this.disposableTextController.addFromPresetAliases(InterceptionAreaAliases.FAIL, this.level.disposableTextCoordinate);
             }
         }
     }
@@ -155,7 +156,7 @@ export class LevelInstance {
                 } else sortedEnemyNodes.push(node);
             }
             this.enemyNodes = sortedEnemyNodes;
-            this.accentuateFirstValidNode();
+            //this.accentuateFirstValidNode();
         }
     }
 
@@ -222,7 +223,7 @@ export class LevelInstance {
             });
             this.disposableTextController.updateAll(delta);
             this.onFrameCountEquals(this.level.framesBeforeNodeInitialization * cadenceMultiplier, () => this.initializeEnemyNode());
-            this.onFrameCountEquals(300, () => { cadenceMultiplier = this.fluctuate(this.level.cadenceMultiplier, 0.8); });
+            this.onFrameCountEquals(300, () => { cadenceMultiplier = this.fluctuate(this.level.cadenceMultiplier, this.level.randomInitializationFluctuationPercentage); });
             this.incrementFrameCount();
         };
     }

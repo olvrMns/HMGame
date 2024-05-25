@@ -1,19 +1,22 @@
-import { Container, Graphics } from "pixi.js";
-import { BitMapTextGrid } from "./obj/bitMapText/BitMapTextGrid";
-import { WindowPresets } from "./util/WindowPresets";
-import { ApplicationUtils } from "./util/ApplicationUtils";
+import { BitmapText, Container, Graphics } from "pixi.js";
+import { GridContainer } from "./GenericGrid";
+import { ApplicationUtils } from "../util/ApplicationUtils";
+import { WindowPresets } from "../util/WindowPresets";
+import { ApplicationSrpites } from "../util/AssetLoader";
+import { Buildable } from "../util/Buildable";
+import { Instructions } from "./Instructions";
 
-export class PauseMenu extends Container {
-    private grid: BitMapTextGrid;
+export class PauseMenu extends Container implements Buildable {
+    private grid: GridContainer<BitmapText>;
     private resumeCallback: () => void;
     private menuCallback: () => void;
 
     constructor(resumeCallback: () => void, menuCallback: () => void) {
         super();
-        this.grid = BitMapTextGrid.of({
+        this.grid = new GridContainer<BitmapText>({
             columns: 1, 
             rows: 2, 
-            gridCenterCoordinate: WindowPresets.CENTER_COORDINATE, 
+            centerCoordinate: WindowPresets.CENTER_COORDINATE, 
             height: WindowPresets.WINDOW_HEIGHT * 0.15,
             width: WindowPresets.WINDOW_WIDTH * 0.15
         });
@@ -32,8 +35,11 @@ export class PauseMenu extends Container {
         background.drawRect(0, 0, WindowPresets.WINDOW_WIDTH, WindowPresets.WINDOW_HEIGHT);
         background.endFill();
         this.addChild(background);
+        this.addChild(Instructions.getInstance());
+        this.addChild(ApplicationUtils.getTitleSprite(ApplicationSrpites.PAUSE_TITLE, 0.6, 0.4));
         
-        this.grid.setBitMapTextsFromArray(
+        this.grid.setContainersFromArray(
+            true,
             ApplicationUtils.getCustomBitMapText({text: "RESUME", onClick: this.resumeCallback}), 
             ApplicationUtils.getCustomBitMapText({text: "EXIT", onClick: this.menuCallback})
         );

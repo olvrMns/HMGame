@@ -3,7 +3,8 @@ import { AbstractLevel, TriggerKeys } from "./src/obj/abstract/AbstractLevel";
 import { Coordinate } from "./src/obj/Coordinate";
 import { Line } from "./src/obj/Line";
 import { InterceptionAreaAliases } from "./src/util/ApplicationUtils";
-import { Levels } from "./src/Menu";
+import { Levels } from "./src/components/Menu";
+import { Enemies } from "./src/obj/EnemyData";
 
 declare type LineInterceptionAreaObject = {areaAlias: InterceptionAreaAliases, coordinate: Coordinate};
 
@@ -13,13 +14,24 @@ declare type LevelInstances = {[key in Levels]?: () => AbstractLevel};
 
 declare type InterceptionCoordinates = LineInterceptionAreaObject[];
 
+/**
+ * @description textures are returned as callbacks beacause it returns as Undefined if not (ts compiles the object before the textures have been loaded (I think)
+ * and doesn't store them as references, but as direct values(???))
+ * 
+ */
+declare type EnemyData = {
+    baseTextures: () => FrameObject[] | Texture<Resource>[],
+    destructionTextures: () => FrameObject[] | Texture<Resource>[],
+    scale?: number,
+    triggerKey: TriggerKeys
+}
+
+declare type EnemiesData = {[key in Enemies]:EnemyData};
+
 declare type LineObject = {
     line: Line, 
-    enemyTextures: {base: FrameObject[] | Texture<Resource>[], destruction: FrameObject[] | Texture<Resource>[], scale?: number}, 
-    triggerKey: TriggerKeys
+    enemyData: EnemyData
 };
-
-declare type EnemyNodeOptions = {angle?: number};
 
 declare type LevelOptions = {
     distancePerFrame?: number, 
@@ -31,10 +43,13 @@ declare type LevelOptions = {
     cadenceMultiplier?: number,
     interceptionPercentages?: InterceptionPercentages,
     disposableTextCoordinate?: Coordinate,
+    randomInitializationFluctuationPercentage?: number,
+    randomSpeedFluctuationPercentage?: number
 };
 
 declare type DisplayableNumberOptions = {
     value?: string,
+    label?: string,
     fontName?: string,
     fontSize?: number,
     color?: string,
@@ -46,22 +61,28 @@ declare interface DisposableTextOptions extends DisplayableNumberOptions {
     framesBeforeDestruction?: number
 }
 
-declare type PRDisposableTexts = {[key in InterceptionAreaAliases]?: DisposableTextOptions};
+/**
+ * @description Preset options for disposable text objects to be used in a LevelInstance
+ */
+declare type PresetDisposableTextOptions = {[key in InterceptionAreaAliases]?: DisposableTextOptions};
 
-declare type BitMapTextGridOptions = {
+declare type GridOptions = {
     width: number,
     height: number,
     columns: number,
     rows: number,
-    gridCenterCoordinate: Coordinate,
+    centerCoordinate?: Coordinate,
+    showBorders?: boolean,
+    ySpacing?: number,
+    xSpacing?: number
 }
 
 declare type CustomBitMapTextOptions = {
     text: string,
     eventMode?: EventMode,
     fontName?: string,
-    fontSize?: string,
-    onClick(): void,
+    fontSize?: number,
+    onClick?(): void,
     color?: string,
     colorOnHover?: string
 }

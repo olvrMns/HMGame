@@ -1,7 +1,7 @@
 import { Application } from "pixi.js";
+import { Menu } from "./components/Menu";
 import { AssetLoader } from "./util/AssetLoader";
 import { WindowPresets } from "./util/WindowPresets";
-import { Menu } from "./Menu";
 
 /**
  * @description Singleton Application Object

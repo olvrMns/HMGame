@@ -1,9 +1,11 @@
 import { AnimatedSprite } from "pixi.js";
-import { EnemyNodeOptions, LineInterceptionAreaObject, LineObject } from "../../types";
-import { ApplicationUtils, InterceptionAreaAliases } from "../util/ApplicationUtils";
+import { LineInterceptionAreaObject, LineObject } from "../../types";
+import { ApplicationUtils } from "../util/ApplicationUtils";
 import { TriggerKeys } from "./abstract/AbstractLevel";
 import { Coordinate } from "./Coordinate";
 import { LinearRepresentation } from "./LinearRepresentation";
+import { InterceptionAreaAliases } from "./DisposableTextPresetOptions";
+import { ApplicationTextures } from "../util/AssetLoader";
 
 /**
  * @description 
@@ -15,20 +17,20 @@ export class EnemyNode extends AnimatedSprite {
     public triggerKey: TriggerKeys;
     public hasNotBeenTriggered: boolean = true;
 
-    constructor(lineObject: LineObject, options: EnemyNodeOptions) {
-        super(lineObject.enemyTextures.base)
+    constructor(lineObject: LineObject) {
+        super(lineObject.enemyData.baseTextures())
         this.lineObject = lineObject;
-        this.scale.x = lineObject.enemyTextures.scale ? lineObject.enemyTextures.scale : 0.5;
-        this.scale.y = lineObject.enemyTextures.scale ? lineObject.enemyTextures.scale : 0.5;
-        this.accentuatedScale = lineObject.enemyTextures.scale ? lineObject.enemyTextures.scale * 1.3 : 0.5 * 1.3; 
+        this.scale.x = lineObject.enemyData.scale ? lineObject.enemyData.scale : 0.5;
+        this.scale.y = lineObject.enemyData.scale ? lineObject.enemyData.scale : 0.5;
+        this.accentuatedScale = lineObject.enemyData.scale ? lineObject.enemyData.scale * 1.3 : 0.5 * 1.3; 
         this.distanceMultiplier = 1;
         this.angle = lineObject.line.inclination;
-        this.triggerKey = lineObject.triggerKey;
+        this.triggerKey = lineObject.enemyData.triggerKey;
         this.init();
     }
 
-    public static of(lineObject: LineObject, options: EnemyNodeOptions): EnemyNode {
-        return new EnemyNode(lineObject, options);
+    public static of(lineObject: LineObject): EnemyNode {
+        return new EnemyNode(lineObject);
     }
 
     public init() {
@@ -67,7 +69,7 @@ export class EnemyNode extends AnimatedSprite {
      * @Note this.textures = this.lineObject.enemyTextures.destruction; not working?
      */
     public explode(): void {
-        this.textures = this.lineObject.enemyTextures.destruction;
+        this.textures = this.lineObject.enemyData.destructionTextures();
         this.animationSpeed = 0.4;
         this.play();
         this.onLoop = () => this.destroy({texture: false});

@@ -1,23 +1,7 @@
-import { BitmapText, ILineStyleOptions } from "pixi.js";
-import { CustomBitMapTextOptions, InterceptionPercentages, PRDisposableTexts } from "../../types";
+import { BitmapText, ILineStyleOptions, Sprite } from "pixi.js";
+import { CustomBitMapTextOptions, InterceptionPercentages } from "../../types";
 import { WindowPresets } from "./WindowPresets";
-
-export enum InterceptionAreaAliases {
-    PERFECT,
-    FINE,
-    GOOD,
-    OK,
-    FAIL,
-    NICE,
-    GREAT
-}
-
-export const prDisposableTexts: PRDisposableTexts = {
-    [InterceptionAreaAliases.PERFECT]: {coordinate: WindowPresets.CENTER_COORDINATE, value: "PERFECT", fontSize: 50, framesBeforeDestruction: 30, color: "#EF5FBE"},
-    [InterceptionAreaAliases.FINE]: {coordinate: WindowPresets.CENTER_COORDINATE, value: "FINE", fontSize: 30, framesBeforeDestruction: 10, color: "#A89CF0"},
-    [InterceptionAreaAliases.GOOD]: {coordinate: WindowPresets.CENTER_COORDINATE, value: "GOOD", fontSize: 40, framesBeforeDestruction: 15, color: "#A6C3E3"},
-    [InterceptionAreaAliases.FAIL]: {coordinate: WindowPresets.CENTER_COORDINATE, value: "FAIL"},
-}
+import { InterceptionAreaAliases } from "../obj/DisposableTextPresetOptions";
 
 export class ApplicationUtils {
     public static DEFAULT_LINE_STYLE: ILineStyleOptions = {color: 'red', width: 5};
@@ -54,12 +38,23 @@ export class ApplicationUtils {
      */
     public static getCustomBitMapText(options: CustomBitMapTextOptions): BitmapText {
         const nBitMapText: BitmapText = new BitmapText(options.text, {fontName: options.fontName ? options.fontName : "MenuFont"});
+        nBitMapText.fontSize = options.fontSize ? options.fontSize : 30;
         nBitMapText.eventMode = options.eventMode ? options.eventMode : "static";
-        nBitMapText.onclick = options.onClick;
+        nBitMapText.onclick = options.onClick ? options.onClick : null;
         nBitMapText.tint = options.color ? options.color : ApplicationUtils.DEFAULT_BUTTON_COLOR;
-        nBitMapText.onmouseenter = () => nBitMapText.tint = "red";
-        nBitMapText.onmouseout = () => nBitMapText.tint = options.colorOnHover ? options.colorOnHover : ApplicationUtils.DEFAULT_BUTTON_COLOR;
+        if (options.onClick) {
+            nBitMapText.onmouseenter = () => nBitMapText.tint = "red";
+            nBitMapText.onmouseout = () => nBitMapText.tint = options.colorOnHover ? options.colorOnHover : ApplicationUtils.DEFAULT_BUTTON_COLOR;
+        }
         return nBitMapText;
+    }
+    
+    public static getTitleSprite(sprite: Sprite, yOffSet: number, scale?: number) {
+        sprite.skew.x = 0.1;
+        sprite.scale.set(scale ? scale : 0.7);
+        sprite.anchor.set(0.5);
+        sprite.position.set(WindowPresets.CENTER_COORDINATE.x, (WindowPresets.CENTER_COORDINATE.y - (WindowPresets.CENTER_COORDINATE.y * yOffSet)));
+        return sprite;
     }
     
 }
