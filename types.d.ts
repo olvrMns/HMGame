@@ -72,7 +72,9 @@ declare type GridOptions = {
     columns: number,
     rows: number,
     centerCoordinate?: Coordinate,
-    showBorders?: boolean
+    showBorders?: boolean,
+    ySpacing?: number,
+    xSpacing?: number
 }
 
 declare type CustomBitMapTextOptions = {

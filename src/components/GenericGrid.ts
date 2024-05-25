@@ -33,6 +33,8 @@ export class GridContainer<T extends Container> extends Container {
     private virtualHeight: number;
     private columnsWidth: number;
     private rowsHeight: number;
+    private xSpacing: number;
+    private ySpacing: number;
     private gridElements: GridSpace<T>[][] = [];
 
     constructor(params: GridOptions) {
@@ -45,6 +47,8 @@ export class GridContainer<T extends Container> extends Container {
         this.rows = params.rows;
         this.columnsWidth = this.virtualWidth/this.columns;
         this.rowsHeight = this.virtualHeight/this.rows;
+        this.xSpacing = params.xSpacing ? params.xSpacing : 0;
+        this.ySpacing = params.ySpacing ? params.ySpacing : 0;
         this.setGridSpaces();
         if (params.showBorders === true) this.drawBorders();
         if (params.centerCoordinate) this.rePosition(params.centerCoordinate); 
@@ -63,12 +67,15 @@ export class GridContainer<T extends Container> extends Container {
             this.gridElements.push([]);
             for (let column = 0; column < this.columns; column++) {
                 this.gridElements[row].push(new GridSpace<T>(Coordinate.of(currentXPosition + this.columnsWidth/2, currentYPosition + this.rowsHeight/2)));
-                currentXPosition+=this.columnsWidth;
+                currentXPosition+=(this.columnsWidth + this.xSpacing);
             };
-            currentYPosition+=this.rowsHeight;
+            currentYPosition+=(this.rowsHeight + this.ySpacing);
         };
     }
 
+    /**
+     * @description probably needs to be optimized...
+     */
     public drawBorders(): void {
         const graphics: Graphics = new Graphics();
         let currentXPosition: number;
@@ -76,17 +83,17 @@ export class GridContainer<T extends Container> extends Container {
         graphics.lineStyle(ApplicationUtils.DEFAULT_LINE_STYLE);
         for (let row = 0; row < this.rows; row++) {
             currentXPosition = this.x;
-            graphics.moveTo(currentXPosition, currentYPosition);
-            graphics.lineTo(currentXPosition, currentYPosition + this.rowsHeight);
-            graphics.moveTo(currentXPosition, currentYPosition);
             for (let column = 0; column < this.columns; column++) {
-                currentXPosition+=this.columnsWidth;
-                graphics.lineTo(currentXPosition, currentYPosition);
+                graphics.moveTo(currentXPosition, currentYPosition);
                 graphics.lineTo(currentXPosition, currentYPosition + this.rowsHeight);
-                graphics.lineTo(currentXPosition - this.columnsWidth, currentYPosition + this.rowsHeight);
+                graphics.moveTo(currentXPosition, currentYPosition);
+                graphics.lineTo(currentXPosition + this.columnsWidth, currentYPosition);
+                graphics.lineTo(currentXPosition + this.columnsWidth, currentYPosition + this.rowsHeight);
+                currentXPosition+=(this.columnsWidth + this.xSpacing);
+                graphics.lineTo(currentXPosition - this.columnsWidth - this.xSpacing, currentYPosition + this.rowsHeight);
                 graphics.moveTo(currentXPosition, currentYPosition);
             }
-            currentYPosition+=this.rowsHeight;
+            currentYPosition+=(this.rowsHeight + this.ySpacing);
         };
         graphics.x+=this.columnsWidth/2;
         graphics.y+=this.rowsHeight/2;
@@ -103,8 +110,8 @@ export class GridContainer<T extends Container> extends Container {
         this.y = coordinate.y - this.virtualHeight;
     }
 
-    public addContainer(container: T): void {
-        this.reSizeContainerToGridSpace(container);
+    public addContainer(container: T, resize: boolean): void {
+        if (resize) this.reSizeContainerToGridSpace(container);
         this.addChild(container);
     }
 
@@ -117,8 +124,8 @@ export class GridContainer<T extends Container> extends Container {
         container.height = this.rowsHeight;
     }
 
-    public setContainerAt(container: T, column: number, row: number): void {
-        this.addContainer(container);
+    public setContainerAt(container: T, resize: boolean, column: number, row: number): void {
+        this.addContainer(container, resize);
         this.gridElements[row][column].setContainer(container);
     }
 
@@ -126,11 +133,11 @@ export class GridContainer<T extends Container> extends Container {
         this.gridElements[row][column].container = null;
     }
 
-    public setContainersFromArray(...containers: T[]): void {
+    public setContainersFromArray(resize: boolean, ...containers: T[]): void {
         let currentRow: number = 0; 
         let currentColumn: number = 0;
         for (let elem = 0; elem < containers.length; elem++) {
-            this.setContainerAt(containers[elem], currentColumn, currentRow);
+            this.setContainerAt(containers[elem], resize, currentColumn, currentRow);
             currentColumn++;
             if (currentColumn >= this.columns) {
                 currentColumn = 0;

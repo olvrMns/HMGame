@@ -2,7 +2,7 @@ import { BitmapFont, BitmapText, Container } from "pixi.js";
 import { LevelInstances } from "../../types";
 import { LevelInstance } from "../LevelInstance";
 import { Coordinate } from "../obj/Coordinate";
-import { ClassicGH, Space1, Space2 } from "../obj/Levels";
+import { ClassicGH, Space1, Space2, Space3 } from "../obj/Levels";
 import { AbstractLevel } from "../obj/abstract/AbstractLevel";
 import { GridContainer } from "../components/GenericGrid";
 import { ApplicationUtils } from "../util/ApplicationUtils";
@@ -24,6 +24,7 @@ export enum Levels {
 export const levelInstances: LevelInstances = {
     [Levels.SPACE1]: () => new Space1(),
     [Levels.SPACE2]: () => new Space2(),
+    [Levels.SPACE3]: () => new Space3(),
     [Levels.CGH]: () => new ClassicGH()
 }
 
@@ -39,10 +40,14 @@ export class Menu extends Container implements Buildable {
         super();
         this.levelsGrid = new GridContainer<BitmapText>({
             columns: 1, 
-            rows: 3, height: WindowPresets.WINDOW_HEIGHT * 0.2, 
+            rows: Object.keys(levelInstances).length, 
+            height: WindowPresets.WINDOW_HEIGHT * 0.2, 
             width: WindowPresets.WINDOW_WIDTH * 0.15, 
             centerCoordinate: Coordinate.of(WindowPresets.CENTER_COORDINATE.x, WindowPresets.CENTER_COORDINATE.y + (WindowPresets.CENTER_COORDINATE.y * 0.5)), 
-            showBorders: false});
+            showBorders: false,
+            xSpacing: 10,
+            ySpacing: 20
+        });
         this.build();
     }
 
@@ -69,7 +74,7 @@ export class Menu extends Container implements Buildable {
         Object.keys(levelInstances).forEach((levelName) => {
             bitMapTexts.push(ApplicationUtils.getCustomBitMapText({onClick: () => this.loadLevel(levelInstances[levelName]), text: levelName}));
         });
-        this.levelsGrid.setContainersFromArray(...bitMapTexts);
+        this.levelsGrid.setContainersFromArray(true, ...bitMapTexts);
         this.addChildAt(this.levelsGrid, 1);
     }
 

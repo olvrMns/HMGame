@@ -49,6 +49,12 @@ export class AssetLoader {
         ApplicationSrpites.PAUSE_TITLE = Sprite.from("assets/pauseTitle.png");
         ApplicationSrpites.MENU_TITLE = Sprite.from("assets/title.png");
         ApplicationSrpites.MENU_TITLE2 = Sprite.from("assets/title2.png");
+        ApplicationSrpites.A_BUTTON = Sprite.from("assets/aButton.png");
+        ApplicationSrpites.X_BUTTON = Sprite.from("assets/xButton.png");
+        ApplicationSrpites.B_BUTTON = Sprite.from("assets/bButton.png");
+        ApplicationSrpites.Y_BUTTON = Sprite.from("assets/yButton.png");
+        ApplicationSrpites.P_CONTROLLER = Sprite.from("assets/pController.png");
+        ApplicationSrpites.SPACE_BACKGROUND5 = Sprite.from("assets/SpaceBackground5.png");
     }
 
     public static async load() {
@@ -75,10 +81,16 @@ export class ApplicationSrpites {
     public static SPACE_BACKGROUND1: Sprite;
     public static SPACE_BACKGROUND2: Sprite;
     public static SPACE_BACKGROUND3: Sprite;
+    public static SPACE_BACKGROUND5: Sprite;
     public static MENU_BACKGROUND: Sprite;
     public static MENU_TITLE: Sprite;
     public static MENU_TITLE2: Sprite;
     public static PAUSE_TITLE: Sprite;
+    public static X_BUTTON: Sprite;
+    public static A_BUTTON: Sprite;
+    public static B_BUTTON: Sprite;
+    public static Y_BUTTON: Sprite;
+    public static P_CONTROLLER: Sprite;
 }   
 
 

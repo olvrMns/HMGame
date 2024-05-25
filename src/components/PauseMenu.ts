@@ -39,6 +39,7 @@ export class PauseMenu extends Container implements Buildable {
         this.addChild(ApplicationUtils.getTitleSprite(ApplicationSrpites.PAUSE_TITLE, 0.6, 0.4));
         
         this.grid.setContainersFromArray(
+            true,
             ApplicationUtils.getCustomBitMapText({text: "RESUME", onClick: this.resumeCallback}), 
             ApplicationUtils.getCustomBitMapText({text: "EXIT", onClick: this.menuCallback})
         );
