@@ -43,6 +43,8 @@ declare type LevelOptions = {
     cadenceMultiplier?: number,
     interceptionPercentages?: InterceptionPercentages,
     disposableTextCoordinate?: Coordinate,
+    randomInitializationFluctuationPercentage?: number,
+    randomSpeedFluctuationPercentage?: number
 };
 
 declare type DisplayableNumberOptions = {

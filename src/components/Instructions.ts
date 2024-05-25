@@ -1,10 +1,11 @@
-import { AnimatedSprite, Container, Graphics } from "pixi.js";
+import { AnimatedSprite, BitmapText, Container, Graphics } from "pixi.js";
 import { Buildable } from "../util/Buildable";
 import { GridContainer } from "./GenericGrid";
 import { WindowPresets } from "../util/WindowPresets";
 import { Coordinate } from "../obj/Coordinate";
 import { ApplicationSrpites, ApplicationTextures } from "../util/AssetLoader";
 import { ApplicationUtils } from "../util/ApplicationUtils";
+import { Enemies, enemiesData } from "../obj/EnemyData";
 
 
 
@@ -15,10 +16,10 @@ export class Instructions extends Container implements Buildable {
         super()
         this.grid = new GridContainer<Container>({
             columns: 3, 
-            rows: 4, 
+            rows: Object.keys(enemiesData).length + 1, 
             width: WindowPresets.WINDOW_WIDTH * 0.3, height: WindowPresets.WINDOW_HEIGHT * 0.3,
             centerCoordinate: Coordinate.of(WindowPresets.WINDOW_WIDTH * 0.3, WindowPresets.WINDOW_HEIGHT * 0.3),
-            showBorders: true
+            showBorders: false
         });
         this.build();
     }
@@ -27,16 +28,17 @@ export class Instructions extends Container implements Buildable {
         return new Instructions();
     }
     
-    public build() {
-        const ship1 = new AnimatedSprite(ApplicationTextures.SPACESHIP1);
-        ship1.play();
+    public build(): void {
+        for (let elem = 0; elem < Object.keys(enemiesData).length; elem++) {
+            let animatedSprite: AnimatedSprite = new AnimatedSprite(enemiesData[elem].baseTextures());
+            //animatedSprite.play();
+            //animatedSprite.anchor.set(0.5);
+            let bitMapText: BitmapText = ApplicationUtils.getCustomBitMapText({text: enemiesData[elem].triggerKey, color: "green"});
+            //bitMapText.anchor.set(0.5);
 
-        const ship2 = new AnimatedSprite(ApplicationTextures.SPACESHIP2);
-        ship2.play();
-
-        this.grid.setContainerAt(ApplicationUtils.getCustomBitMapText({text: "Enemy"}), 0, 0);
-        this.grid.setContainerAt(ship1, 0, 1);
-        this.grid.setContainerAt(ship2, 0, 2);
+            this.grid.setContainerAt(animatedSprite, 0, elem + 1);
+            this.grid.setContainerAt(bitMapText, 1, elem + 1);
+        }
 
         this.addChild(this.grid);
     }

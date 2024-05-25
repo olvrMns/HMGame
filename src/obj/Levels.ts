@@ -65,11 +65,12 @@ export class ClassicGH extends AbstractLevel {
         super({
             distancePerFrame: 10,
             distanceToIntercept: 150,
-            framesBeforeNodeInitialization: 80,
+            framesBeforeNodeInitialization: 100,
             distanceToInterceptMultiplier: 1.5,
             framesBeforeNodeUpdate: 5,
             nodeSpeedMultiplier: 0.5,
-            disposableTextCoordinate: Coordinate.of(WindowPresets.PSC_BOTTOM_RIGHT.x - 150, WindowPresets.PSC_BOTTOM_RIGHT.y - 150)
+            disposableTextCoordinate: Coordinate.of(WindowPresets.PSC_BOTTOM_RIGHT.x - 150, WindowPresets.PSC_BOTTOM_RIGHT.y - 150),
+            randomInitializationFluctuationPercentage: 0.6
         });
     }
 
@@ -78,10 +79,10 @@ export class ClassicGH extends AbstractLevel {
         this.addChild(ApplicationSrpites.SPACE_BACKGROUND3);
 
         this.addLineObject({
-            enemyData: enemiesData[Enemies.SHIP1],
+            enemyData: enemiesData[Enemies.SHIP3],
             line: Line.of(Coordinate.of(WindowPresets.WINDOW_WIDTH, 100), Coordinate.of(xLineLimit, 100), this.distanceToIntercept,  270, this.interceptionPercentages, true)});
         this.addLineObject({
-            enemyData: enemiesData[Enemies.SHIP1],
+            enemyData: enemiesData[Enemies.SHIP3],
             line: Line.of(Coordinate.of(WindowPresets.WINDOW_WIDTH, 200), Coordinate.of(xLineLimit, 200), this.distanceToIntercept,  270, this.interceptionPercentages, true)});
 
         this.addLineObject({

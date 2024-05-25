@@ -223,7 +223,7 @@ export class LevelInstance {
             });
             this.disposableTextController.updateAll(delta);
             this.onFrameCountEquals(this.level.framesBeforeNodeInitialization * cadenceMultiplier, () => this.initializeEnemyNode());
-            this.onFrameCountEquals(300, () => { cadenceMultiplier = this.fluctuate(this.level.cadenceMultiplier, 0.8); });
+            this.onFrameCountEquals(300, () => { cadenceMultiplier = this.fluctuate(this.level.cadenceMultiplier, this.level.randomInitializationFluctuationPercentage); });
             this.incrementFrameCount();
         };
     }
