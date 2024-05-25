@@ -1,6 +1,6 @@
 import { Container } from "pixi.js";
 import { DisposableText } from "../bitMapText/DisposableText";
-import { InterceptionAreaAliases, presetDisposableTextOptions } from "../../util/ApplicationUtils";
+import { InterceptionAreaAliases, presetDisposableTextOptions } from "../DisposableTextPresetOptions";
 import { DisposableTextOptions } from "../../../types";
 import { Coordinate } from "../Coordinate";
 

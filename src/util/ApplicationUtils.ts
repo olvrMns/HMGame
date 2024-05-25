@@ -1,23 +1,7 @@
 import { BitmapText, ILineStyleOptions, Sprite } from "pixi.js";
-import { CustomBitMapTextOptions, InterceptionPercentages, PresetDisposableTextOptions } from "../../types";
+import { CustomBitMapTextOptions, InterceptionPercentages } from "../../types";
 import { WindowPresets } from "./WindowPresets";
-
-export enum InterceptionAreaAliases {
-    PERFECT,
-    FINE,
-    GOOD,
-    OK,
-    FAIL,
-    NICE,
-    GREAT
-}
-
-export const presetDisposableTextOptions: PresetDisposableTextOptions = {
-    [InterceptionAreaAliases.PERFECT]: {coordinate: WindowPresets.CENTER_COORDINATE, value: "PERFECT", fontSize: 50, framesBeforeDestruction: 30, color: "#EF5FBE"},
-    [InterceptionAreaAliases.FINE]: {coordinate: WindowPresets.CENTER_COORDINATE, value: "FINE", fontSize: 30, framesBeforeDestruction: 10, color: "#A89CF0"},
-    [InterceptionAreaAliases.GOOD]: {coordinate: WindowPresets.CENTER_COORDINATE, value: "GOOD", fontSize: 40, framesBeforeDestruction: 15, color: "#A6C3E3"},
-    [InterceptionAreaAliases.FAIL]: {coordinate: WindowPresets.CENTER_COORDINATE, value: "FAIL", color: "red", framesBeforeDestruction: 14},
-}
+import { InterceptionAreaAliases } from "../obj/DisposableTextPresetOptions";
 
 export class ApplicationUtils {
     public static DEFAULT_LINE_STYLE: ILineStyleOptions = {color: 'red', width: 5};
@@ -68,7 +52,8 @@ export class ApplicationUtils {
     public static getTitleSprite(sprite: Sprite, yOffSet: number, scale?: number) {
         sprite.skew.x = 0.1;
         sprite.scale.set(scale ? scale : 0.7);
-        sprite.position.set(WindowPresets.CENTER_COORDINATE.x - sprite.width/2, (WindowPresets.CENTER_COORDINATE.y - sprite.height/2) - WindowPresets.CENTER_COORDINATE.y * yOffSet);
+        sprite.anchor.set(0.5);
+        sprite.position.set(WindowPresets.CENTER_COORDINATE.x, (WindowPresets.CENTER_COORDINATE.y - (WindowPresets.CENTER_COORDINATE.y * yOffSet)));
         return sprite;
     }
     

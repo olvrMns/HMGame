@@ -9,6 +9,7 @@ import { ApplicationUtils } from "../util/ApplicationUtils";
 import { ApplicationSrpites } from "../util/AssetLoader";
 import { WindowPresets } from "../util/WindowPresets";
 import { Buildable } from "../util/Buildable";
+import { Instructions } from "./Instructions";
 
 export enum Levels {
     SPACE1 = "Space 1",
@@ -40,7 +41,8 @@ export class Menu extends Container implements Buildable {
             columns: 1, 
             rows: 3, height: WindowPresets.WINDOW_HEIGHT * 0.2, 
             width: WindowPresets.WINDOW_WIDTH * 0.15, 
-            centerCoordinate: Coordinate.of(WindowPresets.CENTER_COORDINATE.x, WindowPresets.CENTER_COORDINATE.y + (WindowPresets.CENTER_COORDINATE.y * 0.5))});
+            centerCoordinate: Coordinate.of(WindowPresets.CENTER_COORDINATE.x, WindowPresets.CENTER_COORDINATE.y + (WindowPresets.CENTER_COORDINATE.y * 0.5)), 
+            showBorders: false});
         this.build();
     }
 
@@ -57,7 +59,8 @@ export class Menu extends Container implements Buildable {
         BitmapFont.from("MenuFont", {fontFamily: 'Pixelfont2', fontSize: 30, fill: '#c4d4b1'});
         
         this.addChild(ApplicationSrpites.MENU_BACKGROUND);
-        this.addChild(ApplicationUtils.getTitleSprite(ApplicationSrpites.MENU_TITLE, 0.4));
+        this.addChild(Instructions.getInstance());
+        this.addChild(ApplicationUtils.getTitleSprite(ApplicationSrpites.MENU_TITLE2, 0.4));
         this.setLevelsGrid();
     }
 

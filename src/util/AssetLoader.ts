@@ -9,6 +9,7 @@ import planet1Data from "../../static/assets/planet1Data.json";
 import planet2Data from "../../static/assets/planet2Data.json";
 import planet3Data from "../../static/assets/planet3Data.json";
 import planet4Data from "../../static/assets/planet4Data.json";
+
 /**
  * @description Utility class containing Assets/Animations of the application and methods
  * @Note returns a clone of a texture/sprite so that the .destroy() method of containers doesn't destroy the referenced object
@@ -22,7 +23,12 @@ export class AssetLoader {
         return textures.animations?.[name];
     }
 
-    public static async load() {
+    private static async loadFonts() {
+        await Assets.load('fonts/pixelFont1.ttf');
+        await Assets.load('fonts/pixelFont2.ttf');
+    }
+
+    private static async loadTextures() {
         ApplicationTextures.PLANET1 = await this.getTextures(`${this.PATH}planet1.png`, planet1Data, "planet1");
         ApplicationTextures.PLANET2 = await this.getTextures(`${this.PATH}planet2.png`, planet2Data, "planet2");
         ApplicationTextures.PLANET3 = await this.getTextures(`${this.PATH}planet3.png`, planet3Data, "planet3");
@@ -33,15 +39,22 @@ export class AssetLoader {
         ApplicationTextures.SPACESHIP2_EXPLOSION = await this.getTextures(`${this.PATH}fighter2Explosion.png`, fighter2ExplosionData, "fighter2Exp");
         ApplicationTextures.SPACESHIP3 = await this.getTextures(`${this.PATH}fighter3.png`, fighter3Data, "fighter3");
         ApplicationTextures.EXPLOSION3 = await this.getTextures(`${this.PATH}explosion3.png`, explosion3Data, "explosion3");
+    }
+
+    private static async loadSprites() {
         ApplicationSrpites.SPACE_BACKGROUND1 = Sprite.from("assets/SpaceBackground1.png");
         ApplicationSrpites.SPACE_BACKGROUND2 = Sprite.from("assets/SpaceBackground2.png");
         ApplicationSrpites.SPACE_BACKGROUND3 = Sprite.from("assets/SpaceBackground3.png");
         ApplicationSrpites.MENU_BACKGROUND = Sprite.from("assets/SpaceBackground4.png");
         ApplicationSrpites.PAUSE_TITLE = Sprite.from("assets/pauseTitle.png");
         ApplicationSrpites.MENU_TITLE = Sprite.from("assets/title.png");
-        await Assets.load('fonts/pixelFont1.ttf');
-        await Assets.load('fonts/pixelFont2.ttf');
-        
+        ApplicationSrpites.MENU_TITLE2 = Sprite.from("assets/title2.png");
+    }
+
+    public static async load() {
+        await this.loadFonts();
+        await this.loadTextures();
+        await this.loadSprites();
     }
 }
 
@@ -53,7 +66,6 @@ export class ApplicationTextures {
     public static SPACESHIP1: Texture<Resource>[];
     public static SPACESHIP2: Texture<Resource>[];
     public static SPACESHIP3: Texture<Resource>[];
-
     public static SPACESHIP1_EXPLOSION: Texture<Resource>[];
     public static SPACESHIP2_EXPLOSION: Texture<Resource>[];
     public static EXPLOSION3: Texture<Resource>[];
@@ -65,6 +77,7 @@ export class ApplicationSrpites {
     public static SPACE_BACKGROUND3: Sprite;
     public static MENU_BACKGROUND: Sprite;
     public static MENU_TITLE: Sprite;
+    public static MENU_TITLE2: Sprite;
     public static PAUSE_TITLE: Sprite;
 }   
 

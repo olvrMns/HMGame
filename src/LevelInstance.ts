@@ -9,7 +9,7 @@ import { AbstractLevel, TriggerKeys } from "./obj/abstract/AbstractLevel";
 import { DisplayableNumber } from "./obj/bitMapText/DisplayableNumber";
 import { DisposableTextController } from "./obj/dataStructure/DisposableTextController";
 import { TickerController } from "./obj/dataStructure/TickerController";
-import { InterceptionAreaAliases } from "./util/ApplicationUtils";
+import { InterceptionAreaAliases } from "./obj/DisposableTextPresetOptions";
 
 /**
  * @description Singleton Object containing the logic/lifecycle of the game (level)
@@ -97,7 +97,7 @@ export class LevelInstance {
     }
 
     public initializeEnemyNode(lineObject: LineObject = this.level.getRandomLineObject()): void {
-        let enemyNode: EnemyNode = EnemyNode.of(lineObject, {angle: lineObject.line.inclination});
+        let enemyNode: EnemyNode = EnemyNode.of(lineObject);
         this.enemyNodes.push(enemyNode);
         this.level.addChild(enemyNode);
     }

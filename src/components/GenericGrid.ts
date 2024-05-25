@@ -1,6 +1,7 @@
-import { Container } from "pixi.js";
+import { Container, Graphics } from "pixi.js";
 import { GridOptions } from "../../types";
 import { Coordinate } from "../obj/Coordinate";
+import { ApplicationUtils } from "../util/ApplicationUtils";
 
 class GridSpace<T extends Container> {
     public container: T | null;
@@ -20,7 +21,10 @@ class GridSpace<T extends Container> {
 
 /**
  * @Note (generic should probably be removed?)
+ * - could be renamed to VirtualContainerGrid
+ * - virtualWidth and virtualHeight => the width/height property of a container doesn't change (stays at 0) if it's empty
  * @description Container representing a customizable (only on initialization) grid
+ * - still need to add spacing between GridSpaces
  */
 export class GridContainer<T extends Container> extends Container {
     private columns: number;
@@ -42,7 +46,8 @@ export class GridContainer<T extends Container> extends Container {
         this.columnsWidth = this.virtualWidth/this.columns;
         this.rowsHeight = this.virtualHeight/this.rows;
         this.setGridSpaces();
-        this.rePosition(params.centerCoordinate);
+        if (params.showBorders === true) this.drawBorders();
+        if (params.centerCoordinate) this.rePosition(params.centerCoordinate); 
     }
 
     /**
@@ -50,7 +55,7 @@ export class GridContainer<T extends Container> extends Container {
      * - ((the current X position + half of the width of a column) and (the current y position + half of the height of a row))
      * - after reaching the last column of a row, the current Y position is incremented by the height of a row to "switch" rows
      */
-    public setGridSpaces() {
+    public setGridSpaces(): void {
         let currentXPosition: number;
         let currentYPosition: number = this.y;
         for (let row = 0; row < this.rows; row++) {
@@ -64,17 +69,41 @@ export class GridContainer<T extends Container> extends Container {
         };
     }
 
+    public drawBorders(): void {
+        const graphics: Graphics = new Graphics();
+        let currentXPosition: number;
+        let currentYPosition: number = this.y;
+        graphics.lineStyle(ApplicationUtils.DEFAULT_LINE_STYLE);
+        for (let row = 0; row < this.rows; row++) {
+            currentXPosition = this.x;
+            graphics.moveTo(currentXPosition, currentYPosition);
+            graphics.lineTo(currentXPosition, currentYPosition + this.rowsHeight);
+            graphics.moveTo(currentXPosition, currentYPosition);
+            for (let column = 0; column < this.columns; column++) {
+                currentXPosition+=this.columnsWidth;
+                graphics.lineTo(currentXPosition, currentYPosition);
+                graphics.lineTo(currentXPosition, currentYPosition + this.rowsHeight);
+                graphics.lineTo(currentXPosition - this.columnsWidth, currentYPosition + this.rowsHeight);
+                graphics.moveTo(currentXPosition, currentYPosition);
+            }
+            currentYPosition+=this.rowsHeight;
+        };
+        graphics.x+=this.columnsWidth/2;
+        graphics.y+=this.rowsHeight/2;
+        this.addChild(graphics);
+    }
+
     /**
      * @description the [position] of a container is its left upper corner and not its actual center,
      * so we need to substract the width/height to center from coordinates passed in parameters
      * @param coordinate where the center of the container will be moved 
      */
-    public rePosition(coordinate: Coordinate) {
+    public rePosition(coordinate: Coordinate): void {
         this.x = coordinate.x - this.virtualWidth;
         this.y = coordinate.y - this.virtualHeight;
     }
 
-    public addContainer(container: T) {
+    public addContainer(container: T): void {
         this.reSizeContainerToGridSpace(container);
         this.addChild(container);
     }
@@ -93,15 +122,14 @@ export class GridContainer<T extends Container> extends Container {
         this.gridElements[row][column].setContainer(container);
     }
 
-    public unSetContainerAt(column: number, row: number) {
+    public unSetContainerAt(column: number, row: number): void {
         this.gridElements[row][column].container = null;
     }
 
-    public setContainersFromArray(...containers: T[]) {
+    public setContainersFromArray(...containers: T[]): void {
         let currentRow: number = 0; 
         let currentColumn: number = 0;
         for (let elem = 0; elem < containers.length; elem++) {
-            this.addContainer(containers[elem]);
             this.setContainerAt(containers[elem], currentColumn, currentRow);
             currentColumn++;
             if (currentColumn >= this.columns) {
