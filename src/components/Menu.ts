@@ -12,9 +12,9 @@ import { Buildable } from "../util/Buildable";
 import { Instructions } from "./Instructions";
 
 export enum Levels {
-    SPACE1 = "Space 1",
-    SPACE2 = "Space 2",
-    SPACE3 = "Space 3",
+    SPACE1 = "Pinky Winky",
+    SPACE2 = "Milky Way",
+    SPACE3 = "Rusty",
     CGH = "Hero"
 }
 
